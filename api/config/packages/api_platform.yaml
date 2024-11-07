@@ -21,3 +21,10 @@ api_platform:
     # change this to true if you use controllers
     use_symfony_listeners: false
     keep_legacy_inflector: false
+    serializer:
+        hydra_prefix: false
+    swagger:
+        api_keys:
+            access_token:
+                name: Authorization
+                type: header

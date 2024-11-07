@@ -27,15 +27,18 @@ when@test:
     monolog:
         handlers:
             main:
-                type: fingers_crossed
+                type: stream
+                level: '%env(LOG_LEVEL)%'
                 action_level: error
                 handler: nested
-                excluded_http_codes: [404, 405]
-                channels: ["!event"]
+                channels: [ "app" ]
             nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
+            console:
+                type: console
+                process_psr_3_messages: false
 
 when@prod:
     monolog:

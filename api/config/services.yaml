@@ -19,6 +19,15 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    App\Services\ISProvider:
+        public: true
+        arguments: 
+            $baseApiUri: '%env(string:IS_API_URL)%'
+            $options:
+                clientId: '%env(string:OAUTH2_CLIENT_ID)%'
+                clientSecret: '%env(string:OAUTH2_CLIENT_SECRET)%'
+                redirectUri: '%env(string:OAUTH2_REDIRECT_URI)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
