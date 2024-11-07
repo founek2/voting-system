@@ -15,7 +15,7 @@ export default function AuthGuard() {
 
   return (
     <>
-      {isLoading ? <Loader /> : null}
+      {isLoading && !loggedId ? <Loader /> : null}
       {loggedId ? <Outlet /> : null}
     </>
   );

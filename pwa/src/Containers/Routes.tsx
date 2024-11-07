@@ -12,6 +12,10 @@ import Layout from "../Components/Layout";
 import AuthGuard from "../Components/AuthGuard";
 import ElectionPage from "../Pages/ElectionPage";
 import ElectionEditPage from "../Pages/ElectionEditPage";
+import ElectionCreatePage from "../Pages/ElectionCreatePage";
+import PositionPage from "../Pages/PositionPage";
+import PositionCreatePage from "../Pages/PositionCreatePage";
+import PositionEditPage from "../Pages/PositionEditPage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -24,9 +28,22 @@ export default function MyRoutes() {
       <Route path="/auth" element={<AuthGuard />}>
         <Route path="/auth/admin" element={<LayoutAdmin />}>
           <Route
+            path="/auth/admin/elections/create"
+            element={<ElectionCreatePage />}
+          />
+          <Route
             path="/auth/admin/elections/:id"
             element={<ElectionEditPage />}
           />
+          <Route
+            path="/auth/admin/positions/create"
+            element={<PositionCreatePage />}
+          />
+          <Route
+            path="/auth/admin/positions/:id"
+            element={<PositionEditPage />}
+          />
+          <Route path="/auth/admin/positions" element={<PositionPage />} />
           <Route path="/auth/admin" element={<ElectionPage />} />
         </Route>
       </Route>

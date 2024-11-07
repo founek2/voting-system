@@ -1,12 +1,9 @@
-import HowToVoteIcon from "@mui/icons-material/HowToVote";
-import { Card, CardContent, CardHeader } from "@mui/material";
-import React from "react";
-import type { Election } from "../endpoints/types";
 import {
-  DatePicker as OriginalDatePicker,
   DatePickerProps,
+  DatePicker as OriginalDatePicker,
   PickerValidDate,
 } from "@mui/x-date-pickers";
+import React from "react";
 import { ChangeHandler } from "react-hook-form";
 
 type CustomDatePickerProps<
@@ -14,9 +11,10 @@ type CustomDatePickerProps<
   TEnableAccessibleFieldDOMStructure extends boolean = false
 > = Omit<
   DatePickerProps<TDate, TEnableAccessibleFieldDOMStructure>,
-  "onChange"
+  "onChange" | "defaultValue"
 > & {
   onChange: ChangeHandler;
+  defaultValue?: string | null;
 };
 export const MyDatePicker = React.forwardRef(function <
   TDate extends PickerValidDate,
@@ -25,39 +23,22 @@ export const MyDatePicker = React.forwardRef(function <
   {
     onChange,
     name,
+    defaultValue,
     ...props
   }: CustomDatePickerProps<TDate, TEnableAccessibleFieldDOMStructure>,
-  ref: React.LegacyRef<HTMLDivElement>
+  ref: React.Ref<HTMLInputElement>
 ) {
   return (
     <OriginalDatePicker
-      ref={ref}
+      inputRef={ref}
       slotProps={{ textField: { fullWidth: true } }}
       onChange={(date) => {
+        console.log("change", date);
         onChange({ target: { value: date?.toISOString(), name: name } });
       }}
       name={name}
+      defaultValue={defaultValue ? (new Date(defaultValue) as any) : undefined}
       {...props}
     />
   );
 });
-
-// export function MyDatePicker2<
-//   TDate extends PickerValidDate,
-//   TEnableAccessibleFieldDOMStructure extends boolean = false
-// >({
-//   onChange,
-//   name,
-//   ...props
-// }: CustomDatePickerProps<TDate, TEnableAccessibleFieldDOMStructure>) {
-//   return (
-//     <OriginalDatePicker
-//       slotProps={{ textField: { fullWidth: true } }}
-//       onChange={(date) => {
-//         onChange({ target: { value: date?.toISOString(), name: name } });
-//       }}
-//       name={name}
-//       {...props}
-//     />
-//   );
-// }

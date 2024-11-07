@@ -13,7 +13,10 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <MyThemeProvider>
-          <SnackbarProvider maxSnack={3}>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
             <BrowserRouter>
               <Suspense fallback={<CircularProgress />}>
                 <MyRoutes />

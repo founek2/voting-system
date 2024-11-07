@@ -23,7 +23,9 @@ class AccessTokenType extends Type
     {
         // This is executed when the value is read from the database. Make your conversions here, optionally using the $platform.
         // var_dump($value);
-        $json = json_decode($value ?? "{}", true);
+        if ($value == null || empty($value)) return null;
+
+        $json = json_decode($value, true);
         return new AccessToken($json);
     }
 

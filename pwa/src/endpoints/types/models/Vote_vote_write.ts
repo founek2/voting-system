@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Vote = {
-    readonly id?: number;
+export type Vote_vote_write = {
     candidate?: string;
     value?: 1 | 0 | -1;
-    appUser?: string;
 };
 

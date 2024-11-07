@@ -11,7 +11,6 @@ export function FormStatus<T extends FieldValues>({
   const [path, params] = Object.entries(errors).slice(0, 1)?.[0] || [];
   if (!path) return null;
 
-  console.log("path", params);
   if (params?.type == "required")
     return <Alert severity="warning">Pole {path} je povinné</Alert>;
 

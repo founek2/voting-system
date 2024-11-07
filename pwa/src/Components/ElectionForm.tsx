@@ -1,24 +1,37 @@
-import { Button, Grid2, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Grid2,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
 import { MyDatePicker } from "../Components/MyDatePicker";
-import { Election } from "../endpoints/types";
+import {
+  Election_election_write,
+  Position_jsonld_position_read,
+} from "../endpoints/types";
+import { useGetPositionsQuery } from "../endpoints/positions";
 
 interface ElectionFormProps {
-  defaultValues?: Election;
-  onSubmit: SubmitHandler<Election>;
+  defaultValues?: Omit<Election_election_write, "candidates">;
+  onSubmit: SubmitHandler<Election_election_write>;
+  disabled?: boolean;
 }
 export default function ElectionForm({
   defaultValues,
   onSubmit,
+  disabled,
 }: ElectionFormProps) {
+  const methods = useForm<Election_election_write>();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Election>({ defaultValues });
+  } = methods;
+  const { data: positions } = useGetPositionsQuery();
 
   const handleOnSubmit = handleSubmit(onSubmit);
 
@@ -29,13 +42,14 @@ export default function ElectionForm({
       </Grid2>
 
       <Grid2 size={12}>
-        <Typography variant="h4">Datumy:</Typography>
+        <Typography variant="h4">Volby:</Typography>
       </Grid2>
 
       <Grid2 size={3}>
         <MyDatePicker
           label="Vyhlášení voleb"
           {...register("announcementDate", { required: true })}
+          defaultValue={defaultValues?.announcementDate}
         />
       </Grid2>
 
@@ -43,6 +57,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Přihlašování kandidátů"
           {...register("registrationOfCandidatesDate", { required: true })}
+          defaultValue={defaultValues?.registrationOfCandidatesDate}
         />
       </Grid2>
 
@@ -50,6 +65,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Volební kampaň"
           {...register("campaignDate", { required: true })}
+          defaultValue={defaultValues?.campaignDate}
         />
       </Grid2>
 
@@ -57,6 +73,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Elektronické hlasování"
           {...register("electronicVotingDate", { required: true })}
+          defaultValue={defaultValues?.electronicVotingDate}
         />
       </Grid2>
 
@@ -64,6 +81,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Urnové hlasování"
           {...register("ballotVotingDate", { required: true })}
+          defaultValue={defaultValues?.ballotVotingDate}
         />
       </Grid2>
 
@@ -71,6 +89,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Vyhlášení předběžných výsledků"
           {...register("preliminaryResultsDate", { required: true })}
+          defaultValue={defaultValues?.preliminaryResultsDate}
         />
       </Grid2>
 
@@ -78,6 +97,7 @@ export default function ElectionForm({
         <MyDatePicker
           label="Uzávěr podávání stížností"
           {...register("complaintsDeadlineDate", { required: true })}
+          defaultValue={defaultValues?.complaintsDeadlineDate}
         />
       </Grid2>
 
@@ -85,11 +105,49 @@ export default function ElectionForm({
         <MyDatePicker
           label="Vyhlášení konečních výsledků"
           {...register("finalResultsDate", { required: true })}
+          defaultValue={defaultValues?.finalResultsDate}
+        />
+      </Grid2>
+
+      <Grid2 size={6}>
+        <Controller
+          control={methods.control}
+          name="positions"
+          defaultValue={defaultValues?.positions}
+          render={({ field }) => (
+            <Autocomplete
+              options={
+                positions?.member || []
+                // top100Films
+              }
+              getOptionKey={(z) => z["@id"]!}
+              getOptionLabel={(z) => z.name!}
+              renderInput={(params) => (
+                <TextField {...params} label="Volené pozice" />
+              )}
+              multiple
+              // {...autocompleteField}
+              onChange={(e, values) => {
+                field.onChange(values.map((v) => v["@id"]));
+                // autocompleteField.onChange({
+                //   target: { value, name: autocompleteField.name },
+                // });
+              }}
+              onBlur={field.onBlur}
+              value={
+                field.value
+                  ?.map((id) => positions?.member.find((z) => z["@id"] == id))
+                  .filter(Boolean) as Position_jsonld_position_read[]
+              }
+            />
+          )}
         />
       </Grid2>
 
       <Grid2 size={12}>
-        <Button type="submit">Uložit</Button>
+        <Button type="submit" disabled={disabled}>
+          Uložit
+        </Button>
       </Grid2>
     </Grid2>
   );

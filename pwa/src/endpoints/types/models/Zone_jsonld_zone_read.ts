@@ -2,13 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Vote_jsonld = {
+export type Zone_jsonld_zone_read = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
     readonly '@type'?: string;
-    readonly id?: number;
-    candidate?: string;
-    value?: 1 | 0 | -1;
-    appUser?: string;
+    id?: number;
+    alias?: string;
+    name?: string;
+    note?: string;
 };
 

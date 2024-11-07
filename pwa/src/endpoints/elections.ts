@@ -1,17 +1,18 @@
 import { api } from './api';
-import { Election, Election_jsonld } from './types';
+import { Election, Hydra } from '../types';
+import { Election_jsonld_election_read, Election_jsonld_election_write } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getElections: build.query<Election_jsonld, void>({
+        getElections: build.query<Hydra<Election_jsonld_election_read>, void>({
             query: () => `elections`,
             providesTags: ['Elections'],
         }),
-        getElection: build.query<Election_jsonld, number>({
+        getElection: build.query<Election_jsonld_election_read, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
         }),
-        addElection: build.mutation<Election_jsonld, Election>({
+        addElection: build.mutation<Election_jsonld_election_read, Election_jsonld_election_write>({
             query(body) {
                 return {
                     url: `elections`,
@@ -21,12 +22,15 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Elections'],
         }),
-        updateElection: build.mutation<Election_jsonld, Election>({
-            query(body) {
+        updateElection: build.mutation<Election_jsonld_election_read, { id: number, body: Election_jsonld_election_write }>({
+            query(data) {
                 return {
-                    url: `elections/${body.id}`,
+                    url: `elections/${data.id}`,
+                    // headers: {
+                    //     'Content-Type': 'application/merge-patch+json'
+                    // },
                     method: 'PATCH',
-                    body: JSON.stringify(body),
+                    body: JSON.stringify(data.body),
                 };
             },
             invalidatesTags: ['Elections'],

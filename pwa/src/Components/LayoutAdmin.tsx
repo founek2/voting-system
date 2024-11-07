@@ -30,6 +30,7 @@ import { authorizationReducerActions } from "../store/slices/authorizationSlice"
 import { enqueueSnackbar } from "notistack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import BoyIcon from "@mui/icons-material/Boy";
 
 const drawerWidth = 240;
 
@@ -41,6 +42,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
+
+const menuItems = [
+  { path: "/auth/admin", text: "Volby", Icon: <MailIcon /> },
+  { path: "/auth/admin", text: "Usnesení", Icon: <InboxIcon /> },
+  { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
+];
 
 export default function LayoutAdmin() {
   const loggedId = useAppSelector((state) => state.authorization.loggedIn);
@@ -90,15 +97,15 @@ export default function LayoutAdmin() {
           </DrawerHeader>
           <Divider />
           <List>
-            {["Volby", "Usnesení"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
+            {menuItems.map((item) => (
+              <Link to={item.path} key={item.text}>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{item.Icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
             ))}
           </List>
           <Divider />

@@ -2,13 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Vote } from './Vote';
-export type Candidate = {
+export type Vote_jsonld_vote_read = {
+    readonly '@context'?: (string | Record<string, any>);
+    readonly '@id'?: string;
+    readonly '@type'?: string;
     readonly id?: number;
-    election?: string;
+    candidate?: string;
     appUser?: string;
-    votes?: Array<Vote>;
-    createdAt?: string;
-    updatedAt?: string;
 };
 

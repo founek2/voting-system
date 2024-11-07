@@ -10,6 +10,8 @@ api_platform:
         jsonld: ['application/ld+json']
         jsonopenapi: ['application/vnd.openapi+json']
         html: ['text/html']
+    patch_formats:
+        json: ['application/ld+json']
     # Good defaults for REST APIs
     defaults:
         stateless: true

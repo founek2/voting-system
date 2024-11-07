@@ -13,6 +13,7 @@ const baseQuery = fetchBaseQuery({
         if (!accessToken) return headers
 
         headers.set('Authorization', `Bearer ${accessToken.accessToken}`);
+        console.log(headers)
 
         return headers;
     },
@@ -40,6 +41,8 @@ export const api = createApi({
         'AuthorizationUrl',
         'UserMe',
         'Elections',
+        'Positions',
+        'Zones'
     ],
     /**
      * This api has endpoints injected in adjacent files,

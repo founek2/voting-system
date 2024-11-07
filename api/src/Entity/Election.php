@@ -13,8 +13,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     mercure: true,
-    normalizationContext: ['groups' => ['election:read', 'position:read', 'candidate:read']],
-    denormalizationContext: ['groups' => ['election:Write']],
+    normalizationContext: ['groups' => ['election:read']],
+    denormalizationContext: ['groups' => ['election:write']],
+    order: ['id' => 'DESC']
 )]
 #[ORM\Entity(repositoryClass: ElectionRepository::class)]
 class Election
@@ -63,14 +64,14 @@ class Election
      * @var Collection<int, Candidate>
      */
     #[ORM\OneToMany(mappedBy: 'election', targetEntity: Candidate::class, orphanRemoval: true)]
-    #[Groups(['election:read', 'election:write', 'candidate:read'])]
+    #[Groups(['election:read', 'election:write'])]
     private Collection $candidates;
 
     /**
      * @var Collection<int, Position>
      */
     #[ORM\ManyToMany(targetEntity: Position::class, inversedBy: 'elections')]
-    #[Groups(['election:read', 'election:write', 'position:read'])]
+    #[Groups(['election:read', 'election:write'])]
     private Collection $positions;
 
     public function __construct()

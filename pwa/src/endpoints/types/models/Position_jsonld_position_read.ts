@@ -2,16 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Vote_jsonld } from './Vote_jsonld';
-export type Candidate_jsonld = {
+export type Position_jsonld_position_read = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
     readonly '@type'?: string;
     readonly id?: number;
-    election?: string;
-    appUser?: string;
-    votes?: Array<Vote_jsonld>;
-    createdAt?: string;
-    updatedAt?: string;
+    zoneRestrictions?: Array<string>;
+    candidates?: Array<string>;
+    name?: string;
+    elections?: Array<string>;
 };
 

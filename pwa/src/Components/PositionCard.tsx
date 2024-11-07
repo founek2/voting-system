@@ -1,17 +1,17 @@
-import HowToVoteIcon from "@mui/icons-material/HowToVote";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import React from "react";
-import type { Election } from "../endpoints/types";
+import { Position } from "../types";
 
-interface ElectionCardProps {
-  election: Election;
+interface PositionCardProps {
+  position: Position;
 }
-export function ElectionCard({ election }: ElectionCardProps) {
+export function PositionCard({ position }: PositionCardProps) {
   return (
     <Card>
-      <CardHeader title="10.10.2024 - 30.10.2024" />
+      <CardHeader title={position.name} />
       <CardContent>
-        <HowToVoteIcon fontSize="large" />
+        <EmojiPeopleIcon fontSize="large" />
       </CardContent>
     </Card>
   );

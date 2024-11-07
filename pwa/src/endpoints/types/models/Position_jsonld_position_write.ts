@@ -2,13 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Zone = {
-    id?: number;
-    alias?: string;
+export type Position_jsonld_position_write = {
+    zoneRestrictions?: Array<string>;
+    candidates?: Array<string>;
     name?: string;
-    note?: string;
-    positions?: Array<string>;
-    createdAt?: string;
-    updatedAt?: string;
+    elections?: Array<string>;
 };
 

@@ -3,13 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Zone_jsonld = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
     id?: number;
     alias?: string;
     name?: string;
     note?: string;
+    positions?: Array<string>;
     createdAt?: string;
     updatedAt?: string;
 };

@@ -23,7 +23,7 @@ class Candidate
     #[ORM\Id]
     #[ORM\GeneratedValue('SEQUENCE')]
     #[ORM\Column]
-    #[Groups(['candidate:read'])]
+    #[Groups(['candidate:read', 'election:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'candidates')]
@@ -33,7 +33,7 @@ class Candidate
 
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['candidate:read'])]
+    #[Groups(['candidate:read', 'election:read'])]
     private ?User $appUser = null;
 
     /**
@@ -44,7 +44,7 @@ class Candidate
 
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['candidate:read', 'candidate:write', 'position:read'])]
+    #[Groups(['candidate:read', 'candidate:write', 'election:read'])]
     private ?Position $position = null;
 
     public function __construct()

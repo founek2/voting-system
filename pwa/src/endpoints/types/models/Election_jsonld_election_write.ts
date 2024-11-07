@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Election = {
-    readonly id?: number;
+export type Election_jsonld_election_write = {
     announcementDate?: string;
     registrationOfCandidatesDate?: string | null;
     campaignDate?: string | null;
@@ -13,7 +12,6 @@ export type Election = {
     complaintsDeadlineDate?: string | null;
     finalResultsDate?: string | null;
     candidates?: Array<string>;
-    createdAt?: string;
-    updatedAt?: string;
+    positions?: Array<string>;
 };
 

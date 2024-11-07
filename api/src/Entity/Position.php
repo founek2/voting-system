@@ -33,7 +33,7 @@ class Position
      * @var Collection<int, Candidate>
      */
     #[ORM\OneToMany(mappedBy: 'position', targetEntity: Candidate::class)]
-    #[Groups(['position:read', 'position:write'])]
+    #[Groups(['position:read'])]
     private Collection $candidates;
 
     #[ORM\Column(length: 255)]
@@ -44,7 +44,7 @@ class Position
      * @var Collection<int, Election>
      */
     #[ORM\ManyToMany(targetEntity: Election::class, mappedBy: 'positions')]
-    #[Groups(['position:read', 'position:write'])]
+    #[Groups(['position:read'])]
     private Collection $elections;
 
     public function __construct()
