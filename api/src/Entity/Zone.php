@@ -21,6 +21,7 @@ class Zone
 
     #[ORM\Id]
     #[ORM\GeneratedValue('NONE')]
+    #[ORM\Column]
     #[Groups(['zone:read'])]
     private ?int $id = null;
 
