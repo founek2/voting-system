@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useGetAuthorizationUrlQuery } from "../endpoints/signIn";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -31,6 +31,7 @@ import { enqueueSnackbar } from "notistack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import BoyIcon from "@mui/icons-material/Boy";
+import TimelineIcon from "@mui/icons-material/Timeline";
 
 const drawerWidth = 240;
 
@@ -44,8 +45,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const menuItems = [
-  { path: "/auth/admin", text: "Volby", Icon: <MailIcon /> },
-  { path: "/auth/admin", text: "Usnesení", Icon: <InboxIcon /> },
+  { path: "/auth/admin", text: "Přehled", Icon: <TimelineIcon /> },
+  { path: "/auth/admin/elections", text: "Volby", Icon: <MailIcon /> },
+  { path: "/auth/admin/decrees", text: "Usnesení", Icon: <InboxIcon /> },
   { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
 ];
 
@@ -53,6 +55,7 @@ export default function LayoutAdmin() {
   const loggedId = useAppSelector((state) => state.authorization.loggedIn);
   const user = useAppSelector((state) => state.authorization.currentUser);
   useGetUserMeQuery(undefined, { skip: !loggedId });
+  const location = useLocation();
 
   const [open, setOpen] = useState(loggedId);
   const { data } = useGetAuthorizationUrlQuery();
@@ -100,7 +103,7 @@ export default function LayoutAdmin() {
             {menuItems.map((item) => (
               <Link to={item.path} key={item.text}>
                 <ListItem disablePadding>
-                  <ListItemButton>
+                  <ListItemButton selected={location.pathname === item.path}>
                     <ListItemIcon>{item.Icon}</ListItemIcon>
                     <ListItemText primary={item.text} />
                   </ListItemButton>

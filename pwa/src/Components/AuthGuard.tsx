@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useGetAuthorizationUrlQuery } from "../endpoints/signIn";
 import { useAppSelector } from "../hooks/app";
 import Loader from "./Loader";
@@ -13,10 +13,8 @@ export default function AuthGuard() {
     window.location.assign(data.authorizationUrl);
   if (isError) return <Typography>Nelze načíst autorizační URL</Typography>;
 
-  return (
-    <>
-      {isLoading && !loggedId ? <Loader /> : null}
-      {loggedId ? <Outlet /> : null}
-    </>
-  );
+  if (isLoading && !loggedId) return <Loader />;
+  if (loggedId) return <Outlet />;
+
+  return null;
 }

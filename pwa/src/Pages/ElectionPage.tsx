@@ -7,13 +7,12 @@ import { Election } from "../types";
 import Loader from "../Components/Loader";
 import AddIcon from "@mui/icons-material/Add";
 import { isPassed } from "../util/isPassed";
+import { splitElections } from "../util/splitElections";
 
 export default function ElectionPage() {
   const { data: elections } = useGetElectionsQuery();
 
-  const electionsData = Object.groupBy(elections?.member || [], (election) =>
-    isPassed(election) ? "passed" : "current"
-  );
+  const electionsData = splitElections(elections?.member || []);
 
   return (
     <Grid2 container spacing={2}>
@@ -21,7 +20,7 @@ export default function ElectionPage() {
         <Typography variant="h3" component="span" pr={1}>
           Probíhající volby
         </Typography>
-        <Link to="elections/create">
+        <Link to="create">
           <IconButton>
             <AddIcon fontSize="large" />
           </IconButton>
@@ -29,9 +28,9 @@ export default function ElectionPage() {
       </Grid2>
       <Grid2 container size={12} spacing={2}>
         {elections ? (
-          electionsData.current?.map((e: Election) => (
+          electionsData.current?.map((e) => (
             <Grid2 size={4} key={e.id}>
-              <Link to={`/auth/admin/elections/${e.id}`}>
+              <Link to={`${e.id}`}>
                 <ElectionCard election={e} />
               </Link>
             </Grid2>
@@ -49,7 +48,7 @@ export default function ElectionPage() {
         {elections ? (
           electionsData.passed?.map((e: Election) => (
             <Grid2 size={4} key={e.id}>
-              <Link to={`/auth/admin/elections/${e.id}`}>
+              <Link to={`${e.id}`}>
                 <ElectionCard election={e} />
               </Link>
             </Grid2>

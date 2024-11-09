@@ -13,7 +13,6 @@ const baseQuery = fetchBaseQuery({
         if (!accessToken) return headers
 
         headers.set('Authorization', `Bearer ${accessToken.accessToken}`);
-        console.log(headers)
 
         return headers;
     },
