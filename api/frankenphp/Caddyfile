@@ -36,6 +36,11 @@
 		{$MERCURE_EXTRA_DIRECTIVES}
 	}
 
+	handle_path /api/public/media/* {
+		root *  /app/public/media/
+		file_server
+	}
+
 	vulcain
 
 	# Add links to the API docs and to the Mercure Hub if not set explicitly (e.g. the PWA)
