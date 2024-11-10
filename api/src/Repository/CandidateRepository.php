@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Candidate;
+use App\Entity\Election;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,13 +33,15 @@ class CandidateRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Candidate
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneByElectionAndUser(Election $election, User $appUser): ?Candidate
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.election = :election')
+            ->andWhere('c.appUser = :user')
+            ->setParameter('election', $election)
+            ->setParameter('user', $appUser)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

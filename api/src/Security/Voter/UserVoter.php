@@ -13,13 +13,12 @@ class UserVoter extends Voter
 {
     const EDIT = 'EDIT';
     const VIEW = 'VIEW';
-    const VIEW_TREE = 'VIEW_TREE';
 
     public function __construct(private Security $security, private LoggerInterface $logger,) {}
 
     protected function supports($attribute, $subject): bool
     {
-        $supportsAttribute = in_array($attribute, [self::EDIT, self::VIEW, self::VIEW_TREE]);
+        $supportsAttribute = in_array($attribute, [self::EDIT, self::VIEW]);
         $supportsSubject = $subject instanceof User;
 
         return $supportsAttribute && $supportsSubject;
@@ -38,12 +37,12 @@ class UserVoter extends Voter
 
         switch ($attribute) {
             case self::EDIT:
-                if ($subject === $user || $user->hasRole(Role::CHAIRMAN)) {
+                if ($subject->getId() === $user->getId() || $user->hasRole(Role::CHAIRMAN)) {
                     return true;
                 }
                 break;
             case self::VIEW:
-                if ($subject === $user || $user->hasRole(Role::CHAIRMAN)) {
+                if ($subject->getId() === $user->getId() || $user->hasRole(Role::CHAIRMAN)) {
                     return true;
                 }
         }

@@ -11,13 +11,12 @@ import { splitElections } from "../util/splitElections";
 
 export default function ElectionPage() {
   const { data: elections } = useGetElectionsQuery();
-
   const electionsData = splitElections(elections?.member || []);
 
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
-        <Typography variant="h3" component="span" pr={1}>
+        <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Probíhající volby
         </Typography>
         <Link to="create">
@@ -40,7 +39,7 @@ export default function ElectionPage() {
         )}
       </Grid2>
       <Grid2 size={12} display="flex" alignItems="center" pt={10}>
-        <Typography variant="h3" component="span" pr={1}>
+        <Typography variant="h3" color="textSecondary" component="span" pr={1}>
           Minulé volby
         </Typography>
       </Grid2>

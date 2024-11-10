@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => 'url:read']
         ),
     ],
-    uriTemplate: 'login'
+    uriTemplate: 'public/login'
     // normalizationContext: ['groups' => []],
     // denormalizationContext: ['groups' => []],
 )]

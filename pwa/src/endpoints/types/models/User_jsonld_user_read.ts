@@ -14,6 +14,6 @@ export type User_jsonld_user_read = {
     photoSmallUrl?: string | null;
     zone?: string | null;
     doorNumber?: string | null;
-    roles?: 'voter' | 'chairman' | 'member';
+    roles?: 'voter' | 'ROLE_ADMIN' | 'member';
 };
 

@@ -5605,6 +5605,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mui-file-input@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "mui-file-input@npm:6.0.0"
+  dependencies:
+    pretty-bytes: "npm:^6.1.1"
+  peerDependencies:
+    "@emotion/react": ^11.13.3
+    "@emotion/styled": ^11.13.0
+    "@mui/material": ^5.0.0 || ^6.0.0
+    "@types/react": ^18.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/86cb57d05f66c185f9564b06185fbf2ae77032b368d8759153338bba1330ee00f8096a8eb35696cfba7f20c5112a560aa5cf3c68f2e95ad97873bb521038324d
+  languageName: node
+  linkType: hard
+
 "multicast-dns@npm:^7.2.5":
   version: 7.2.5
   resolution: "multicast-dns@npm:7.2.5"
@@ -6145,6 +6164,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pretty-bytes@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "pretty-bytes@npm:6.1.1"
+  checksum: 10c0/c7a660b933355f3b4587ad3f001c266a8dd6afd17db9f89ebc50812354bb142df4b9600396ba5999bdb1f9717300387dc311df91895c5f0f2a1780e22495b5f8
+  languageName: node
+  linkType: hard
+
 "pretty-error@npm:^4.0.0":
   version: 4.0.0
   resolution: "pretty-error@npm:4.0.0"
@@ -6243,6 +6269,7 @@ __metadata:
     fork-ts-checker-webpack-plugin: "npm:^7.3.0"
     html-webpack-plugin: "npm:^5.6.0"
     mini-css-extract-plugin: "npm:^2.9.0"
+    mui-file-input: "npm:^6.0.0"
     notistack: "npm:^3.0.1"
     pnp-webpack-plugin: "npm:^1.7.0"
     process: "npm:^0.11.10"

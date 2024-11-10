@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Candidate_jsonld_election_read } from './Candidate_jsonld_election_read';
 export type Election_jsonld_election_read = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
@@ -16,7 +15,8 @@ export type Election_jsonld_election_read = {
     preliminaryResultsDate?: string | null;
     complaintsDeadlineDate?: string | null;
     finalResultsDate?: string | null;
-    candidates?: Array<Candidate_jsonld_election_read>;
+    candidates?: Array<string>;
     positions?: Array<string>;
+    readonly stage?: 'announcement' | 'registration_of_candidates' | 'campaign' | 'electronic_voting' | 'ballot_voting' | 'preliminary_results' | 'complaints' | 'final_results';
 };
 

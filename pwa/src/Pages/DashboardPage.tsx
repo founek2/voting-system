@@ -23,7 +23,7 @@ export default function DashboardPage() {
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
-        <Typography variant="h3" component="span" pr={1}>
+        <Typography variant="h3" color="textPrimary" pr={1}>
           Přehled volby {ongoingElection ? electionTitle(ongoingElection) : ""}
         </Typography>
       </Grid2>

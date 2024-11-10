@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Vote_vote_write = {
-    candidate?: string;
-    value?: 1 | 0 | -1;
+export type Candidate_candidate_edit = {
+    poster?: string | null;
 };
 

@@ -27,8 +27,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     mercure: true,
     normalizationContext: ['groups' => ['user:read']],
     operations: [
-        new GetCollection(),
-        new Get(provider: UserProvider::class),
+        new GetCollection(
+            security: 'user.hasRole("ROLE_ADMIN")'
+        ),
+        new Get(
+            provider: UserProvider::class,
+        ),
     ]
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]

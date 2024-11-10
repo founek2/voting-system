@@ -1,4 +1,4 @@
-import { Election_jsonld_election_read, User_jsonld_user_read, Position_jsonld_position_read } from "./endpoints/types";
+import { Election_jsonld_election_read, User_jsonld_user_read, Position_jsonld_position_read, Candidate_jsonld_candidate_read, } from "./endpoints/types";
 
 export type User = User_jsonld_user_read
 
@@ -7,11 +7,12 @@ function createEnumObject<T extends string>(o: { [P in T]: P }) {
 }
 
 export const Role = createEnumObject<Exclude<User['roles'], undefined>>({
-    chairman: "chairman",
+    ROLE_ADMIN: "ROLE_ADMIN",
     member: "member",
     voter: "voter"
 })
 
+export type Candidate = Candidate_jsonld_candidate_read
 export type Election = Election_jsonld_election_read
 export type Position = Position_jsonld_position_read
 export type Hydra<T> = {

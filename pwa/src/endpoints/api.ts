@@ -7,12 +7,13 @@ const baseQuery = fetchBaseQuery({
     headers: {
         "Content-type": "application/ld+json"
     },
-    prepareHeaders: async (headers, { getState }) => {
+    prepareHeaders: async (headers, { endpoint }) => {
         // By default, if we have a token in the store, let's use that for authenticated requests
         const accessToken = internalStorage.getAccessToken()
         if (!accessToken) return headers
 
-        headers.set('Authorization', `Bearer ${accessToken.accessToken}`);
+        if (!endpoint.startsWith('getPublic'))
+            headers.set('Authorization', `Bearer ${accessToken.accessToken}`);
 
         return headers;
     },
@@ -41,7 +42,10 @@ export const api = createApi({
         'UserMe',
         'Elections',
         'Positions',
-        'Zones'
+        'Zones',
+        'PublicElections',
+        'Candidates',
+        'MediaPosters',
     ],
     /**
      * This api has endpoints injected in adjacent files,

@@ -52,7 +52,7 @@ class MediaPoster
     private ?int $id = null;
 
     #[ApiProperty(types: ['https://schema.org/contentUrl'], writable: false)]
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'candidate:read'])]
     public ?string $contentUrl = null;
 
     #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
@@ -63,8 +63,33 @@ class MediaPoster
     #[ORM\Column(nullable: true)]
     public ?string $filePath = null;
 
+    #[ORM\OneToOne(mappedBy: 'poster', cascade: ['persist', 'remove'])]
+    private ?Candidate $candidate = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCandidate(): ?Candidate
+    {
+        return $this->candidate;
+    }
+
+    public function setCandidate(?Candidate $candidate): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($candidate === null && $this->candidate !== null) {
+            $this->candidate->setPoster(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($candidate !== null && $candidate->getPoster() !== $this) {
+            $candidate->setPoster($this);
+        }
+
+        $this->candidate = $candidate;
+
+        return $this;
     }
 }

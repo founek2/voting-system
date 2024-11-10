@@ -2,20 +2,65 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CandidateRepository;
+use App\State\NewEditCandidateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ApiResource(
+    operations: [
+        new Get(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Post(
+            uriTemplate: 'users/{userId}/candidates',
+            uriVariables: [
+                'userId' => new Link(fromClass: User::class, toProperty: 'appUser'),
+            ],
+            security: 'user.getId() == request.attributes.get("userId")',
+            processor: NewEditCandidateProcessor::class,
+        ),
+        new Patch(
+            uriTemplate: 'users/{userId}/candidates/{id}',
+            uriVariables: [
+                'userId' => new Link(fromClass: User::class, toProperty: 'appUser'),
+                'id' => new Link(fromClass: self::class),
+            ],
+            security: 'user.getId() == request.attributes.get("userId")',
+            processor: NewEditCandidateProcessor::class,
+            denormalizationContext: ['groups' => ['candidate:edit']],
+        ),
+        new GetCollection(
+            uriTemplate: 'users/{userId}/candidates',
+            security: 'user.getId() === request.attributes.get("id") or user.hasRole("ROLE_ADMIN")',
+            uriVariables: [
+                'userId' => new Link(fromClass: User::class, fromProperty: 'candidates')
+            ]
+        ),
+
+        new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
+    ],
     mercure: true,
     denormalizationContext: ['groups' => ['candidate:write']],
-    normalizationContext: ['groups' => ['candidate:read', 'position:read']]
+    normalizationContext: ['groups' => ['candidate:read']]
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
+#[ApiFilter(SearchFilter::class, properties: ['election' => 'exact', 'appUser' => 'exact', 'position' => 'exact'])]
+#[Validator\CandidateAllowed]
+#[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id'])]
 class Candidate
 {
     use Timestampable;
@@ -23,9 +68,11 @@ class Candidate
     #[ORM\Id]
     #[ORM\GeneratedValue('SEQUENCE')]
     #[ORM\Column]
-    #[Groups(['candidate:read', 'election:read'])]
+    #[Groups(['candidate:read'])]
     private ?int $id = null;
 
+
+    #[Assert\NotNull]
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['candidate:read', 'candidate:write'])]
@@ -33,7 +80,7 @@ class Candidate
 
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['candidate:read', 'election:read'])]
+    #[Groups(['candidate:read'])]
     private ?User $appUser = null;
 
     /**
@@ -42,10 +89,15 @@ class Candidate
     #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: Vote::class)]
     private Collection $votes;
 
+    #[Assert\NotNull]
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['candidate:read', 'candidate:write', 'election:read'])]
+    #[Groups(['candidate:read', 'candidate:write'])]
     private ?Position $position = null;
+
+    #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
+    #[Groups(['candidate:read', 'candidate:write', 'candidate:edit'])]
+    private ?MediaPoster $poster = null;
 
     public function __construct()
     {
@@ -119,6 +171,18 @@ class Candidate
     public function setPosition(?Position $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getPoster(): ?MediaPoster
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(?MediaPoster $poster): static
+    {
+        $this->poster = $poster;
 
         return $this;
     }

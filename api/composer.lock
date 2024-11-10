@@ -3041,16 +3041,16 @@
         },
         {
             "name": "scienta/doctrine-json-functions",
-            "version": "6.2.0",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ScientaNL/DoctrineJsonFunctions.git",
-                "reference": "9e7752c230edddaaf2f3c204152e498243bdbfa4"
+                "reference": "554b2fd281e976a791501fc4753ffd4c5891ec62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ScientaNL/DoctrineJsonFunctions/zipball/9e7752c230edddaaf2f3c204152e498243bdbfa4",
-                "reference": "9e7752c230edddaaf2f3c204152e498243bdbfa4",
+                "url": "https://api.github.com/repos/ScientaNL/DoctrineJsonFunctions/zipball/554b2fd281e976a791501fc4753ffd4c5891ec62",
+                "reference": "554b2fd281e976a791501fc4753ffd4c5891ec62",
                 "shasum": ""
             },
             "require": {
@@ -3062,6 +3062,10 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^1.12",
+                "phpstan/phpstan-doctrine": "^1.4",
+                "phpstan/phpstan-phpunit": "^1.4",
                 "phpunit/phpunit": "^10.1",
                 "psalm/plugin-phpunit": "^0.18",
                 "slevomat/coding-standard": "~8",
@@ -3103,9 +3107,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ScientaNL/DoctrineJsonFunctions/issues",
-                "source": "https://github.com/ScientaNL/DoctrineJsonFunctions/tree/6.2.0"
+                "source": "https://github.com/ScientaNL/DoctrineJsonFunctions/tree/6.3.0"
             },
-            "time": "2024-10-17T07:21:06+00:00"
+            "time": "2024-11-08T12:33:19+00:00"
         },
         {
             "name": "symfony/asset",
@@ -8509,16 +8513,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c"
+                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c",
-                "reference": "3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
                 "shasum": ""
             },
             "require": {
@@ -8557,7 +8561,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
             },
             "funding": [
                 {
@@ -8565,7 +8569,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-12T14:39:25+00:00"
+            "time": "2024-11-08T17:47:46+00:00"
         },
         {
             "name": "nette/php-generator",
@@ -11849,7 +11853,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -11857,6 +11861,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

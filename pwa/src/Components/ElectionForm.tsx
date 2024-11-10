@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Button,
   Grid2,
+  GridSize,
   TextField,
   Typography,
 } from "@mui/material";
@@ -14,6 +15,9 @@ import {
   Position_jsonld_position_read,
 } from "../endpoints/types";
 import { useGetPositionsQuery } from "../endpoints/positions";
+import { ResponsiveStyleValue } from "@mui/system";
+
+const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6, lg: 3 };
 
 interface ElectionFormProps {
   defaultValues?: Omit<Election_election_write, "candidates">;
@@ -42,10 +46,12 @@ export default function ElectionForm({
       </Grid2>
 
       <Grid2 size={12}>
-        <Typography variant="h4">Volby:</Typography>
+        <Typography variant="h4" color="textPrimary">
+          Volby:
+        </Typography>
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Vyhlášení voleb"
           {...register("announcementDate", { required: true })}
@@ -53,7 +59,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Přihlašování kandidátů"
           {...register("registrationOfCandidatesDate", { required: true })}
@@ -61,7 +67,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Volební kampaň"
           {...register("campaignDate", { required: true })}
@@ -69,7 +75,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Elektronické hlasování"
           {...register("electronicVotingDate", { required: true })}
@@ -77,7 +83,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Urnové hlasování"
           {...register("ballotVotingDate", { required: true })}
@@ -85,7 +91,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Vyhlášení předběžných výsledků"
           {...register("preliminaryResultsDate", { required: true })}
@@ -93,7 +99,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Uzávěr podávání stížností"
           {...register("complaintsDeadlineDate", { required: true })}
@@ -101,7 +107,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={dateSize}>
         <MyDatePicker
           label="Vyhlášení konečních výsledků"
           {...register("finalResultsDate", { required: true })}
@@ -109,7 +115,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, md: 6 }}>
         <Controller
           control={methods.control}
           name="positions"

@@ -4,8 +4,6 @@
 /* eslint-disable */
 export type Position_position_write = {
     zoneRestrictions?: Array<string>;
-    candidates?: Array<string>;
     name?: string;
-    elections?: Array<string>;
 };
 

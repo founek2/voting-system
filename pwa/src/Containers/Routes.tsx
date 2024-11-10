@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import HomePage from "../Pages/HomePage";
 import OAuthCallback from "../Pages/OAuthCallback";
-import LayoutAdmin from "../Components/LayoutAdmin";
 import Layout from "../Components/Layout";
 import AuthGuard from "../Components/AuthGuard";
 import ElectionPage from "../Pages/ElectionPage";
@@ -17,6 +16,10 @@ import PositionPage from "../Pages/PositionPage";
 import PositionCreatePage from "../Pages/PositionCreatePage";
 import PositionEditPage from "../Pages/PositionEditPage";
 import DashboardPage from "../Pages/DashboardPage";
+import DashboardUserPage from "../Pages/DashboardUserPage";
+import LayoutAuth from "../Components/LayoutAuth";
+import CandidateCreatePage from "../Pages/CandidateCreatePage";
+import CandidateEditPage from "../Pages/CandidateEditPage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -27,7 +30,7 @@ export default function MyRoutes() {
     <Routes>
       {/* <Route path="/registration" element={<Registration />} /> */}
       <Route path="/auth" element={<AuthGuard />}>
-        <Route path="/auth/admin" element={<LayoutAdmin />}>
+        <Route path="/auth/admin" element={<LayoutAuth />}>
           <Route
             path="/auth/admin/elections/create"
             element={<ElectionCreatePage />}
@@ -47,6 +50,17 @@ export default function MyRoutes() {
           <Route path="/auth/admin" element={<DashboardPage />} />
           <Route path="/auth/admin/positions" element={<PositionPage />} />
           <Route path="/auth/admin/elections" element={<ElectionPage />} />
+        </Route>
+        <Route path="/auth/user" element={<LayoutAuth />}>
+          <Route
+            path="/auth/user/elections/:electionId/candidates/create"
+            element={<CandidateCreatePage />}
+          />
+          <Route
+            path="/auth/user/candidates/:id"
+            element={<CandidateEditPage />}
+          />
+          <Route path="/auth/user" element={<DashboardUserPage />} />
         </Route>
       </Route>
 

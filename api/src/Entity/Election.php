@@ -2,8 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\Const\ElectionStage;
 use App\Repository\ElectionRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -12,6 +19,13 @@ use Gedmo\Timestampable\Traits\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
+    operations: [
+        new GetCollection(),
+        new GetCollection(uriTemplate: 'public/elections'),
+        new Get(),
+        new Post(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
+    ],
     mercure: true,
     normalizationContext: ['groups' => ['election:read']],
     denormalizationContext: ['groups' => ['election:write']],
@@ -233,5 +247,22 @@ class Election
         $this->positions->removeElement($position);
 
         return $this;
+    }
+
+    #[Groups(['election:read'])]
+    public function getStage(): ?ElectionStage
+    {
+        $now = new DateTime();
+
+        if ($this->finalResultsDate <= $now) return ElectionStage::FINAL_RESULTS;
+        if ($this->complaintsDeadlineDate <= $now) return ElectionStage::COMPLAINTS;
+        if ($this->preliminaryResultsDate <= $now) return ElectionStage::PRELIMINARY_RESULTS;
+        if ($this->ballotVotingDate <= $now) return ElectionStage::BALLOG_VOTING;
+        if ($this->electronicVotingDate <= $now) return ElectionStage::ELECTRONIC_VOTING;
+        if ($this->campaignDate <= $now) return ElectionStage::CAMPAIGN;
+        if ($this->registrationOfCandidatesDate <= $now) return ElectionStage::REGISTRATION_OF_CANDIDATES;
+        if ($this->announcementDate <= $now) return ElectionStage::ANNOUNCEMENT;
+
+        return null;
     }
 }

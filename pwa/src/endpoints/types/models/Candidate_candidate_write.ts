@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Candidate_candidate_write = {
-    election?: string;
-    position?: string;
+    election: string;
+    position: string;
+    poster?: string | null;
 };
 

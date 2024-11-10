@@ -3,6 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Const\VoteValue;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +15,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+        // new Post(security: 'user.hasRole("ROLE_ADMIN")'),
+        // new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
+    ],
     mercure: true,
     normalizationContext: ['groups' => ['vote:read']],
     denormalizationContext: ['groups' => ['vote:write']],

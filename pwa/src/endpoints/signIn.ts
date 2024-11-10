@@ -3,14 +3,14 @@ import { LoginResource_jsonld_code_write, LoginResource_jsonld_url_read, LoginRe
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getAuthorizationUrl: build.query<LoginResource_jsonld_url_read, void>({
-            query: () => `login`,
+        getPublicAuthorizationUrl: build.query<LoginResource_jsonld_url_read, void>({
+            query: () => `public/login`,
             providesTags: ['AuthorizationUrl'],
         }),
         signIn: build.mutation<LoginResource_LoginResponseDto_jsonld, LoginResource_jsonld_code_write>({
             query(body) {
                 return {
-                    url: `login`,
+                    url: `public/login`,
                     method: 'POST',
                     body: JSON.stringify(body),
                 };
@@ -21,4 +21,4 @@ export const signInApi = api.injectEndpoints({
     }),
 });
 
-export const { useSignInMutation, useGetAuthorizationUrlQuery } = signInApi;
+export const { useSignInMutation, useGetPublicAuthorizationUrlQuery } = signInApi;

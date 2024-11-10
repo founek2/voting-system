@@ -16,7 +16,7 @@ export default function PositionPage() {
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
-        <Typography variant="h3" component="span" pr={1}>
+        <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Pozice
         </Typography>
         <Link to="create">

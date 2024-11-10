@@ -8,6 +8,10 @@ export const signInApi = api.injectEndpoints({
             query: () => `elections`,
             providesTags: ['Elections'],
         }),
+        getPublicElections: build.query<Hydra<Election_jsonld_election_read>, void>({
+            query: () => `public/elections?perPage=3`,
+            providesTags: ['PublicElections'],
+        }),
         getElection: build.query<Election_jsonld_election_read, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
@@ -20,7 +24,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify(body),
                 };
             },
-            invalidatesTags: ['Elections'],
+            invalidatesTags: ['Elections', 'PublicElections'],
         }),
         updateElection: build.mutation<Election_jsonld_election_read, { id: number, body: Election_jsonld_election_write }>({
             query(data) {
@@ -33,9 +37,9 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify(data.body),
                 };
             },
-            invalidatesTags: ['Elections'],
+            invalidatesTags: ['Elections', 'PublicElections'],
         }),
     }),
 });
 
-export const { useGetElectionsQuery, useAddElectionMutation, useUpdateElectionMutation, useGetElectionQuery } = signInApi;
+export const { useGetElectionsQuery, useAddElectionMutation, useUpdateElectionMutation, useGetElectionQuery, useGetPublicElectionsQuery } = signInApi;

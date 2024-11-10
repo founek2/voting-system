@@ -1,17 +1,17 @@
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import React from "react";
-import { Election } from "../types";
-import { electionTitle } from "../util/electionTitle";
+import { Candidate } from "../types";
+import { candidateTitle } from "../util/candidateTitle";
 
 interface ElectionCardProps {
-  election: Election;
+  candidate: Candidate;
   title?: string;
 }
-export function ElectionCard({ election, title }: ElectionCardProps) {
+export function CandidateCard({ candidate, title }: ElectionCardProps) {
   return (
     <Card>
-      <CardHeader title={title ? title : electionTitle(election)} />
+      <CardHeader title={title ? title : candidateTitle(candidate)} />
       <CardContent>
         <HowToVoteIcon fontSize="large" />
       </CardContent>

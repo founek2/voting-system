@@ -1,3 +1,12 @@
+import AppsIcon from "@mui/icons-material/Apps";
+import BoyIcon from "@mui/icons-material/Boy";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import {
   Avatar,
   Box,
@@ -15,23 +24,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { Suspense, useEffect, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useGetAuthorizationUrlQuery } from "../endpoints/signIn";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { useAppDispatch, useAppSelector } from "../hooks/app";
-import { useGetUserMeQuery } from "../endpoints/users";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { authorizationReducerActions } from "../store/slices/authorizationSlice";
-import { enqueueSnackbar } from "notistack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import BoyIcon from "@mui/icons-material/Boy";
-import TimelineIcon from "@mui/icons-material/Timeline";
+import { enqueueSnackbar } from "notistack";
+import React, { useState } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useGetUserMeQuery } from "../endpoints/users";
+import { useAppDispatch, useAppSelector } from "../hooks/app";
+import { authorizationReducerActions } from "../store/slices/authorizationSlice";
+import { Role } from "../types";
 
 const drawerWidth = 240;
 
@@ -44,21 +45,28 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const menuItems = [
+const adminMenuItems = [
   { path: "/auth/admin", text: "Přehled", Icon: <TimelineIcon /> },
   { path: "/auth/admin/elections", text: "Volby", Icon: <MailIcon /> },
   { path: "/auth/admin/decrees", text: "Usnesení", Icon: <InboxIcon /> },
   { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
 ];
 
-export default function LayoutAdmin() {
+const userMenuItems = [
+  {
+    path: "/auth/user",
+    text: "Aktuální volby",
+    Icon: <AppsIcon />,
+  },
+];
+
+export default function LayoutAuth() {
   const loggedId = useAppSelector((state) => state.authorization.loggedIn);
   const user = useAppSelector((state) => state.authorization.currentUser);
   useGetUserMeQuery(undefined, { skip: !loggedId });
   const location = useLocation();
 
-  const [open, setOpen] = useState(loggedId);
-  const { data } = useGetAuthorizationUrlQuery();
+  const [open, setOpen] = useState(true);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -99,8 +107,23 @@ export default function LayoutAdmin() {
             </IconButton>
           </DrawerHeader>
           <Divider />
+          {user?.roles?.includes(Role.ROLE_ADMIN) ? (
+            <List>
+              {adminMenuItems.map((item) => (
+                <Link to={item.path} key={item.text}>
+                  <ListItem disablePadding>
+                    <ListItemButton selected={location.pathname === item.path}>
+                      <ListItemIcon>{item.Icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+          ) : null}
+          {user?.roles?.includes(Role.ROLE_ADMIN) ? <Divider /> : null}
           <List>
-            {menuItems.map((item) => (
+            {userMenuItems.map((item) => (
               <Link to={item.path} key={item.text}>
                 <ListItem disablePadding>
                   <ListItemButton selected={location.pathname === item.path}>
@@ -147,21 +170,14 @@ export default function LayoutAdmin() {
             >
               <MenuIcon />
             </IconButton>
-
-            {loggedId ? (
-              <Paper sx={{ display: "flex", alignItems: "center", p: 1 }}>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={user?.photoSmallUrl || undefined}
-                  sx={{ mr: 1 }}
-                />
-                <Typography>{user?.username}</Typography>
-              </Paper>
-            ) : (
-              <Link to={data?.authorizationUrl || ""}>
-                <Button disabled={!data?.authorizationUrl}>Přihlásit</Button>
-              </Link>
-            )}
+            <Paper sx={{ display: "flex", alignItems: "center", p: 1 }}>
+              <Avatar
+                alt="Remy Sharp"
+                src={user?.photoSmallUrl || undefined}
+                sx={{ mr: 1 }}
+              />
+              <Typography>{user?.username}</Typography>
+            </Paper>
           </Box>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Box p={2}>

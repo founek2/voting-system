@@ -3,6 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use App\Repository\PositionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+        new Post(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
+    ],
     denormalizationContext: ['groups' => ['position:write']],
     normalizationContext: ['groups' => ['position:read']]
 )]
@@ -19,7 +29,7 @@ class Position
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['position:read'])]
+    #[Groups(['position:read', 'candidate:read'])]
     private ?int $id = null;
 
     /**
@@ -37,7 +47,7 @@ class Position
     private Collection $candidates;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['position:read', 'position:write'])]
+    #[Groups(['position:read', 'position:write', 'candidate:read'])]
     private ?string $name = null;
 
     /**

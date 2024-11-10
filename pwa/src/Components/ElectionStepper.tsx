@@ -11,6 +11,8 @@ import { Election } from "../types";
 import { isAfter, isBefore } from "date-fns";
 import { SxProps } from "@mui/system";
 import { Tooltip } from "@mui/material";
+import { dateToString } from "../util/dateToString";
+import { Link } from "react-router-dom";
 
 // announcementDate?: string;
 // registrationOfCandidatesDate?: string | null;
@@ -35,45 +37,56 @@ function isFuture(date?: string | Date | null) {
 }
 
 function getStep(election: Election) {
-  if (isFuture(election.announcementDate)) return 0;
-  if (isFuture(election.registrationOfCandidatesDate)) return 1;
-  if (isFuture(election.campaignDate)) return 2;
-  if (isFuture(election.electronicVotingDate)) return 3;
-  if (isFuture(election.ballotVotingDate)) return 4;
-  if (isFuture(election.preliminaryResultsDate)) return 5;
-  if (isFuture(election.complaintsDeadlineDate)) return 6;
-  if (isFuture(election.finalResultsDate)) return 7;
+  if (election.stage == "announcement") return 0;
+  if (election.stage == "registration_of_candidates") return 1;
+  if (election.stage == "campaign") return 2;
+  if (election.stage == "electronic_voting") return 3;
+  if (election.stage == "ballot_voting") return 4;
+  if (election.stage == "preliminary_results") return 5;
+  if (election.stage == "complaints") return 6;
+  if (election.stage == "final_results") return 7;
 
   return 0;
 }
 
 const steps = [
   {
-    label: "Vyhlášení voleb",
+    label: (election: Election) =>
+      `Vyhlášení voleb ${dateToString(election.announcementDate)}`,
     description: `Volby vyhlašuje volební komise.`,
   },
   {
-    label: "Přihlašování kandidátů",
+    label: (election: Election) =>
+      `Přihlašování kandidátů ${dateToString(
+        election.registrationOfCandidatesDate
+      )}`,
     description: `Kandidovat do představenstva klubu může pouze člen SH, který není zároveň členem volební komise. Kandidovat lze současně pouze na jednu pozici.
     Přihlašuje se elektronicky na e-mail volební komise volby@sh.cvut.cz z klubové e-mailové adresy. Tou se rozumí adresa v doméně siliconhill.cz nebo sh.cvut.cz.`,
+    action: (election: Election) => (
+      <Link to={`/auth/user/elections/${election.id}/candidates/create`}>
+        <Button color="primary">Chci kandidovat</Button>
+      </Link>
+    ),
   },
   {
-    label: "Volební kampaň",
+    label: (election: Election) =>
+      `Volební kampaň ${dateToString(election.campaignDate)}`,
     description: `Volební kampaní se rozumí jakákoliv propagace kandidáta nebo volební agitace ve
 prospěch kandidáta.`,
   },
   {
-    label: "Elektronické hlasování",
+    label: (election: Election) =>
+      `Elektronické hlasování ${dateToString(election.electronicVotingDate)}`,
     description: "Hlasovat můžete na adrese volby.sh.cvut.cz",
   },
   {
-    label: "Urnové hlasování",
+    label: (election: Election) =>
+      `Urnové hlasování ${dateToString(election.ballotVotingDate)}`,
     description: "Hlasovat fyzicky je možné pouze ve stanovenou dobu.",
   },
-  { label: "Vyhlášení výsledků" },
-  { label: "Vyhlášení předběžných výsledků" },
-  { label: "Uzávěrka podávání stížností" },
-  { label: "Vyhlášení konečných výsledků" },
+  { label: (election: Election) => "Vyhlášení předběžných výsledků" },
+  { label: (election: Election) => "Uzávěrka podávání stížností" },
+  { label: (election: Election) => "Vyhlášení konečných výsledků" },
 ];
 
 function AddTooltip({
@@ -106,7 +119,7 @@ export default function ElectionStepper({
     // <Box sx={{ maxWidth: 400 }}>
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
       {steps.map((step, index) => (
-        <Step key={step.label}>
+        <Step key={step.label(election)}>
           <AddTooltip
             title={step.description}
             step={index}
@@ -119,11 +132,12 @@ export default function ElectionStepper({
                 ) : null
               }
             >
-              {step.label}
+              {step.label(election)}
             </StepLabel>
           </AddTooltip>
           <StepContent>
-            <Typography>{step.description}</Typography>
+            <Typography color="textSecondary">{step.description}</Typography>
+            {step.action ? <Box pt={2}>{step.action(election)}</Box> : null}
           </StepContent>
         </Step>
       ))}

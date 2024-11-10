@@ -55,7 +55,9 @@ export default function PositionForm({
       </Grid2>
 
       <Grid2 size={12}>
-        <Typography variant="h4">Pozice</Typography>
+        <Typography variant="h4" color="textPrimary">
+          Pozice
+        </Typography>
       </Grid2>
 
       <Grid2 size={3}>
