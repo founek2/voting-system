@@ -16,6 +16,10 @@ export const signInApi = api.injectEndpoints({
             query: (id) => `candidates/${id}`,
             providesTags: ['Candidates'],
         }),
+        getPublicCandidates: build.query<Hydra<Candidate>, number>({
+            query: (electionId) => `public/elections/${electionId}/candidates`,
+            providesTags: ['Candidates'],
+        }),
         addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write }>({
             query({ userId, body }) {
                 return {
@@ -39,4 +43,7 @@ export const signInApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetCandidatesQuery, useGetCandidateQuery, useAddCandidateMutation, useUpdateCandidateMutation, useGetUserCandidatesQuery } = signInApi;
+export const {
+    useGetCandidatesQuery,
+    useGetCandidateQuery,
+    useAddCandidateMutation, useUpdateCandidateMutation, useGetUserCandidatesQuery, useGetPublicCandidatesQuery } = signInApi;

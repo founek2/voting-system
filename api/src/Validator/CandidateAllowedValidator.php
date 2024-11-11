@@ -4,8 +4,6 @@ namespace App\Validator;
 
 use App\Const\ElectionStage;
 use App\Entity\Candidate;
-use App\Entity\Country;
-use App\Entity\Invoice\Invoice;
 use App\Entity\Position;
 use App\Repository\CandidateRepository;
 use App\Util\ArrayUtil;

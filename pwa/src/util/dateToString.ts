@@ -1,5 +1,9 @@
-export function dateToString(date?: string | Date | null) {
+import { subDays } from "date-fns";
+
+export function dateToString(date?: string | Date | null, options?: { subDays?: number }) {
     if (!date) return "";
 
-    return (new Date(date)).toLocaleDateString()
+    const d = new Date(date);
+    console.log(subDays(d, options?.subDays || 0).toLocaleDateString())
+    return subDays(d, options?.subDays || 0).toLocaleDateString()
 }

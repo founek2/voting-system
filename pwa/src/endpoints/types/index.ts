@@ -19,6 +19,7 @@ export type { Position_jsonld_candidate_read } from './models/Position_jsonld_ca
 export type { Position_jsonld_position_read } from './models/Position_jsonld_position_read';
 export type { Position_jsonld_position_write } from './models/Position_jsonld_position_write';
 export type { Position_position_write } from './models/Position_position_write';
+export type { User_jsonld_candidate_read } from './models/User_jsonld_candidate_read';
 export type { User_jsonld_user_read } from './models/User_jsonld_user_read';
 export type { Vote_jsonld_vote_read } from './models/Vote_jsonld_vote_read';
 export type { Zone } from './models/Zone';

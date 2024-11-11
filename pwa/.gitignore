@@ -70,3 +70,4 @@ modules/*/*.tsbuildinfo
 
 # generated files
 openapi.json
+build

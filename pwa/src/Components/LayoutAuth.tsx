@@ -71,6 +71,15 @@ export default function LayoutAuth() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // Redirect regular user to non-admin part
+  if (user?.roles) {
+    if (
+      !user.roles.includes(Role.ROLE_ADMIN) &&
+      location.pathname.startsWith("/auth/admin")
+    )
+      navigate("/auth/user", { replace: true });
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -98,6 +107,36 @@ export default function LayoutAuth() {
           onClose={handleDrawerClose}
         >
           <DrawerHeader>
+            <Box
+              display="flex"
+              width="100%"
+              height="100%"
+              alignContent="cenetr"
+              alignItems="center"
+              p={1}
+            >
+              <Link
+                to="/"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  component="img"
+                  sx={{
+                    display: "block",
+                    maxWidth: 130,
+                  }}
+                  alt="The house from the offer."
+                  src="/assets/SH-logo.png"
+                  position={{ lg: "absolute" }}
+                />
+              </Link>
+            </Box>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "ltr" ? (
                 <ChevronLeftIcon />

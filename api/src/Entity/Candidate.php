@@ -19,11 +19,10 @@ use Gedmo\Timestampable\Traits\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ApiResource(
     operations: [
-        new Get(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Get(security: 'user.getId() == object.getAppUser().getId() or user.hasRole("ROLE_ADMIN")'),
         new Post(
             uriTemplate: 'users/{userId}/candidates',
             uriVariables: [
@@ -31,6 +30,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             ],
             security: 'user.getId() == request.attributes.get("userId")',
             processor: NewEditCandidateProcessor::class,
+            validationContext: ['groups' => ['candidate:write']]
         ),
         new Patch(
             uriTemplate: 'users/{userId}/candidates/{id}',
@@ -44,10 +44,17 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         ),
         new GetCollection(
             uriTemplate: 'users/{userId}/candidates',
-            security: 'user.getId() === request.attributes.get("id") or user.hasRole("ROLE_ADMIN")',
+            security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
             uriVariables: [
                 'userId' => new Link(fromClass: User::class, fromProperty: 'candidates')
             ]
+        ),
+
+        new GetCollection(
+            uriTemplate: 'public/elections/{id}/candidates',
+            uriVariables: [
+                'id' => new Link(fromClass: Election::class, fromProperty: 'candidates'),
+            ],
         ),
 
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
@@ -59,7 +66,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['election' => 'exact', 'appUser' => 'exact', 'position' => 'exact'])]
-#[Validator\CandidateAllowed]
+#[Validator\CandidateAllowed(groups: ['candidate:write'])]
 #[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id'])]
 class Candidate
 {
@@ -72,7 +79,7 @@ class Candidate
     private ?int $id = null;
 
 
-    #[Assert\NotNull]
+    #[Assert\NotNull(groups: ['Default', 'candidate:write'])]
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['candidate:read', 'candidate:write'])]
@@ -89,7 +96,7 @@ class Candidate
     #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: Vote::class)]
     private Collection $votes;
 
-    #[Assert\NotNull]
+    #[Assert\NotNull(groups: ['Default', 'candidate:write'])]
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['candidate:read', 'candidate:write'])]

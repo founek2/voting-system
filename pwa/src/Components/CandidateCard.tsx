@@ -10,7 +10,7 @@ interface ElectionCardProps {
 }
 export function CandidateCard({ candidate, title }: ElectionCardProps) {
   return (
-    <Card>
+    <Card sx={{ minWidth: 250 }}>
       <CardHeader title={title ? title : candidateTitle(candidate)} />
       <CardContent>
         <HowToVoteIcon fontSize="large" />

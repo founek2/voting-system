@@ -9,6 +9,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\OAuth2\Client\Token\AccessToken;
 
+const DEFAULT_PHOTO_URL = "https://static.is.sh.cvut.cz/assets/bag_on_head_white-eaa457debaec8080de4e7f800fa9033b.jpg";
+
 /**
  * @extends ServiceEntityRepository<User>
  */
@@ -19,14 +21,14 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function upsert(int $id, string $username, string $email, string $firstName, string $lastName, string $photoSmallUrl, AccessToken $accessToken): ?User
+    public function upsert(int $id, string $username, string $email, string $firstName, string $lastName, ?string $photoSmallUrl, AccessToken $accessToken): ?User
     {
         $em = $this->getEntityManager();
 
         /** @var User|null */
         $user = $this->find($id);
         if ($user) {
-            $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl, $accessToken);
+            $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl ?? DEFAULT_PHOTO_URL, $accessToken);
         } else {
             $user = new User();
             $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl, $accessToken);
@@ -38,7 +40,7 @@ class UserRepository extends ServiceEntityRepository
         return $user;
     }
 
-    private function update(User $user, int $id, string $username, string $email, string $firstName, string $lastName, string $photoSmallUrl, AccessToken $accessToken)
+    private function update(User $user, int $id, string $username, string $email, string $firstName, string $lastName, ?string $photoSmallUrl, AccessToken $accessToken)
     {
         $user
             ->setId($id)
@@ -47,7 +49,7 @@ class UserRepository extends ServiceEntityRepository
             ->setFirstName($firstName)
             ->setLastName($lastName)
             ->setAccessToken($accessToken)
-            ->setPhotoSmallUrl($photoSmallUrl);
+            ->setPhotoSmallUrl($photoSmallUrl ?? DEFAULT_PHOTO_URL);
     }
 
     public function findByAccessToken(string $accessToken): ?User

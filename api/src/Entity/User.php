@@ -46,7 +46,7 @@ class User implements ResourceOwnerInterface, UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'candidate:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -54,11 +54,11 @@ class User implements ResourceOwnerInterface, UserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'candidate:read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'candidate:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -66,7 +66,7 @@ class User implements ResourceOwnerInterface, UserInterface
     private ?string $username = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'candidate:read'])]
     private ?string $photoSmallUrl = null;
 
     // TODO - for PROD build, it would be good idea to encrypt this column

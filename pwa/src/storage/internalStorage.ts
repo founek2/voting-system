@@ -2,6 +2,7 @@ import { EventEmitter } from "events"
 
 const storage = localStorage
 const TOKEN_KEY = 'accessToken'
+const URL_KEY = 'originalUrl'
 
 export interface AccessToken {
     scope: string
@@ -25,6 +26,25 @@ class InternalStorage extends EventEmitter {
 
     public deleteAccessToken() {
         storage.removeItem(TOKEN_KEY)
+    }
+
+    public setOriginalUrl(pathname: string) {
+        storage.setItem(URL_KEY, pathname)
+    }
+
+    public getOriginalUrl(): string | null {
+        return storage.getItem(URL_KEY)
+    }
+
+    public deleteOriginalUrl() {
+        storage.removeItem(URL_KEY)
+    }
+
+    public popOriginalUrl(): string | null {
+        const url = storage.getItem(URL_KEY)
+        this.deleteOriginalUrl();
+
+        return url
     }
 }
 

@@ -121,13 +121,13 @@ const config = {
             process: 'process/browser',
         }),
         !isEnvProduction && new webpack.HotModuleReplacementPlugin(),
-        isEnvProduction &&
-        new WorkboxPlugin.InjectManifest({
-            swSrc: './src/service-worker.ts',
-            swDest: 'service-worker.js',
-            maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
-            exclude: [/\.map$/, /^manifest.*\.js$/, /\/dist\//],
-        }),
+        // isEnvProduction &&
+        // new WorkboxPlugin.InjectManifest({
+        //     swSrc: './src/service-worker.ts',
+        //     swDest: 'service-worker.js',
+        //     maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
+        //     exclude: [/\.map$/, /^manifest.*\.js$/, /\/dist\//],
+        // }),
     ].filter(Boolean),
     devServer: {
         proxy: {

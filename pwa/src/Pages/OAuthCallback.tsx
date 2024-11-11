@@ -5,13 +5,14 @@ import { useSignInMutation } from "../endpoints/signIn";
 import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import { enqueueSnackbar } from "notistack";
 import Loader from "../Components/Loader";
+import internalStorage from "../storage/internalStorage";
 
 let firsRender = true;
 
 export default function OAuthCallback() {
   const [params, setParams] = useSearchParams({ code: "" });
   const code = params.get("code");
-  const [signIn, { isLoading, isSuccess }] = useSignInMutation();
+  const [signIn, { isLoading }] = useSignInMutation();
   const navigate = useNavigate();
 
   async function run() {
@@ -25,7 +26,11 @@ export default function OAuthCallback() {
         message: "Nastala chyba při přihlašování. Zkuste to znovu",
         variant: "error",
       });
-    } else navigate("/auth/admin");
+    } else {
+      const originalUrl = internalStorage.popOriginalUrl();
+      if (originalUrl) navigate(originalUrl);
+      else navigate("/auth/admin");
+    }
   }
 
   useEffect(() => {

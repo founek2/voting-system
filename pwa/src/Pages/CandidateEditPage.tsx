@@ -21,6 +21,7 @@ import CandidateForm from "../Components/CandidateForm";
 import Loader from "../Components/Loader";
 import { Typography } from "@mui/material";
 import { parseId } from "../util/parseId";
+import { handleError } from "../util/handleError";
 
 export default function CandidateEditPage() {
   const params = useParams<{ id: string }>();
@@ -47,7 +48,7 @@ export default function CandidateEditPage() {
       id: candidate?.id!,
       body: data,
     });
-    if (error) enqueueSnackbar({ variant: "error", message: "Nastala chyba" });
+    if (error) handleError(error);
     else {
       enqueueSnackbar("Aktualizováno");
       navigate("/auth/user");

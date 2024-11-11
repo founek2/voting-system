@@ -4,13 +4,14 @@
 /* eslint-disable */
 import type { MediaPoster_jsonld_candidate_read } from './MediaPoster_jsonld_candidate_read';
 import type { Position_jsonld_candidate_read } from './Position_jsonld_candidate_read';
+import type { User_jsonld_candidate_read } from './User_jsonld_candidate_read';
 export type Candidate_jsonld_candidate_read = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
     readonly '@type'?: string;
     readonly id?: number;
     election: string;
-    appUser?: string;
+    appUser?: User_jsonld_candidate_read;
     position: Position_jsonld_candidate_read;
     poster?: (MediaPoster_jsonld_candidate_read | null);
 };

@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { Election } from "../types";
-import { isAfter, isBefore } from "date-fns";
+import { isAfter, isBefore, subDays } from "date-fns";
 import { SxProps } from "@mui/system";
 import { Tooltip } from "@mui/material";
 import { dateToString } from "../util/dateToString";
@@ -51,14 +51,21 @@ function getStep(election: Election) {
 
 const steps = [
   {
-    label: (election: Election) =>
-      `Vyhlášení voleb ${dateToString(election.announcementDate)}`,
+    label: (election: Election) => "Vyhlášení voleb",
+    date: (election: Election) => `${dateToString(election.announcementDate)} - 
+          ${dateToString(election.registrationOfCandidatesDate, {
+            subDays: 1,
+          })}`,
     description: `Volby vyhlašuje volební komise.`,
   },
   {
-    label: (election: Election) =>
-      `Přihlašování kandidátů ${dateToString(
-        election.registrationOfCandidatesDate
+    label: (election: Election) => "Přihlašování kandidátů",
+    date: (election: Election) =>
+      `${dateToString(election.registrationOfCandidatesDate)} - ${dateToString(
+        election.campaignDate,
+        {
+          subDays: 1,
+        }
       )}`,
     description: `Kandidovat do představenstva klubu může pouze člen SH, který není zároveň členem volební komise. Kandidovat lze současně pouze na jednu pozici.
     Přihlašuje se elektronicky na e-mail volební komise volby@sh.cvut.cz z klubové e-mailové adresy. Tou se rozumí adresa v doméně siliconhill.cz nebo sh.cvut.cz.`,
@@ -69,24 +76,53 @@ const steps = [
     ),
   },
   {
-    label: (election: Election) =>
-      `Volební kampaň ${dateToString(election.campaignDate)}`,
+    label: (election: Election) => "Volební kampaň",
+    date: (election: Election) =>
+      `${dateToString(election.campaignDate)} - ${dateToString(
+        election.electronicVotingDate,
+        {
+          subDays: 1,
+        }
+      )}`,
     description: `Volební kampaní se rozumí jakákoliv propagace kandidáta nebo volební agitace ve
 prospěch kandidáta.`,
   },
   {
-    label: (election: Election) =>
-      `Elektronické hlasování ${dateToString(election.electronicVotingDate)}`,
+    label: (election: Election) => "Elektronické hlasování",
+    date: (election: Election) =>
+      `${dateToString(election.electronicVotingDate)} - ${dateToString(
+        election.ballotVotingDate,
+        {
+          subDays: 1,
+        }
+      )}`,
     description: "Hlasovat můžete na adrese volby.sh.cvut.cz",
   },
   {
-    label: (election: Election) =>
-      `Urnové hlasování ${dateToString(election.ballotVotingDate)}`,
+    label: (election: Election) => "Urnové hlasování",
+    date: (election: Election) =>
+      `${dateToString(election.ballotVotingDate)} - ${dateToString(
+        election.preliminaryResultsDate,
+        {
+          subDays: 1,
+        }
+      )}`,
     description: "Hlasovat fyzicky je možné pouze ve stanovenou dobu.",
   },
-  { label: (election: Election) => "Vyhlášení předběžných výsledků" },
-  { label: (election: Election) => "Uzávěrka podávání stížností" },
-  { label: (election: Election) => "Vyhlášení konečných výsledků" },
+  {
+    label: (election: Election) => "Vyhlášení předběžných výsledků",
+    date: (election: Election) =>
+      `${dateToString(election.preliminaryResultsDate)}`,
+  },
+  {
+    label: (election: Election) => "Uzávěrka podávání stížností",
+    date: (election: Election) =>
+      `${dateToString(election.complaintsDeadlineDate)}`,
+  },
+  {
+    label: (election: Election) => "Vyhlášení konečných výsledků",
+    date: (election: Election) => `${dateToString(election.finalResultsDate)}`,
+  },
 ];
 
 function AddTooltip({
@@ -128,11 +164,16 @@ export default function ElectionStepper({
             <StepLabel
               optional={
                 index === steps.length - 1 ? (
-                  <Typography variant="caption">Poslední krok</Typography>
+                  <Typography variant="caption">Zakončení voleb</Typography>
                 ) : null
               }
             >
-              {step.label(election)}
+              <Typography variant="h6" pr={2}>
+                {step.label(election)}
+              </Typography>
+              <Typography component="span" color="textSecondary">
+                {step.date ? step.date(election) : null}
+              </Typography>
             </StepLabel>
           </AddTooltip>
           <StepContent>

@@ -32,13 +32,12 @@ import { Role } from "../types";
 //   );
 // }
 
-function LoginButton() {
+function LoginButton({ admin }: { admin?: boolean }) {
   return (
     <Link to="/auth/admin">
       <Button
         color="secondary"
         aria-label="enter candidate"
-        // sx={}
         startIcon={<LoginIcon />}
       >
         Přihlásit
@@ -47,9 +46,9 @@ function LoginButton() {
   );
 }
 
-function AdminButton() {
+function AdminButton({ admin }: { admin?: boolean }) {
   return (
-    <Link to="/auth/admin">
+    <Link to={admin ? "/auth/admin" : "/auth/user"}>
       <Button
         color="secondary"
         aria-label="enter administration"
@@ -67,14 +66,11 @@ export default function Layout() {
   const user = useAppSelector((state) => state.authorization.currentUser);
   useGetUserMeQuery(undefined, { skip: !loggedId });
 
-  const vottingHasStarted = false;
-
   return (
     <Box p={2}>
       <Box pb={2} display="flex" justifyContent="flex-end">
-        {user?.roles?.includes(Role.ROLE_ADMIN) ||
-        user?.roles?.includes(Role.member) ? (
-          <AdminButton />
+        {loggedId ? (
+          <AdminButton admin={user?.roles?.includes(Role.ROLE_ADMIN)} />
         ) : (
           <LoginButton />
         )}
