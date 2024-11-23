@@ -54,7 +54,10 @@ export default function CandidateCreatePage() {
   if (isError || errorExistingCandidate)
     return <Typography>Nastala chyba</Typography>;
 
-  if (existingCandidate?.member.length)
+  const existingValidCandidate =
+    existingCandidate?.member.some((t) => !t.withdrewAt) || false;
+
+  if (existingValidCandidate)
     return (
       <Typography color="textPrimary">
         Pro zvolené volby již máte kandidátku podanou. Vaše kandidátky můžete

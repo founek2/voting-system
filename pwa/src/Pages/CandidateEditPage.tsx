@@ -15,6 +15,7 @@ import {
   useAddCandidateMutation,
   useGetCandidateQuery,
   useUpdateCandidateMutation,
+  useWithdrawCandidateMutation,
 } from "../endpoints/candidates";
 import { useAppSelector } from "../hooks/app";
 import CandidateForm from "../Components/CandidateForm";
@@ -37,10 +38,13 @@ export default function CandidateEditPage() {
   } = useGetElectionQuery(parseId(candidate?.election)!, {
     skip: !candidate?.election,
   });
-  const [updateCandidate, { isLoading: isMutation }] =
+  const [updateCandidate, { isLoading: isLoadingUpdate }] =
     useUpdateCandidateMutation();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.authorization.currentUser);
+  const [withdraw, { isLoading: isLoadingWithdraw }] =
+    useWithdrawCandidateMutation();
+  const isLoadingMutation = isLoadingUpdate || isLoadingWithdraw;
 
   async function onSubmit(data: Candidate_candidate_edit) {
     const { error } = await updateCandidate({
@@ -55,13 +59,26 @@ export default function CandidateEditPage() {
     }
   }
 
+  async function handleWithdraw() {
+    if (!candidate?.id) return;
+
+    const result = await withdraw(Number(candidate.id));
+    if (result.error) {
+      handleError(result.error);
+    } else {
+      enqueueSnackbar("Kandidátka zrušena");
+      navigate("/auth/user");
+    }
+  }
+
   if (isLoading || loadingCandidate) return <Loader />;
   if (isError || errorCandidate) return <Typography>Nastala chyba</Typography>;
 
   return (
     <CandidateForm
       onSubmit={onSubmit}
-      disabled={isMutation}
+      onWithdraw={handleWithdraw}
+      disabled={isLoadingMutation || Boolean(candidate?.withdrewAt)}
       election={election!}
       defaultValues={candidate}
       edit

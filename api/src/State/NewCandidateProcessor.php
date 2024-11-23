@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-class NewEditCandidateProcessor implements ProcessorInterface
+class NewCandidateProcessor implements ProcessorInterface
 {
     public function __construct(
         private Security $security,

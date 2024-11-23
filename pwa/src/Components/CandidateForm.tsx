@@ -35,10 +35,15 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MyUploadFileInput } from "./MyUploadFileInput";
 import { parseId } from "../util/parseId";
+import { ConditionalTooltip } from "./ConditionalTooltip";
+import AlertDialog from "./AlertDialog";
+import { useWithdrawCandidateMutation } from "../endpoints/candidates";
+import { handleError } from "../util/handleError";
 
 interface CandidateFormProps {
   defaultValues?: Candidate;
   onSubmit: SubmitHandler<Candidate_candidate_write>;
+  onWithdraw?: () => any;
   disabled?: boolean;
   election: Election;
   edit?: boolean;
@@ -49,6 +54,7 @@ export default function CandidateForm({
   disabled,
   election,
   edit,
+  onWithdraw,
 }: CandidateFormProps) {
   const methods = useForm<Candidate_candidate_write>({
     defaultValues: { poster: defaultValues?.poster?.["@id"] },
@@ -63,7 +69,7 @@ export default function CandidateForm({
   const { data: posterMedia } = useGetPosterQuery(parseId(posterId || "")!, {
     skip: !posterId,
   });
-  console.log("poster", posterId);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const availablePositions =
     allPositions?.member.filter((position) =>
@@ -74,95 +80,131 @@ export default function CandidateForm({
   if (isLoading) return <Loader />;
 
   return (
-    <Grid2 container spacing={4} alignItems="flex-start">
-      <Grid2
-        container
-        spacing={2}
-        size={{ xs: 12, md: 12, lg: 6 }}
-        component="form"
-        onSubmit={handleOnSubmit}
-      >
-        <Input
-          value={election["@id"]}
-          sx={{ display: "none" }}
-          {...register("election")}
+    <>
+      <Grid2 container spacing={4} alignItems="flex-start">
+        <Grid2
+          container
+          spacing={2}
+          size={{ xs: 12, md: 12, lg: 6 }}
+          component="form"
+          onSubmit={handleOnSubmit}
+        >
+          <Input
+            value={election["@id"]}
+            sx={{ display: "none" }}
+            {...register("election")}
+          />
+          <Grid2 size={12}>
+            <FormStatus errors={errors} />
+          </Grid2>
+
+          <Grid2 size={12}>
+            <Typography variant="h4" color="textPrimary">
+              Kandidátka:
+            </Typography>
+          </Grid2>
+
+          <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+            <Controller
+              control={methods.control}
+              name="position"
+              defaultValue={defaultValues?.position["@id"]}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Autocomplete
+                  options={availablePositions}
+                  getOptionKey={(z) => z["@id"]!}
+                  getOptionLabel={(z) => z.name!}
+                  disabled={edit}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Vyberte pozici" />
+                  )}
+                  onChange={(e, value) => {
+                    field.onChange(value?.["@id"]);
+                  }}
+                  onBlur={field.onBlur}
+                  value={availablePositions.find(
+                    (position) => position["@id"] == field.value
+                  )}
+                />
+              )}
+            />
+          </Grid2>
+
+          <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+            <Controller
+              control={methods.control}
+              name="poster"
+              render={({ field }) => (
+                <MyUploadFileInput
+                  onChange={(value) => field.onChange(value)}
+                  value={field.value}
+                />
+              )}
+            />
+          </Grid2>
+
+          {defaultValues?.withdrewAt ? (
+            <Grid2 size={12}>
+              <TextField
+                value={new Date(defaultValues.withdrewAt).toLocaleString()}
+                label="Odstoupeno"
+                disabled
+                fullWidth
+              />
+            </Grid2>
+          ) : null}
+
+          <Grid2 size={{ xs: 12, md: 3 }}>
+            <Button type="submit" disabled={disabled}>
+              Uložit
+            </Button>
+          </Grid2>
+          {onWithdraw ? (
+            <Grid2 size={{ xs: 12, md: 3 }}>
+              <ConditionalTooltip
+                disabled={defaultValues?.withdrawAllowed}
+                title="Odstroupit lze pouze před zveřejněním výsledků"
+              >
+                <Button
+                  disabled={!defaultValues?.withdrawAllowed || disabled}
+                  color="error"
+                  onClick={() => setOpenDialog(true)}
+                >
+                  Odstoupit
+                </Button>
+              </ConditionalTooltip>
+            </Grid2>
+          ) : null}
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
+          {posterMedia?.contentUrl ? (
+            <Card>
+              {/* <CardActionArea> */}
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Náhled plakátu
+                </Typography>
+              </CardContent>
+              <iframe
+                src={posterMedia.contentUrl}
+                width="100%"
+                style={{ border: 0, height: "auto", aspectRatio: 8.5 / 8 }}
+              ></iframe>
+              {/* </CardActionArea> */}
+            </Card>
+          ) : null}
+        </Grid2>
+      </Grid2>
+      {onWithdraw ? (
+        <AlertDialog
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={onWithdraw}
+          title="Opravdu si přeješ odstoupit?"
+          description="V seznamech tvoje kandidátka zůstane, ale bude označena jako neplatná."
         />
-        <Grid2 size={12}>
-          <FormStatus errors={errors} />
-        </Grid2>
-
-        <Grid2 size={12}>
-          <Typography variant="h4" color="textPrimary">
-            Kandidátka:
-          </Typography>
-        </Grid2>
-
-        <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
-          <Controller
-            control={methods.control}
-            name="position"
-            defaultValue={defaultValues?.position["@id"]}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Autocomplete
-                options={availablePositions}
-                getOptionKey={(z) => z["@id"]!}
-                getOptionLabel={(z) => z.name!}
-                disabled={edit}
-                renderInput={(params) => (
-                  <TextField {...params} label="Vyberte pozici" />
-                )}
-                onChange={(e, value) => {
-                  field.onChange(value?.["@id"]);
-                }}
-                onBlur={field.onBlur}
-                value={availablePositions.find(
-                  (position) => position["@id"] == field.value
-                )}
-              />
-            )}
-          />
-        </Grid2>
-
-        <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
-          <Controller
-            control={methods.control}
-            name="poster"
-            render={({ field }) => (
-              <MyUploadFileInput
-                onChange={(value) => field.onChange(value)}
-                value={field.value}
-              />
-            )}
-          />
-        </Grid2>
-
-        {/* <Grid2 size={{ xs: 12, md: 6, lg: 3 }}></Grid2> */}
-
-        <Grid2 size={12}>
-          <Button type="submit" disabled={disabled}>
-            Uložit
-          </Button>
-        </Grid2>
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
-        {posterMedia?.contentUrl ? (
-          <Card>
-            {/* <CardActionArea> */}
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Náhled plakátu
-              </Typography>
-            </CardContent>
-            <iframe
-              src={posterMedia.contentUrl}
-              width="100%"
-              style={{ border: 0, height: "auto", aspectRatio: 8.5 / 8 }}
-            ></iframe>
-            {/* </CardActionArea> */}
-          </Card>
-        ) : null}
-      </Grid2>
-    </Grid2>
+      ) : null}
+    </>
   );
 }

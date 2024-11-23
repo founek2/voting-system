@@ -5,13 +5,17 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Const\ElectionStage;
 use App\Repository\CandidateRepository;
+use App\State\NewCandidateProcessor;
 use App\State\NewEditCandidateProcessor;
+use App\State\WithdrawCandidateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,8 +33,9 @@ use App\Validator;
                 'userId' => new Link(fromClass: User::class, toProperty: 'appUser'),
             ],
             security: 'user.getId() == request.attributes.get("userId")',
-            processor: NewEditCandidateProcessor::class,
-            validationContext: ['groups' => ['candidate:write']]
+            processor: NewCandidateProcessor::class,
+            validationContext: ['groups' => ['candidate:write']],
+            denormalizationContext: ['groups' => ['candidate:write']],
         ),
         new Patch(
             uriTemplate: 'users/{userId}/candidates/{id}',
@@ -39,7 +44,6 @@ use App\Validator;
                 'id' => new Link(fromClass: self::class),
             ],
             security: 'user.getId() == request.attributes.get("userId")',
-            processor: NewEditCandidateProcessor::class,
             denormalizationContext: ['groups' => ['candidate:edit']],
         ),
         new GetCollection(
@@ -56,18 +60,26 @@ use App\Validator;
                 'id' => new Link(fromClass: Election::class, fromProperty: 'candidates'),
             ],
         ),
-
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
-        new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Patch(
+            security: 'user.hasRole("ROLE_ADMIN")',
+            denormalizationContext: ['groups' => ['candidate:write']],
+        ),
+        new Delete(
+            uriTemplate: 'candidates/{id}',
+            security: 'object.getAppUser().getId() == user.getId() or user.hasRole("ROLE_ADMIN")',
+            processor: WithdrawCandidateProcessor::class,
+            validationContext: ['groups' => ['candidate:delete']]
+        ),
     ],
     mercure: true,
-    denormalizationContext: ['groups' => ['candidate:write']],
     normalizationContext: ['groups' => ['candidate:read']]
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['election' => 'exact', 'appUser' => 'exact', 'position' => 'exact'])]
+#[Validator\WithdrawalAllowed(groups: ['candidate:delete'])]
 #[Validator\CandidateAllowed(groups: ['candidate:write'])]
-#[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id'])]
+#[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id', 'withdrew_at'])]
 class Candidate
 {
     use Timestampable;
@@ -105,6 +117,10 @@ class Candidate
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[Groups(['candidate:read', 'candidate:write', 'candidate:edit'])]
     private ?MediaPoster $poster = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['candidate:read'])]
+    private ?\DateTimeImmutable $withdrewAt = null;
 
     public function __construct()
     {
@@ -192,5 +208,23 @@ class Candidate
         $this->poster = $poster;
 
         return $this;
+    }
+
+    public function getWithdrewAt(): ?\DateTimeImmutable
+    {
+        return $this->withdrewAt;
+    }
+
+    public function setWithdrewAt(?\DateTimeImmutable $withdrewAt): static
+    {
+        $this->withdrewAt = $withdrewAt;
+
+        return $this;
+    }
+
+    #[Groups(['candidate:read'])]
+    public function isWithdrawAllowed(): bool
+    {
+        return $this->getElection()->getStage() != ElectionStage::FINAL_RESULTS && $this->withdrewAt == null;
     }
 }

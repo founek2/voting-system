@@ -38,6 +38,7 @@ class CandidateRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.election = :election')
             ->andWhere('c.appUser = :user')
+            ->andWhere('c.withdrewAt IS NULL')
             ->setParameter('election', $election)
             ->setParameter('user', $appUser)
             ->getQuery()

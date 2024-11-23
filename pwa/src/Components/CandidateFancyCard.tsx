@@ -21,18 +21,15 @@ interface ElectionCardProps {
 export function CandidateFancyCard({ candidate, title }: ElectionCardProps) {
   return (
     <Card>
+      <CardHeader title={candidate.position.name} />
       <CardMedia
         sx={{ height: 140 }}
         image={candidate.appUser?.photoSmallUrl || undefined}
         title="green iguana"
       />
-
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {candidate.appUser?.firstName} {candidate.appUser?.lastName}
-        </Typography>
-        <Typography variant="body1" component="div" color="textSecondary">
-          {candidate.position.name}
         </Typography>
         <Link
           href={`https://is.sh.cvut.cz/users/${candidate.appUser?.id}`}
@@ -40,7 +37,7 @@ export function CandidateFancyCard({ candidate, title }: ElectionCardProps) {
           underline="none"
         >
           <Typography variant="body1" component="div" color="textSecondary">
-            {candidate.appUser?.id}
+            UID: {candidate.appUser?.id}
           </Typography>
         </Link>
       </CardContent>

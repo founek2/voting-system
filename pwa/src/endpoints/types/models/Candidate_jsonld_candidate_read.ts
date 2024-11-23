@@ -14,5 +14,7 @@ export type Candidate_jsonld_candidate_read = {
     appUser?: User_jsonld_candidate_read;
     position: Position_jsonld_candidate_read;
     poster?: (MediaPoster_jsonld_candidate_read | null);
+    withdrewAt?: string | null;
+    readonly withdrawAllowed?: boolean;
 };
 

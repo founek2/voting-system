@@ -40,10 +40,20 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Candidates'],
         }),
+        withdrawCandidate: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `candidates/${id}`,
+                    method: 'DELETE',
+                };
+            },
+            invalidatesTags: ['Candidates'],
+        }),
     }),
 });
 
 export const {
     useGetCandidatesQuery,
     useGetCandidateQuery,
-    useAddCandidateMutation, useUpdateCandidateMutation, useGetUserCandidatesQuery, useGetPublicCandidatesQuery } = signInApi;
+    useAddCandidateMutation, useUpdateCandidateMutation, useGetUserCandidatesQuery, useGetPublicCandidatesQuery,
+    useWithdrawCandidateMutation } = signInApi;
