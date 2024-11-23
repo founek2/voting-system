@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Const\ElectionStage;
+use App\Filter\ElectionStageFilter;
 use App\Repository\ElectionRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,6 +33,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     order: ['id' => 'DESC']
 )]
 #[ORM\Entity(repositoryClass: ElectionRepository::class)]
+#[ApiFilter(ElectionStageFilter::class)]
 class Election
 {
     use Timestampable;

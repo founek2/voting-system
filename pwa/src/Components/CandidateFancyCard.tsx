@@ -1,4 +1,3 @@
-import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import {
   Button,
   Card,
@@ -11,16 +10,37 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Candidate } from "../types";
-import { candidateTitle } from "../util/candidateTitle";
-// import { Link } from "react-router-dom";
+import { DARK_BACKGROUND } from "../Containers/ThemeProvider";
 
 interface ElectionCardProps {
   candidate: Candidate;
-  title?: string;
 }
-export function CandidateFancyCard({ candidate, title }: ElectionCardProps) {
+export function CandidateFancyCard({ candidate }: ElectionCardProps) {
   return (
-    <Card>
+    <Card
+      sx={{
+        overflow: "hidden",
+        position: "relative",
+        opacity: candidate.withdrewAt ? 0.7 : undefined,
+        height: "100%",
+      }}
+    >
+      {candidate.withdrewAt ? (
+        <Typography
+          sx={{
+            position: "absolute",
+            backgroundColor: DARK_BACKGROUND,
+            transform: "rotate(50deg) translate(50%, 0%)",
+            top: "7%",
+            right: "10%",
+            transformOrigin: "100% 0",
+            textAlign: "center",
+          }}
+          width="100%"
+        >
+          Odstoupil
+        </Typography>
+      ) : null}
       <CardHeader title={candidate.position.name} />
       <CardMedia
         sx={{ height: 140 }}

@@ -12,6 +12,10 @@ export const signInApi = api.injectEndpoints({
             query: () => `public/elections?perPage=3`,
             providesTags: ['PublicElections'],
         }),
+        getPublicElectionsElectronic: build.query<Hydra<Election_jsonld_election_read>, void>({
+            query: () => `public/elections?stage=electronic_voting`,
+            providesTags: ['PublicElections'],
+        }),
         getElection: build.query<Election_jsonld_election_read, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
@@ -42,4 +46,4 @@ export const signInApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetElectionsQuery, useAddElectionMutation, useUpdateElectionMutation, useGetElectionQuery, useGetPublicElectionsQuery } = signInApi;
+export const { useGetElectionsQuery, useAddElectionMutation, useUpdateElectionMutation, useGetElectionQuery, useGetPublicElectionsQuery, useGetPublicElectionsElectronicQuery } = signInApi;

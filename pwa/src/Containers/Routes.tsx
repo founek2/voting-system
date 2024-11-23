@@ -20,6 +20,7 @@ import DashboardUserPage from "../Pages/DashboardUserPage";
 import LayoutAuth from "../Components/LayoutAuth";
 import CandidateCreatePage from "../Pages/CandidateCreatePage";
 import CandidateEditPage from "../Pages/CandidateEditPage";
+import VotePage from "../Pages/VotePage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -60,6 +61,7 @@ export default function MyRoutes() {
             path="/auth/user/candidates/:id"
             element={<CandidateEditPage />}
           />
+          <Route path="/auth/user/vote" element={<VotePage />} />
           <Route path="/auth/user" element={<DashboardUserPage />} />
         </Route>
       </Route>

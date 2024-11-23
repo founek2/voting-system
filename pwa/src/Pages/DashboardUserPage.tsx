@@ -16,6 +16,7 @@ import {
 } from "../endpoints/candidates";
 import { useAppSelector } from "../hooks/app";
 import { CandidateCard } from "../Components/CandidateCard";
+import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -119,7 +120,7 @@ export default function DashboardUserPage() {
                   to={`/auth/user/candidates/${candidate.id}`}
                   key={candidate.id}
                 >
-                  <CandidateCard candidate={candidate} />
+                  <CandidateFancyCard candidate={candidate} />
                 </Link>
               ))
             ) : (

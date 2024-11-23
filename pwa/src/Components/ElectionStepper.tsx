@@ -96,7 +96,13 @@ prospěch kandidáta.`,
           subDays: 1,
         }
       )}`,
-    description: "Hlasovat můžete na adrese volby.sh.cvut.cz",
+    description:
+      "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill.",
+    action: (election: Election) => (
+      <Link to={`/auth/user/vote`}>
+        <Button color="primary">Hlasovat</Button>
+      </Link>
+    ),
   },
   {
     label: (election: Election) => "Urnové hlasování",
@@ -149,7 +155,7 @@ export default function ElectionStepper({
   election,
   sx,
 }: ElectionStepperProps) {
-  const [activeStep, setActiveStep] = React.useState(getStep(election));
+  const activeStep = getStep(election);
 
   return (
     // <Box sx={{ maxWidth: 400 }}>
@@ -164,7 +170,7 @@ export default function ElectionStepper({
             <StepLabel
               optional={
                 index === steps.length - 1 ? (
-                  <Typography variant="caption">Zakončení voleb</Typography>
+                  <Typography variant="caption">Ukončení voleb</Typography>
                 ) : null
               }
             >

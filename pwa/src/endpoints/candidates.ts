@@ -20,20 +20,28 @@ export const signInApi = api.injectEndpoints({
             query: (electionId) => `public/elections/${electionId}/candidates`,
             providesTags: ['Candidates'],
         }),
+        getCandidatesVoted: build.query<Hydra<Candidate>, number>({
+            query: (electionId) => `elections/${electionId}/candidates?type=voted`,
+            providesTags: ['Candidates'],
+        }),
+        getCandidatesUnvoted: build.query<Hydra<Candidate>, number>({
+            query: (electionId) => `elections/${electionId}/candidates?type=unvoted`,
+            providesTags: ['Candidates'],
+        }),
         addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write }>({
             query({ userId, body }) {
                 return {
-                    url: `users/${userId}/candidates`,
+                    url: `candidates`,
                     method: 'POST',
                     body: JSON.stringify(body),
                 };
             },
             invalidatesTags: ['Candidates'],
         }),
-        updateCandidate: build.mutation<Position_jsonld_position_read, { userId: number, id: number, body: Candidate_candidate_edit }>({
-            query({ userId, id, body }) {
+        updateCandidate: build.mutation<Position_jsonld_position_read, { id: number, body: Candidate_candidate_edit }>({
+            query({ id, body }) {
                 return {
-                    url: `users/${userId}/candidates/${id}`,
+                    url: `candidates/${id}`,
                     method: 'PATCH',
                     body: JSON.stringify(body),
                 };
@@ -55,5 +63,11 @@ export const signInApi = api.injectEndpoints({
 export const {
     useGetCandidatesQuery,
     useGetCandidateQuery,
-    useAddCandidateMutation, useUpdateCandidateMutation, useGetUserCandidatesQuery, useGetPublicCandidatesQuery,
-    useWithdrawCandidateMutation } = signInApi;
+    useAddCandidateMutation,
+    useUpdateCandidateMutation,
+    useGetUserCandidatesQuery,
+    useGetPublicCandidatesQuery,
+    useGetCandidatesUnvotedQuery,
+    useGetCandidatesVotedQuery,
+    useWithdrawCandidateMutation
+} = signInApi;

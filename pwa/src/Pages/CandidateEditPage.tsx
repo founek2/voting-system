@@ -48,7 +48,6 @@ export default function CandidateEditPage() {
 
   async function onSubmit(data: Candidate_candidate_edit) {
     const { error } = await updateCandidate({
-      userId: user?.id!,
       id: candidate?.id!,
       body: data,
     });

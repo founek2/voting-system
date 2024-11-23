@@ -73,7 +73,6 @@ function CandidatesSection() {
       <Grid2
         size={12}
         display="flex"
-        alignItems="center"
         justifyContent="center"
         container
         spacing={4}

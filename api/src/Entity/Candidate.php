@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Const\ElectionStage;
+use App\Filter\VoteCandidateFilter;
 use App\Repository\CandidateRepository;
 use App\State\NewCandidateProcessor;
 use App\State\NewEditCandidateProcessor;
@@ -28,22 +29,16 @@ use App\Validator;
     operations: [
         new Get(security: 'user.getId() == object.getAppUser().getId() or user.hasRole("ROLE_ADMIN")'),
         new Post(
-            uriTemplate: 'users/{userId}/candidates',
-            uriVariables: [
-                'userId' => new Link(fromClass: User::class, toProperty: 'appUser'),
-            ],
-            security: 'user.getId() == request.attributes.get("userId")',
             processor: NewCandidateProcessor::class,
             validationContext: ['groups' => ['candidate:write']],
             denormalizationContext: ['groups' => ['candidate:write']],
         ),
         new Patch(
-            uriTemplate: 'users/{userId}/candidates/{id}',
+            uriTemplate: 'candidates/{id}',
             uriVariables: [
-                'userId' => new Link(fromClass: User::class, toProperty: 'appUser'),
                 'id' => new Link(fromClass: self::class),
             ],
-            security: 'user.getId() == request.attributes.get("userId")',
+            security: 'user.getId() == object.getAppUser().getId(',
             denormalizationContext: ['groups' => ['candidate:edit']],
         ),
         new GetCollection(
@@ -53,12 +48,18 @@ use App\Validator;
                 'userId' => new Link(fromClass: User::class, fromProperty: 'candidates')
             ]
         ),
-
         new GetCollection(
             uriTemplate: 'public/elections/{id}/candidates',
             uriVariables: [
                 'id' => new Link(fromClass: Election::class, fromProperty: 'candidates'),
             ],
+        ),
+        new GetCollection(
+            uriTemplate: 'elections/{id}/candidates',
+            uriVariables: [
+                'id' => new Link(fromClass: Election::class, fromProperty: 'candidates'),
+            ],
+            filters: [VoteCandidateFilter::class],
         ),
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
         new Patch(

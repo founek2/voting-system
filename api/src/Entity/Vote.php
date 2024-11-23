@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Const\VoteValue;
@@ -17,8 +18,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(),
+        new GetCollection(
+            uriTemplate: 'users/{userId}/votes',
+            uriVariables: [
+                'userId' => new Link(fromClass: User::class, fromProperty: 'votes')
+            ],
+            security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
+        ),
         new Get(),
-        // new Post(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Post(),
         // new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
     ],
     mercure: true,

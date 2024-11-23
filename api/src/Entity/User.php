@@ -91,7 +91,7 @@ class User implements ResourceOwnerInterface, UserInterface
     /**
      * @var Collection<int, Candidate>
      */
-    #[ORM\OneToMany(mappedBy: 'appUser', targetEntity: Candidate::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'appUser', targetEntity: Candidate::class)]
     private Collection $candidates;
 
     /**
