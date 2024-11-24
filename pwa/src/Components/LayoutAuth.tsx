@@ -22,12 +22,13 @@ import {
   Paper,
   styled,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { enqueueSnackbar } from "notistack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppDispatch, useAppSelector } from "../hooks/app";
@@ -70,6 +71,12 @@ export default function LayoutAuth() {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    if (open && isMobile) setOpen(false);
+    if (!open && !isMobile) setOpen(true);
+  }, [isMobile]);
 
   // Redirect regular user to non-admin part
   if (user?.roles) {
@@ -101,7 +108,7 @@ export default function LayoutAuth() {
             },
             // height: "100%",
           }}
-          variant="persistent"
+          variant={isMobile ? "temporary" : "persistent"}
           anchor="left"
           open={open}
           onClose={handleDrawerClose}

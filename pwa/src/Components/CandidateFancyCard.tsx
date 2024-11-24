@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { Candidate } from "../types";
 import { DARK_BACKGROUND } from "../Containers/ThemeProvider";
+import { PosterButton } from "./PosterButton";
 
 interface ElectionCardProps {
   candidate: Candidate;
@@ -62,14 +63,7 @@ export function CandidateFancyCard({ candidate }: ElectionCardProps) {
         </Link>
       </CardContent>
       <CardActions>
-        {candidate.poster?.contentUrl ? (
-          <Link
-            href={window.origin + candidate.poster?.contentUrl}
-            target="_blank"
-          >
-            <Button size="small">Plakát</Button>
-          </Link>
-        ) : null}
+        <PosterButton poster={candidate.poster} />
       </CardActions>
     </Card>
   );

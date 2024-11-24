@@ -1,22 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Grid2, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
+import { Grid2, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 import { ElectionCard } from "../Components/ElectionCard";
 import Loader from "../Components/Loader";
+import { useGetUserCandidatesQuery } from "../endpoints/candidates";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
+import { useAppSelector } from "../hooks/app";
+import { Election } from "../types";
 import { dateToString } from "../util/dateToString";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
-import { Election } from "../types";
-import {
-  useGetCandidateQuery,
-  useGetCandidatesQuery,
-  useGetUserCandidatesQuery,
-} from "../endpoints/candidates";
-import { useAppSelector } from "../hooks/app";
-import { CandidateCard } from "../Components/CandidateCard";
-import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -78,10 +73,7 @@ export default function DashboardUserPage() {
           {!isLoading ? (
             electronicVotingElections.length > 0 ? (
               electronicVotingElections.map((election) => (
-                <Link
-                  to={`/auth/user/elections/${election.id}/vote`}
-                  key={election.id}
-                >
+                <Link to={`/auth/user/vote`} key={election.id}>
                   <ElectionCard
                     election={election}
                     title={`${dateToString(
