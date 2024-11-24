@@ -4,6 +4,5 @@ export function dateToString(date?: string | Date | null, options?: { subDays?: 
     if (!date) return "";
 
     const d = new Date(date);
-    console.log(subDays(d, options?.subDays || 0).toLocaleDateString())
     return subDays(d, options?.subDays || 0).toLocaleDateString()
 }

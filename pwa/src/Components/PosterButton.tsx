@@ -5,25 +5,53 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Link,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Candidate } from "../types";
 import { candidateTitle } from "../util/candidateTitle";
-import { MediaPoster_jsonld_candidate_read } from "../endpoints/types";
+import {
+  Candidate_jsonld_candidate_read,
+  MediaPoster_jsonld_candidate_read,
+} from "../endpoints/types";
 
 interface ElectionCardProps {
-  poster: MediaPoster_jsonld_candidate_read | null | undefined;
+  candidate: Candidate_jsonld_candidate_read | null | undefined;
   disabled?: boolean;
   children?: JSX.Element | JSX.Element[] | null;
 }
-export function PosterButton({ poster, disabled }: ElectionCardProps) {
+export function PosterButton({ candidate, disabled }: ElectionCardProps) {
+  const [open, setOpen] = useState(false);
+  const poster = candidate?.poster;
+
   return (
-    <Link href={window.origin + poster?.contentUrl} target="_blank">
-      <Button size="small" disabled={disabled || !Boolean(poster?.contentUrl)}>
+    // <Link href={window.origin + poster?.contentUrl} target="_blank">
+    // </Link>
+    <>
+      <Button
+        size="small"
+        disabled={disabled || !Boolean(poster?.contentUrl)}
+        onClick={() => setOpen(true)}
+      >
         {poster?.contentUrl ? "Plakát" : "Plakát neuveden"}
       </Button>
-    </Link>
+      <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
+        <DialogTitle>
+          {candidate?.appUser?.firstName} {candidate?.appUser?.lastName} -{" "}
+          {candidate?.position.name}
+        </DialogTitle>
+        <DialogContent>
+          <iframe
+            src={window.origin + poster?.contentUrl}
+            width="100%"
+            style={{ border: 0, height: "auto", aspectRatio: 8.5 / 8 }}
+          ></iframe>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

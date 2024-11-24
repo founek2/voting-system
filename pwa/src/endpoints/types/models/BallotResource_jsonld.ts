@@ -2,12 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Vote_jsonld_vote_read = {
+export type BallotResource_jsonld = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
     readonly '@type'?: string;
-    readonly id?: number;
-    candidate: string;
-    appUser?: string;
+    votes?: Array<string>;
 };
 

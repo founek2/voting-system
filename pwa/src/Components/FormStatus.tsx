@@ -8,9 +8,11 @@ interface ElectionCardProps<T extends FieldValues> {
 export function FormStatus<T extends FieldValues>({
   errors,
 }: ElectionCardProps<T>) {
-  const [path, params] = Object.entries(errors).slice(0, 1)?.[0] || [];
+  let [path, params] = Object.entries(errors).slice(0, 1)?.[0] || [];
   if (!path) return null;
 
+  // if (Array.isArray(params) && params.length) params = params[0];
+  console.log(params);
   if (params?.type == "required")
     return <Alert severity="warning">Pole {path} je povinné</Alert>;
 

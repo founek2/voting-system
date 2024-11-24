@@ -22,11 +22,11 @@ export const signInApi = api.injectEndpoints({
         }),
         getCandidatesVoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=voted`,
-            providesTags: ['Candidates'],
+            providesTags: ['Candidates', 'Votes'],
         }),
         getCandidatesUnvoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=unvoted`,
-            providesTags: ['Candidates'],
+            providesTags: ['Candidates', 'Votes'],
         }),
         addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write }>({
             query({ userId, body }) {

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
@@ -26,8 +27,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
             security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
         ),
         new Get(),
-        new Post(),
-        // new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
     ],
     mercure: true,
     normalizationContext: ['groups' => ['vote:read']],
@@ -44,11 +43,13 @@ class Vote
     #[Groups(['vote:read'])]
     private ?int $id = null;
 
+    #[Assert\NotNull]
     #[ORM\ManyToOne(inversedBy: 'votes')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['vote:read', 'vote:write'])]
     private ?Candidate $candidate = null;
 
+    #[Assert\NotNull]
     #[ORM\Column(length: 255, enumType: VoteValue::class)]
     #[Groups(['vote:write'])]
     private ?VoteValue $value = null;

@@ -31,7 +31,7 @@ export function CandidateVoteCard({
           {candidate.appUser?.firstName} {candidate.appUser?.lastName}
         </Typography>
         <Typography>UID: {candidate.appUser?.id}</Typography>
-        <PosterButton poster={candidate.poster} />
+        <PosterButton candidate={candidate} />
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
         {children}

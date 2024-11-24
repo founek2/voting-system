@@ -46,6 +46,8 @@ export const api = createApi({
         'PublicElections',
         'Candidates',
         'MediaPosters',
+        'Ballot',
+        'Votes'
     ],
     /**
      * This api has endpoints injected in adjacent files,

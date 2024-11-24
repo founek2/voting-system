@@ -63,7 +63,7 @@ export function CandidateFancyCard({ candidate }: ElectionCardProps) {
         </Link>
       </CardContent>
       <CardActions>
-        <PosterButton poster={candidate.poster} />
+        <PosterButton candidate={candidate} />
       </CardActions>
     </Card>
   );
