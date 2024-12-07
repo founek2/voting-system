@@ -11,13 +11,12 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[Vich\Uploadable]
-#[ORM\Entity]
 #[ApiResource(
     normalizationContext: ['groups' => ['media:read']],
     types: ['https://schema.org/MediaObject'],
@@ -60,8 +59,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     ],
     order: ['id' => 'DESC']
 )]
+#[Vich\Uploadable]
+#[ORM\Entity]
 class MediaResolution
 {
+    use TimestampableEntity;
+
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     #[Groups(['media:read'])]
     private ?int $id = null;

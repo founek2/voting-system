@@ -15,15 +15,14 @@ use App\Const\ElectionStage;
 use App\Filter\VoteCandidateFilter;
 use App\Repository\CandidateRepository;
 use App\State\NewCandidateProcessor;
-use App\State\NewEditCandidateProcessor;
 use App\State\WithdrawCandidateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ApiResource(
     operations: [
@@ -83,7 +82,7 @@ use App\Validator;
 #[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id', 'withdrew_at'])]
 class Candidate
 {
-    use Timestampable;
+    use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue('SEQUENCE')]

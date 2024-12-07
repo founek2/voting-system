@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -41,7 +42,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[UniqueEntity('username')]
 class User implements ResourceOwnerInterface, UserInterface
 {
-    use Timestampable;
+    use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
