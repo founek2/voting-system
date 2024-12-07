@@ -49,7 +49,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const adminMenuItems = [
   { path: "/auth/admin", text: "Přehled", Icon: <TimelineIcon /> },
   { path: "/auth/admin/elections", text: "Volby", Icon: <MailIcon /> },
-  { path: "/auth/admin/decrees", text: "Usnesení", Icon: <InboxIcon /> },
+  { path: "/auth/admin/resolutions", text: "Usnesení", Icon: <InboxIcon /> },
+  {
+    path: "/auth/admin/reports",
+    text: "Závěřečné zprávy",
+    Icon: <InboxIcon />,
+  },
   { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
 ];
 

@@ -2,11 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type MediaPoster_jsonld_media_object_read = {
+export type MediaResolution_jsonld_resolution_object_read = {
     readonly '@context'?: (string | Record<string, any>);
     readonly '@id'?: string;
     readonly '@type'?: string;
     readonly id?: number;
     readonly contentUrl?: string | null;
+    name?: string;
 };
 

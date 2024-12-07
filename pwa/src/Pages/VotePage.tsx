@@ -76,9 +76,9 @@ function VoteListMobile({
                       value={field.value}
                     >
                       <FormControlLabel
-                        value="-1"
+                        value="1"
                         control={<Radio />}
-                        label="Proti"
+                        label="Pro"
                       />
                       <FormControlLabel
                         value="0"
@@ -86,9 +86,9 @@ function VoteListMobile({
                         label="Zdržuji se"
                       />
                       <FormControlLabel
-                        value="1"
+                        value="-1"
                         control={<Radio />}
-                        label="Pro"
+                        label="Proti"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -225,9 +225,9 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                             value={field.value}
                           >
                             <FormControlLabel
-                              value="-1"
+                              value="1"
                               control={<Radio />}
-                              label="Proti"
+                              label="Pro"
                             />
                             <FormControlLabel
                               value="0"
@@ -235,9 +235,9 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                               label="Zdržuji se"
                             />
                             <FormControlLabel
-                              value="1"
+                              value="-1"
                               control={<Radio />}
-                              label="Pro"
+                              label="Proti"
                             />
                           </RadioGroup>
                         </FormControl>

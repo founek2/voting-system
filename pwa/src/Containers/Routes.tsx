@@ -21,6 +21,12 @@ import LayoutAuth from "../Components/LayoutAuth";
 import CandidateCreatePage from "../Pages/CandidateCreatePage";
 import CandidateEditPage from "../Pages/CandidateEditPage";
 import VotePage from "../Pages/VotePage";
+import ReportPage from "../Pages/ReportPage";
+import ResolutionPage from "../Pages/ResolutionPage";
+import ReportCreatePage from "../Pages/ReportCreatePage";
+import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
+import ReportEditPage from "../Pages/ReportEditPage";
+import ResolutionEditPage from "../Pages/ResolutionEditPage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -51,6 +57,21 @@ export default function MyRoutes() {
           <Route path="/auth/admin" element={<DashboardPage />} />
           <Route path="/auth/admin/positions" element={<PositionPage />} />
           <Route path="/auth/admin/elections" element={<ElectionPage />} />
+          <Route
+            path="/auth/admin/resolutions/create"
+            element={<ResolutionCreatePage />}
+          />
+          <Route
+            path="/auth/admin/resolutions/:id"
+            element={<ResolutionEditPage />}
+          />
+          <Route path="/auth/admin/resolutions" element={<ResolutionPage />} />
+          <Route
+            path="/auth/admin/reports/create"
+            element={<ReportCreatePage />}
+          />
+          <Route path="/auth/admin/reports/:id" element={<ReportEditPage />} />
+          <Route path="/auth/admin/reports" element={<ReportPage />} />
         </Route>
         <Route path="/auth/user" element={<LayoutAuth />}>
           <Route

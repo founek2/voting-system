@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,14 +19,25 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 #[ORM\Entity]
 #[ApiResource(
-    normalizationContext: ['groups' => ['media_object:read']],
+    normalizationContext: ['groups' => ['media:read']],
     types: ['https://schema.org/MediaObject'],
     outputFormats: ['jsonld' => ['application/ld+json']],
     operations: [
-        new Get(uriTemplate: 'media/posters/{id}'),
-        new GetCollection(uriTemplate: 'media/posters'),
+        new Get(uriTemplate: 'public/media-reports/{id}'),
+        new GetCollection(uriTemplate: 'public/media-reports'),
+        new Patch(
+            uriTemplate: 'media/reports/{id}',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            denormalizationContext: ['groups' => ['media:edit']],
+            validationContext: ['groups' => ['media:edit']],
+        ),
+        new Delete(
+            uriTemplate: 'media/reports/{id}',
+            security: 'user.hasRole("ROLE_ADMIN")',
+        ),
         new Post(
-            uriTemplate: 'media/posters',
+            uriTemplate: 'media/reports',
+            security: 'user.hasRole("ROLE_ADMIN")',
             inputFormats: ['multipart' => ['multipart/form-data']],
             openapi: new Model\Operation(
                 requestBody: new Model\RequestBody(
@@ -44,19 +57,20 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                 )
             )
         )
-    ]
+    ],
+    order: ['id' => 'DESC']
 )]
-class MediaPoster
+class MediaReport
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
-    #[Groups(['media_object:read'])]
+    #[Groups(['media:read'])]
     private ?int $id = null;
 
     #[ApiProperty(types: ['https://schema.org/contentUrl'], writable: false)]
-    #[Groups(['media_object:read', 'candidate:read'])]
+    #[Groups(['media:read'])]
     public ?string $contentUrl = null;
 
-    #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
+    #[Vich\UploadableField(mapping: 'report_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull]
     public ?File $file = null;
 
@@ -64,33 +78,12 @@ class MediaPoster
     #[ORM\Column(nullable: true)]
     public ?string $filePath = null;
 
-    #[ORM\OneToOne(mappedBy: 'poster', cascade: ['persist', 'remove'])]
-    private ?Candidate $candidate = null;
+    #[ORM\Column]
+    #[Groups(['Default', 'media:read', 'media:edit'])]
+    public ?string $name = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCandidate(): ?Candidate
-    {
-        return $this->candidate;
-    }
-
-    public function setCandidate(?Candidate $candidate): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($candidate === null && $this->candidate !== null) {
-            $this->candidate->setPoster(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($candidate !== null && $candidate->getPoster() !== $this) {
-            $candidate->setPoster($this);
-        }
-
-        $this->candidate = $candidate;
-
-        return $this;
     }
 }

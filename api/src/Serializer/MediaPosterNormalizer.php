@@ -3,6 +3,8 @@
 namespace App\Serializer;
 
 use App\Entity\MediaPoster;
+use App\Entity\MediaReport;
+use App\Entity\MediaResolution;
 use Vich\UploaderBundle\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -34,13 +36,15 @@ class MediaPosterNormalizer implements NormalizerInterface
             return false;
         }
 
-        return $data instanceof MediaPoster;
+        return $data instanceof MediaPoster || $data instanceof MediaReport || $data instanceof MediaResolution;
     }
 
     public function getSupportedTypes(?string $format): array
     {
         return [
             MediaPoster::class => true,
+            MediaReport::class => true,
+            MediaResolution::class => true,
         ];
     }
 }

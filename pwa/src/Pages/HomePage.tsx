@@ -1,4 +1,4 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Button, Grid2, Paper, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import PublicElectionStepper from "../Components/PublicElectionStepper";
@@ -8,6 +8,8 @@ import { head } from "../util/head";
 import Loader from "../Components/Loader";
 import { useGetPublicCandidatesQuery } from "../endpoints/candidates";
 import { CandidateFancyCard } from "../Components/CandidateFancyCard";
+import BasicInformation from "../Components/BasicInformation";
+import FileButton from "../Components/FileButton";
 
 function StepperSection() {
   return (
@@ -91,11 +93,53 @@ function CandidatesSection() {
   );
 }
 
+function BasicInformationSection() {
+  return (
+    <Grid2>
+      <BasicInformation />
+    </Grid2>
+  );
+}
+
+function FilesSection() {
+  return (
+    <Grid2
+      container
+      spacing={4}
+      size={12}
+      justifyContent="center"
+      display="flex"
+    >
+      <Grid2 size={12}>
+        <Typography variant="h3" color="primary" textAlign="center">
+          Dokumenty
+        </Typography>
+      </Grid2>
+      <Grid2>
+        <Paper
+          sx={{ width: "100%", display: "flex", flexDirection: "column", p: 2 }}
+        >
+          <FileButton href="http://www.siliconhill.cz/uploads/stanovy_klubu_siliconhill.pdf">
+            Stanovy klubu Silicon Hill (účinné od 1. 1. 2017)
+          </FileButton>
+          <FileButton href="https://zapisy.sh.cvut.cz/prilohy/20240515-Volebni-rad-klubu-Silicon-Hill.pdf">
+            Volební řád klubu Silicon Hill (účinný od 15. 05. 2024)
+          </FileButton>
+          <FileButton href="#">Usnesení volební komise</FileButton>
+          <FileButton href="#">Závěrečné zprávy</FileButton>
+        </Paper>
+      </Grid2>
+    </Grid2>
+  );
+}
+
 export default function HomePage() {
   return (
     <Grid2 container spacing={15}>
       <StepperSection />
       <CandidatesSection />
+      <BasicInformationSection />
+      <FilesSection />
     </Grid2>
   );
 }

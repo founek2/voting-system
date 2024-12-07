@@ -17,6 +17,8 @@ export type { LoginResource_jsonld_url_read } from './models/LoginResource_jsonl
 export type { LoginResource_LoginResponseDto_jsonld } from './models/LoginResource_LoginResponseDto_jsonld';
 export type { MediaPoster_jsonld_candidate_read } from './models/MediaPoster_jsonld_candidate_read';
 export type { MediaPoster_jsonld_media_object_read } from './models/MediaPoster_jsonld_media_object_read';
+export type { MediaReport_jsonld_report_object_read } from './models/MediaReport_jsonld_report_object_read';
+export type { MediaResolution_jsonld_resolution_object_read } from './models/MediaResolution_jsonld_resolution_object_read';
 export type { Position_jsonld_candidate_read } from './models/Position_jsonld_candidate_read';
 export type { Position_jsonld_position_read } from './models/Position_jsonld_position_read';
 export type { Position_jsonld_position_write } from './models/Position_jsonld_position_write';

@@ -180,7 +180,6 @@ export default function CandidateForm({
         <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
           {posterMedia?.contentUrl ? (
             <Card>
-              {/* <CardActionArea> */}
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   Náhled plakátu
@@ -191,7 +190,6 @@ export default function CandidateForm({
                 width="100%"
                 style={{ border: 0, height: "auto", aspectRatio: 8.5 / 8 }}
               ></iframe>
-              {/* </CardActionArea> */}
             </Card>
           ) : null}
         </Grid2>

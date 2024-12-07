@@ -1,14 +1,10 @@
+import AddIcon from "@mui/icons-material/Add";
 import { Grid2, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useGetElectionsQuery } from "../endpoints/elections";
-import { ElectionCard } from "../Components/ElectionCard";
-import { Election } from "../types";
 import Loader from "../Components/Loader";
-import AddIcon from "@mui/icons-material/Add";
-import { isPassed } from "../util/isPassed";
-import { useGetPositionsQuery } from "../endpoints/positions";
 import { PositionCard } from "../Components/PositionCard";
+import { useGetPositionsQuery } from "../endpoints/positions";
 
 export default function PositionPage() {
   const { data: positions } = useGetPositionsQuery();

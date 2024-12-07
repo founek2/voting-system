@@ -25,7 +25,6 @@ export const mediaPosterApi = api.injectEndpoints({
             },
             invalidatesTags: ['MediaPosters'],
         }),
-
     }),
 });
 

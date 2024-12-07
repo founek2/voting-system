@@ -46,6 +46,8 @@ export const api = createApi({
         'PublicElections',
         'Candidates',
         'MediaPosters',
+        'MediaReports',
+        'MediaResolutions',
         'Ballot',
         'Votes'
     ],
