@@ -34,9 +34,6 @@ export const signInApi = api.injectEndpoints({
             query(data) {
                 return {
                     url: `elections/${data.id}`,
-                    // headers: {
-                    //     'Content-Type': 'application/merge-patch+json'
-                    // },
                     method: 'PATCH',
                     body: JSON.stringify(data.body),
                 };
