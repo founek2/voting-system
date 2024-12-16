@@ -8,7 +8,11 @@ export default function ReportCreatePage() {
   const [createReport, { isLoading: isMutation }] = useAddReportMutation();
   const navigate = useNavigate();
 
-  async function onSubmit(data: { file: File; name: string }) {
+  async function onSubmit(data: {
+    file: File;
+    name: string;
+    publishedAt: string;
+  }) {
     const { error } = await createReport(data);
     if (error) {
       handleError(error);

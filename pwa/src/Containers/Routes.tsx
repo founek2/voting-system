@@ -5,7 +5,7 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
-import HomePage from "../Pages/HomePage";
+import PublicHomePage from "../Pages/PublicHomePage";
 import OAuthCallback from "../Pages/OAuthCallback";
 import Layout from "../Components/Layout";
 import AuthGuard from "../Components/AuthGuard";
@@ -27,6 +27,8 @@ import ReportCreatePage from "../Pages/ReportCreatePage";
 import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
 import ReportEditPage from "../Pages/ReportEditPage";
 import ResolutionEditPage from "../Pages/ResolutionEditPage";
+import PublicReportPage from "../Pages/PublicReportPage";
+import PublicResolutionPage from "../Pages/PublicResolutionPage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -89,7 +91,9 @@ export default function MyRoutes() {
 
       <Route path="/oauth/callback" element={<OAuthCallback />} />
       <Route path="/" element={<Layout />}>
-        <Route path="" element={<HomePage />} />
+        <Route path="/reports" element={<PublicReportPage />} />
+        <Route path="/resolutions" element={<PublicResolutionPage />} />
+        <Route path="" element={<PublicHomePage />} />
       </Route>
     </Routes>
   );

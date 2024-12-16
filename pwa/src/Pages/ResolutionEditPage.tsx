@@ -1,18 +1,13 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ReportForm from "../Components/ReportForm";
-import {
-  useAddReportMutation,
-  useGetPublicReportQuery,
-  useUpdateReportMutation,
-} from "../endpoints/mediaReport";
-import { handleError } from "../util/handleError";
 import Loader from "../Components/Loader";
-import { Typography } from "@mui/material";
+import ReportForm from "../Components/ReportForm";
 import {
   useGetPublicResolutionQuery,
   useUpdateResolutionMutation,
 } from "../endpoints/mediaResolution";
+import { handleError } from "../util/handleError";
 
 export default function ResolutionEditPage() {
   const params = useParams<{ id: string }>();
@@ -25,7 +20,11 @@ export default function ResolutionEditPage() {
     useUpdateResolutionMutation();
   const navigate = useNavigate();
 
-  async function onSubmit(data: { file: File; name: string }) {
+  async function onSubmit(data: {
+    file: File;
+    name: string;
+    publishedAt: string;
+  }) {
     if (!resolution) return;
 
     const { error } = await updateResolution({

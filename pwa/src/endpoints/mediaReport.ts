@@ -1,22 +1,23 @@
 import { Hydra } from '../types';
 import { api } from './api';
-import { MediaReport_jsonld_report_object_read } from './types';
+import { MediaReport_jsonld_media_read } from './types';
 
 export const reportApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getPublicReport: build.query<MediaReport_jsonld_report_object_read, number>({
+        getPublicReport: build.query<MediaReport_jsonld_media_read, number>({
             query: (id) => `public/media-reports/${id}`,
             providesTags: ['MediaReports'],
         }),
-        getPublicReports: build.query<Hydra<MediaReport_jsonld_report_object_read>, void>({
+        getPublicReports: build.query<Hydra<MediaReport_jsonld_media_read>, void>({
             query: () => `public/media-reports?itemsPerPage=100`,
             providesTags: ['MediaReports'],
         }),
-        addReport: build.mutation<MediaReport_jsonld_report_object_read, { file: File, name: string }>({
-            query: ({ file, name }) => {
+        addReport: build.mutation<MediaReport_jsonld_media_read, { file: File, name: string, publishedAt: string }>({
+            query: ({ file, name, publishedAt }) => {
                 var bodyFormData = new FormData();
                 bodyFormData.append('file', file);
                 bodyFormData.append('name', name);
+                bodyFormData.append('publishedAt', publishedAt);
 
                 return {
                     url: `media/reports`,
@@ -30,7 +31,7 @@ export const reportApi = api.injectEndpoints({
             },
             invalidatesTags: ['MediaReports'],
         }),
-        updateReport: build.mutation<MediaReport_jsonld_report_object_read, { id: number, body: { file: File, name: string } }>({
+        updateReport: build.mutation<MediaReport_jsonld_media_read, { id: number, body: { file: File, name: string, publishedAt: string } }>({
             query(data) {
                 return {
                     url: `media/reports/${data.id}`,

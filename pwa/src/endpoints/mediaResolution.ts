@@ -1,22 +1,23 @@
 import { Hydra } from '../types';
 import { api } from './api';
-import { MediaResolution_jsonld_resolution_object_read } from './types';
+import { MediaResolution_jsonld_media_read } from './types';
 
 export const resolutionApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getPublicResolution: build.query<MediaResolution_jsonld_resolution_object_read, number>({
+        getPublicResolution: build.query<MediaResolution_jsonld_media_read, number>({
             query: (id) => `public/media-resolutions/${id}`,
             providesTags: ['MediaResolutions'],
         }),
-        getPublicResolutions: build.query<Hydra<MediaResolution_jsonld_resolution_object_read>, void>({
+        getPublicResolutions: build.query<Hydra<MediaResolution_jsonld_media_read>, void>({
             query: () => `public/media-resolutions?itemsPerPage=100`,
             providesTags: ['MediaResolutions'],
         }),
-        addResolution: build.mutation<MediaResolution_jsonld_resolution_object_read, { file: File, name: string }>({
-            query: ({ file, name }) => {
+        addResolution: build.mutation<MediaResolution_jsonld_media_read, { file: File, name: string, publishedAt: string }>({
+            query: ({ file, name, publishedAt }) => {
                 var bodyFormData = new FormData();
                 bodyFormData.append('file', file);
                 bodyFormData.append('name', name);
+                bodyFormData.append('publishedAt', publishedAt);
 
                 return {
                     url: `media/resolutions`,
@@ -30,7 +31,7 @@ export const resolutionApi = api.injectEndpoints({
             },
             invalidatesTags: ['MediaResolutions'],
         }),
-        updateResolution: build.mutation<MediaResolution_jsonld_resolution_object_read, { id: number, body: { file: File, name: string } }>({
+        updateResolution: build.mutation<MediaResolution_jsonld_media_read, { id: number, body: { file: File, name: string, publishedAt: string } }>({
             query(data) {
                 return {
                     url: `media/resolutions/${data.id}`,

@@ -24,7 +24,7 @@ export default function BasicInformation() {
         </Typography>
       </Grid2>
       <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
-        <Paper sx={{ p: 2, "& p:not(:first-child)": { pt: 1 } }}>
+        <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
           <Typography variant="h3">Představenstvo</Typography>
           <Typography>
             Představenstvo klubu Silicon Hill má nejvýše 15 členů:
@@ -68,7 +68,7 @@ export default function BasicInformation() {
         </Paper>
       </Grid2>
       <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
-        <Paper sx={{ p: 2, "& p:not(:first-child)": { pt: 1 } }}>
+        <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
           <Typography variant="h3">Chceš kandidovat?</Typography>
           <Typography variant="h5" pt={2}>
             Přihlášení

@@ -1,15 +1,15 @@
 import { Box, Button, Grid2, Paper, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import PublicElectionStepper from "../Components/PublicElectionStepper";
-import { useGetPublicElectionsQuery } from "../endpoints/elections";
-import { splitElections } from "../util/splitElections";
-import { head } from "../util/head";
-import Loader from "../Components/Loader";
-import { useGetPublicCandidatesQuery } from "../endpoints/candidates";
-import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 import BasicInformation from "../Components/BasicInformation";
+import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 import FileButton from "../Components/FileButton";
+import Loader from "../Components/Loader";
+import PublicElectionStepper from "../Components/PublicElectionStepper";
+import { useGetPublicCandidatesQuery } from "../endpoints/candidates";
+import { useGetPublicElectionsQuery } from "../endpoints/elections";
+import { head } from "../util/head";
+import { splitElections } from "../util/splitElections";
 
 function StepperSection() {
   return (
@@ -63,6 +63,8 @@ function CandidatesSection() {
   } = useGetPublicCandidatesQuery(Number(ongoingElection?.id!), {
     skip: !ongoingElection?.id,
   });
+
+  if (!ongoingElection) return null;
 
   return (
     <Grid2 container spacing={4} size={12}>
@@ -125,8 +127,12 @@ function FilesSection() {
           <FileButton href="https://zapisy.sh.cvut.cz/prilohy/20240515-Volebni-rad-klubu-Silicon-Hill.pdf">
             Volební řád klubu Silicon Hill (účinný od 15. 05. 2024)
           </FileButton>
-          <FileButton href="#">Usnesení volební komise</FileButton>
-          <FileButton href="#">Závěrečné zprávy</FileButton>
+          <Link to="/resolutions">
+            <Button color="secondary">Usnesení volební komise</Button>
+          </Link>
+          <Link to="/reports">
+            <Button color="secondary">Závěrečné zprávy</Button>
+          </Link>
         </Paper>
       </Grid2>
     </Grid2>

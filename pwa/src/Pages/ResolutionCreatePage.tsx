@@ -9,7 +9,11 @@ export default function ResolutionCreatePage() {
     useAddResolutionMutation();
   const navigate = useNavigate();
 
-  async function onSubmit(data: { file: File; name: string }) {
+  async function onSubmit(data: {
+    file: File;
+    name: string;
+    publishedAt: string;
+  }) {
     const { error } = await createResolution(data);
     if (error) {
       handleError(error);

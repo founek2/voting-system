@@ -57,7 +57,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             )
         )
     ],
-    order: ['id' => 'DESC']
+    order: ['publishedAt' => 'DESC']
 )]
 #[Vich\Uploadable]
 #[ORM\Entity]
@@ -85,8 +85,24 @@ class MediaReport
     #[Groups(['Default', 'media:read', 'media:edit'])]
     public ?string $name = null;
 
+    #[ORM\Column]
+    #[Groups(['Default', 'media:read', 'media:edit'])]
+    private ?\DateTimeImmutable $publishedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPublishedAt(): ?\DateTimeImmutable
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): static
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
     }
 }

@@ -12,11 +12,12 @@ import { MuiFileInput } from "mui-file-input";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
-import { MediaReport_jsonld_report_object_read } from "../endpoints/types";
+import { MediaReport_jsonld_media_read } from "../endpoints/types";
+import { MyDatePicker } from "./MyDatePicker";
 
-type data = { file: File; name: string };
+type data = { file: File; name: string; publishedAt: string };
 interface CandidateFormProps {
-  defaultValues?: Partial<MediaReport_jsonld_report_object_read>;
+  defaultValues?: Partial<MediaReport_jsonld_media_read>;
   onSubmit: SubmitHandler<data>;
   disabled?: boolean;
   edit?: boolean;
@@ -65,6 +66,14 @@ export default function ReportForm({
               label="Název"
               fullWidth
               {...register("name", { required: true })}
+            />
+          </Grid2>
+
+          <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+            <MyDatePicker
+              label="Datum zvěřejnění"
+              {...register("publishedAt", { required: true })}
+              defaultValue={defaultValues?.publishedAt}
             />
           </Grid2>
 
