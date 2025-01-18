@@ -1,17 +1,30 @@
 import { Grid2, IconButton, Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGetElectionsQuery } from "../endpoints/elections";
 import { ElectionCard } from "../Components/ElectionCard";
-import { Election } from "../types";
+import { Election, Role } from "../types";
 import Loader from "../Components/Loader";
 import AddIcon from "@mui/icons-material/Add";
-import { isPassed } from "../util/isPassed";
 import { splitElections } from "../util/splitElections";
+import { useAppSelector } from "../hooks/app";
 
 export default function ElectionPage() {
   const { data: elections } = useGetElectionsQuery();
   const electionsData = splitElections(elections?.member || []);
+  const roles = useAppSelector(
+    (state) => state.authorization.currentUser?.roles
+  );
+  const navigate = useNavigate();
+  const isAdmin = roles?.includes(Role.ROLE_ADMIN) || false;
+
+  function onViewVotes(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    election: Election
+  ) {
+    e.preventDefault();
+    navigate(`${election.id}/votes`);
+  }
 
   return (
     <Grid2 container spacing={2}>
@@ -30,7 +43,11 @@ export default function ElectionPage() {
           electionsData.current?.map((e) => (
             <Grid2 size={4} key={e.id}>
               <Link to={`${e.id}`}>
-                <ElectionCard election={e} />
+                <ElectionCard
+                  election={e}
+                  isAdmin={isAdmin}
+                  onViewVotes={onViewVotes}
+                />
               </Link>
             </Grid2>
           ))
@@ -48,7 +65,7 @@ export default function ElectionPage() {
           electionsData.passed?.map((e: Election) => (
             <Grid2 size={4} key={e.id}>
               <Link to={`${e.id}`}>
-                <ElectionCard election={e} />
+                <ElectionCard election={e} isAdmin />
               </Link>
             </Grid2>
           ))

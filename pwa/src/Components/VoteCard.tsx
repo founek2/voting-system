@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Link,
   SxProps,
   Theme,
   Typography,
@@ -12,36 +13,37 @@ import React from "react";
 import { Candidate } from "../types";
 import { candidateTitle } from "../util/candidateTitle";
 import { PosterButton } from "./PosterButton";
+import { Vote_jsonld_vote_read } from "../endpoints/types";
+import { voteTitle } from "../util/voteTitle";
 
-interface ElectionCardProps {
-  candidate: Candidate;
+interface VoteCardProps {
+  vote: Vote_jsonld_vote_read;
   title?: string;
   children?: JSX.Element | JSX.Element[] | null;
   sx?: SxProps<Theme>;
+  zone: string;
 }
-export function CandidateVoteCard({
-  candidate,
-  title,
-  children,
-  sx,
-}: ElectionCardProps) {
+export function VoteCard({ vote, title, children, sx, zone }: VoteCardProps) {
   return (
     <Card
       sx={[
         {
           minWidth: 250,
-          opacity: candidate.withdrewAt ? 0.6 : undefined,
+          opacity: vote.invalidatedAt ? 0.6 : undefined,
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <CardHeader title={title ? title : candidateTitle(candidate)} />
-      <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
-          {candidate.appUser?.firstName} {candidate.appUser?.lastName}
-        </Typography>
-        <Typography>UID: {candidate.appUser?.id}</Typography>
-        <PosterButton candidate={candidate} />
+      <CardHeader title={title ? title : voteTitle(vote)} />
+      <CardContent sx={{ py: 0 }}>
+        <Link
+          href={`https://is.sh.cvut.cz/users/${vote.appUser?.id}`}
+          target="_blank"
+          underline="none"
+        >
+          <Typography>UID: {vote.appUser?.id}</Typography>
+        </Link>
+        <Typography>Oblast: {zone}</Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
         {children}

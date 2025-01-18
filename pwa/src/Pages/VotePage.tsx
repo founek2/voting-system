@@ -52,7 +52,11 @@ function VoteListMobile({
   return (
     <Grid2 container spacing={2} display="flex" justifyContent="center">
       {candidates.map((candidate, i) => (
-        <CandidateVoteCard candidate={candidate} key={candidate.id}>
+        <CandidateVoteCard
+          candidate={candidate}
+          key={candidate.id}
+          sx={{ width: "100%" }}
+        >
           {candidate.withdrewAt ? (
             <Typography>Odstoupil z kandidatury</Typography>
           ) : (
@@ -199,7 +203,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                 </ConditionalTooltip>
               </Grid2>
               <Grid2 size={2} justifyContent="center" display="flex">
-                <PosterButton candidate={candidate} />
+                <PosterButton candidate={candidate} disabled={withdrew} />
               </Grid2>
               <Grid2 size={sizeVoting} justifyContent="center" display="flex">
                 {withdrew ? (

@@ -19,6 +19,19 @@ export const signInApi = api.injectEndpoints({
         getPublicCandidates: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `public/elections/${electionId}/candidates`,
             providesTags: ['Candidates'],
+            transformResponse: (data: Hydra<Candidate>) => {
+                data.member.sort((a, b) => {
+                    if (a.withdrewAt && !b.withdrewAt) {
+                        return 1;
+                    }
+                    if (!a.withdrewAt && b.withdrewAt) {
+                        return -1;
+                    }
+                    return 0
+                })
+
+                return data;
+            }
         }),
         getCandidatesVoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=voted`,

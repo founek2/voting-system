@@ -47,7 +47,7 @@ class User implements ResourceOwnerInterface, UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column]
-    #[Groups(['user:read', 'candidate:read'])]
+    #[Groups(['user:read', 'candidate:read', 'vote:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -55,11 +55,11 @@ class User implements ResourceOwnerInterface, UserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'candidate:read'])]
+    #[Groups(['user:read', 'candidate:read', 'vote:read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'candidate:read'])]
+    #[Groups(['user:read', 'candidate:read', 'vote:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -77,7 +77,7 @@ class User implements ResourceOwnerInterface, UserInterface
     private ?AccessToken $accessToken = null;
 
     #[ORM\ManyToOne]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'vote:read'])]
     private ?Zone $zone = null;
 
     #[ORM\Column(length: 255, nullable: true)]

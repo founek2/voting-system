@@ -2,11 +2,11 @@
 
 namespace App\ApiResource;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Vote;
 use App\State\NewBallotVoteProcessor;
+use App\Validator\BallotResourceAllowed;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     uriTemplate: 'ballot/vote'
 )]
+#[BallotResourceAllowed()]
 class BallotResource
 {
     #[Assert\Valid]
