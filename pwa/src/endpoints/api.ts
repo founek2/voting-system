@@ -49,7 +49,8 @@ export const api = createApi({
         'MediaReports',
         'MediaResolutions',
         'Ballot',
-        'Votes'
+        'Votes',
+        'Users',
     ],
     /**
      * This api has endpoints injected in adjacent files,

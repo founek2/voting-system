@@ -15,8 +15,9 @@ import { PosterButton } from "./PosterButton";
 
 interface ElectionCardProps {
   candidate: Candidate;
+  children?: JSX.Element | JSX.Element[];
 }
-export function CandidateFancyCard({ candidate }: ElectionCardProps) {
+export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
   return (
     <Card
       sx={{
@@ -61,6 +62,7 @@ export function CandidateFancyCard({ candidate }: ElectionCardProps) {
             UID: {candidate.appUser?.id}
           </Typography>
         </Link>
+        {children}
       </CardContent>
       <CardActions>
         <PosterButton candidate={candidate} />

@@ -9,9 +9,11 @@ export type { Candidate_candidate_edit } from './models/Candidate_candidate_edit
 export type { Candidate_candidate_write } from './models/Candidate_candidate_write';
 export type { Candidate_jsonld_candidate_read } from './models/Candidate_jsonld_candidate_read';
 export type { Candidate_jsonld_candidate_write } from './models/Candidate_jsonld_candidate_write';
+export type { CandidateResult_jsonld_candidate_read } from './models/CandidateResult_jsonld_candidate_read';
 export type { Election_election_write } from './models/Election_election_write';
 export type { Election_jsonld_election_read } from './models/Election_jsonld_election_read';
 export type { Election_jsonld_election_write } from './models/Election_jsonld_election_write';
+export type { ElectionResultResource_jsonld_candidate_read } from './models/ElectionResultResource_jsonld_candidate_read';
 export type { LoginResource_jsonld_code_write } from './models/LoginResource_jsonld_code_write';
 export type { LoginResource_jsonld_url_read } from './models/LoginResource_jsonld_url_read';
 export type { LoginResource_LoginResponseDto_jsonld } from './models/LoginResource_LoginResponseDto_jsonld';

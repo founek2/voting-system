@@ -267,4 +267,9 @@ class Election
 
         return null;
     }
+
+    public function isFinished(): bool
+    {
+        return   $this->getStage() == ElectionStage::FINAL_RESULTS;
+    }
 }

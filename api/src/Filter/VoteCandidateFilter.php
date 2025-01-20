@@ -6,6 +6,7 @@ use ApiPlatform\Doctrine\Orm\Filter\AbstractFilter;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\Election;
+use App\Entity\Position;
 use App\Entity\User;
 use App\Entity\Vote;
 use DateTimeImmutable;
@@ -50,32 +51,43 @@ final class VoteCandidateFilter extends AbstractFilter
 
         $nowParam = $queryNameGenerator->generateParameterName('now');
         $qb = $queryBuilder->getEntityManager()->createQueryBuilder();
-        $subQuery = $qb->select('e.id')
+        $votingElectionsSubQuery = $qb->select('e.id')
             ->from(Election::class, 'e')
             ->andWhere(sprintf('e.electronicVotingDate <= :%s', $nowParam))
             ->andWhere(sprintf(':%s < e.ballotVotingDate', $nowParam));
 
         $queryBuilder
-            ->andWhere($queryBuilder->expr()->in(sprintf('IDENTITY(%s.election)', $alias), $subQuery->getDQL()))
+            ->andWhere($queryBuilder->expr()->in(sprintf('IDENTITY(%s.election)', $alias), $votingElectionsSubQuery->getDQL()))
             ->setParameter($nowParam, new DateTimeImmutable());
 
         /** @var User */
         $user = $this->security->getUser();
-        $userParam = $queryNameGenerator->generateParameterName('now');
+        $userParam = $queryNameGenerator->generateParameterName('user');
         $qb = $queryBuilder->getEntityManager()->createQueryBuilder();
-        $subQuery = $qb->select('IDENTITY(v.candidate)')
+        $votedCandidatesSubQuery = $qb->select('IDENTITY(v.candidate)')
             ->from(Vote::class, 'v')
             ->andWhere(sprintf('IDENTITY(v.appUser) = :%s', $userParam));
 
+        $zoneParam = $queryNameGenerator->generateParameterName('zone');
+        $qb = $queryBuilder->getEntityManager()->createQueryBuilder();
+        $allowedPositionsSubQuery = $qb->select('p.id')
+            ->from(Position::class, 'p')
+            ->leftJoin('p.zoneRestrictions', 'zone')
+            ->andWhere(sprintf('zone = :%s OR zone IS NULL', $zoneParam));
+
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->in(sprintf('IDENTITY(%s.position)', $alias), $allowedPositionsSubQuery->getDQL()));
+
         if ($value == self::VOTED) {
             $queryBuilder
-                ->andWhere($queryBuilder->expr()->in(sprintf('%s.id', $alias), $subQuery->getDQL()));
+                ->andWhere($queryBuilder->expr()->in(sprintf('%s.id', $alias), $votedCandidatesSubQuery->getDQL()));
         } else if ($value == self::UNVOTED) {
             $queryBuilder
-                ->andWhere($queryBuilder->expr()->notIn(sprintf('%s.id', $alias), $subQuery->getDQL()));
+                ->andWhere($queryBuilder->expr()->notIn(sprintf('%s.id', $alias), $votedCandidatesSubQuery->getDQL()));
         }
 
         $queryBuilder->setParameter($userParam, $user->getId());
+        $queryBuilder->setParameter($zoneParam, $user->getZone());
     }
     /*
      * This function is only used to hook in documentation generators (supported by Swagger and Hydra).

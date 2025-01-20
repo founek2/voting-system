@@ -1,11 +1,20 @@
 import { Hydra } from '../types';
 import { api } from './api';
-import { MediaPoster_jsonld_media_object_read, Position_jsonld_position_read, Position_position_write, Vote_jsonld_vote_read } from './types';
+import { Vote_jsonld_vote_read } from './types';
 
 export const votesApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getVotesForElection: build.query<Hydra<Vote_jsonld_vote_read>, string>({
-            query: (electionId) => `votes?candidate.election=${electionId}&perPage=2000`,
+        getVotesForElection: build.query<Hydra<Vote_jsonld_vote_read>, { electionId: string, zoneId?: string, userId?: string }>({
+            query: ({ electionId, zoneId, userId }) => ({
+                url: 'votes',
+                params: {
+                    'candidate.election': electionId,
+                    'perPage': 2000,
+                    'appUser.zone': zoneId,
+                    'appUser': userId,
+                    'exists[invalidatedAt]': false,
+                }
+            }),
             providesTags: ['Votes'],
         }),
         invalidateVote: build.mutation<void, number>({
@@ -21,4 +30,4 @@ export const votesApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetVotesForElectionQuery, useInvalidateVoteMutation } = votesApi;
+export const { useGetVotesForElectionQuery, useInvalidateVoteMutation, useLazyGetVotesForElectionQuery } = votesApi;

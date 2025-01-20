@@ -30,6 +30,7 @@ import ResolutionEditPage from "../Pages/ResolutionEditPage";
 import PublicReportPage from "../Pages/PublicReportPage";
 import PublicResolutionPage from "../Pages/PublicResolutionPage";
 import ElectionVotesPage from "../Pages/ElectionVotesPage";
+import ElectionResultPage from "../Pages/ElectionResultPage";
 
 const SuspenseTrigger = () => {
   throw new Promise(() => {});
@@ -52,6 +53,10 @@ export default function MyRoutes() {
           <Route
             path="/auth/admin/elections/:id/votes"
             element={<ElectionVotesPage />}
+          />
+          <Route
+            path="/auth/admin/elections/:id/result"
+            element={<ElectionResultPage />}
           />
           <Route
             path="/auth/admin/positions/create"

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
@@ -29,13 +33,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['user:read']],
     operations: [
         new GetCollection(
-            security: 'user.hasRole("ROLE_ADMIN")'
+            security: 'user.hasRole("ROLE_ADMIN")',
+            paginationMaximumItemsPerPage: 2000,
         ),
         new Get(
             provider: UserProvider::class,
         ),
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['votes.candidate.election' => 'exact', 'zone' => 'exact'])]
+#[ApiFilter(ExistsFilter::class, properties: ['votes.invalidatedAt'])]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity('email')]

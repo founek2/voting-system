@@ -4,8 +4,10 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use App\Const\ElectionStage;
 use App\Entity\Vote;
 use DateTimeImmutable;
+use Exception;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class VoteInvalidateProcessor implements ProcessorInterface
@@ -26,6 +28,9 @@ class VoteInvalidateProcessor implements ProcessorInterface
     {
         if (!$data instanceof Vote) {
             throw new \InvalidArgumentException('Data must be an instance of ' . Vote::class);
+        }
+        if ($data->getCandidate()->getElection()->getStage() == ElectionStage::FINAL_RESULTS) {
+            throw new Exception('Unable to modify votes in finished election');
         }
 
         $data->setInvalidatedAt(new DateTimeImmutable());

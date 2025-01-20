@@ -26,6 +26,14 @@ export default function ElectionPage() {
     navigate(`${election.id}/votes`);
   }
 
+  function onViewResult(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    election: Election
+  ) {
+    e.preventDefault();
+    navigate(`${election.id}/result`);
+  }
+
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
@@ -41,12 +49,13 @@ export default function ElectionPage() {
       <Grid2 container size={12} spacing={2}>
         {elections ? (
           electionsData.current?.map((e) => (
-            <Grid2 size={4} key={e.id}>
+            <Grid2 size={12} key={e.id}>
               <Link to={`${e.id}`}>
                 <ElectionCard
                   election={e}
                   isAdmin={isAdmin}
                   onViewVotes={onViewVotes}
+                  onViewResult={onViewResult}
                 />
               </Link>
             </Grid2>

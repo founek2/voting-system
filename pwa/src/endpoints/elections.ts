@@ -1,6 +1,6 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
-import { Election_jsonld_election_read, Election_jsonld_election_write } from './types';
+import { Election_jsonld_election_read, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -19,6 +19,17 @@ export const signInApi = api.injectEndpoints({
         getElection: build.query<Election_jsonld_election_read, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
+        }),
+        getElectionResult: build.query<ElectionResultResource_jsonld_candidate_read, number>({
+            query: (id) => `elections/${id}/result`,
+            providesTags: ['Elections', 'Votes'],
+            transformResponse: (data: ElectionResultResource_jsonld_candidate_read) => {
+                data.candidates?.sort((a, b) => {
+                    return (a.candidate?.position.id ?? 0) - (b.candidate?.position.id ?? 0);
+                })
+
+                return data;
+            }
         }),
         addElection: build.mutation<Election_jsonld_election_read, Election_jsonld_election_write>({
             query(body) {
@@ -43,4 +54,12 @@ export const signInApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetElectionsQuery, useAddElectionMutation, useUpdateElectionMutation, useGetElectionQuery, useGetPublicElectionsQuery, useGetPublicElectionsElectronicQuery } = signInApi;
+export const {
+    useGetElectionsQuery,
+    useAddElectionMutation,
+    useUpdateElectionMutation,
+    useGetElectionQuery,
+    useGetPublicElectionsQuery,
+    useGetPublicElectionsElectronicQuery,
+    useGetElectionResultQuery,
+} = signInApi;

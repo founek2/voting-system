@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -34,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Get(security: 'user.hasRole("ROLE_ADMIN")'),
         new Post(
+            // TODO add constraint to edit only non-finished elections
             uriTemplate: 'votes/{id}/invalidate',
             security: 'object.getInvalidatedAt() == null && user.hasRole("ROLE_ADMIN")',
             denormalizationContext: ['groups' => ['_']],
@@ -43,7 +45,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     mercure: true,
     normalizationContext: ['groups' => ['vote:read']],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['candidate.election' => 'exact', 'appUser' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['candidate.election' => 'exact', 'appUser' => 'exact', 'appUser.zone' => 'exact'])]
+#[ApiFilter(ExistsFilter::class, properties: ['invalidatedAt'])]
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
 #[UniqueEntity(['candidate', 'appUser'])]
 #[UniqueConstraint('uniq_vote_idx', ['candidate_id', 'app_user_id'])]

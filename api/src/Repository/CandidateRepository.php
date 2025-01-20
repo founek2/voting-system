@@ -45,4 +45,16 @@ class CandidateRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    /** @return Candidate[] */
+    public function findByElection(Election $election): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.election = :election')
+            ->andWhere('c.withdrewAt IS NULL')
+            ->setParameter('election', $election)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
