@@ -32,6 +32,9 @@ export default function ElectionResultPage() {
         </Typography>
       </Grid2>
       <Grid2 container size={12} spacing={2}>
+        {results?.candidates?.length === 0 ? (
+          <Typography> Nebyli přihlášení žádní kandidáti.</Typography>
+        ) : null}
         {results ? (
           results.candidates?.map((result) => (
             <Grid2 size={{ xs: 12, sm: 8, md: 5, lg: 2 }} key={result["@id"]}>

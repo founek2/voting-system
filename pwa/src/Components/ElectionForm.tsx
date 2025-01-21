@@ -109,7 +109,7 @@ export default function ElectionForm({
 
       <Grid2 size={dateSize}>
         <MyDatePicker
-          label="Vyhlášení konečních výsledků"
+          label="Vyhlášení konečných výsledků"
           {...register("finalResultsDate", { required: true })}
           defaultValue={defaultValues?.finalResultsDate}
         />

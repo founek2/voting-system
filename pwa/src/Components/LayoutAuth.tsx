@@ -34,6 +34,7 @@ import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppDispatch, useAppSelector } from "../hooks/app";
 import { authorizationReducerActions } from "../store/slices/authorizationSlice";
 import { Role } from "../types";
+import { cs } from "date-fns/locale/cs";
 
 const drawerWidth = 240;
 
@@ -230,7 +231,7 @@ export default function LayoutAuth() {
               <Typography>{user?.username}</Typography>
             </Paper>
           </Box>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={cs}>
             <Box p={2}>
               <Outlet />
             </Box>

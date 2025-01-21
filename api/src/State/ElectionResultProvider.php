@@ -20,7 +20,7 @@ class ElectionResultProvider implements ProviderInterface
     {
         $election = $this->electionRepository->find($uriVariables['id']);
         $candidates = $this->candidateRepository->findByElection($election);
-        $result = $this->electionRepository->calculateResult($candidates);
+        $result = $this->electionRepository->calculateResult($candidates, $election);
 
         return $result;
     }

@@ -56,7 +56,7 @@ const steps = [
           ${dateToString(election.registrationOfCandidatesDate, {
             subDays: 1,
           })}`,
-    description: `Volby vyhlašuje volební komise.`,
+    description: `Volby vyhlašuje předseda klubu Silicon Hill.`,
   },
   {
     label: (election: Election) => "Přihlašování kandidátů",

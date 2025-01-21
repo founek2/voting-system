@@ -73,7 +73,7 @@ class MediaResolution
     #[Groups(['media:read'])]
     public ?string $contentUrl = null;
 
-    #[Vich\UploadableField(mapping: 'resolution_object', fileNameProperty: 'filePath')]
+    #[Vich\UploadableField(mapping: 'resolution_object', fileNameProperty: 'filePath', size: 'size')]
     #[Assert\NotNull]
     public ?File $file = null;
 
@@ -84,6 +84,9 @@ class MediaResolution
     #[ORM\Column]
     #[Groups(['Default', 'media:read', 'media:edit'])]
     public ?string $name = null;
+
+    #[ORM\Column(nullable: true)]
+    public ?int $size = null;
 
     #[ORM\Column]
     #[Groups(['Default', 'media:read', 'media:edit'])]

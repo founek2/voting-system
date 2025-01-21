@@ -18,6 +18,7 @@ interface ElectionCardProps {
   children?: JSX.Element | JSX.Element[];
 }
 export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
+  const fullName = `${candidate.appUser?.firstName} ${candidate.appUser?.lastName}`;
   return (
     <Card
       sx={{
@@ -47,11 +48,11 @@ export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
       <CardMedia
         sx={{ height: 140 }}
         image={candidate.appUser?.photoSmallUrl || undefined}
-        title="green iguana"
+        title={fullName}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {candidate.appUser?.firstName} {candidate.appUser?.lastName}
+          {fullName}
         </Typography>
         <Link
           href={`https://is.sh.cvut.cz/users/${candidate.appUser?.id}`}

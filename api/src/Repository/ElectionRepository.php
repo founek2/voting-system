@@ -23,7 +23,7 @@ class ElectionRepository extends ServiceEntityRepository
     }
 
     /** @param Candidate[] $candidates */
-    public function calculateResult(array $candidates): ElectionResultResource
+    public function calculateResult(array $candidates, Election $election): ElectionResultResource
     {
         // TODO calculate result per candidate
         $results = [];
@@ -34,12 +34,13 @@ class ElectionRepository extends ServiceEntityRepository
             $results[] = new CandidateResult($candidate, $positiveVotes, $negativeVotes, $neutralVotes);
         }
 
-        return new ElectionResultResource($candidate->getElection()->getId(), $results);
+        return new ElectionResultResource($election->getId(), $results);
     }
 
     public function countVotes(VoteValue $value, Candidate $candidate): int
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $query = $qb
             ->select('COUNT(v.id)')
             ->from(Vote::class, 'v')
             ->innerJoin('v.candidate', 'c')
@@ -47,9 +48,10 @@ class ElectionRepository extends ServiceEntityRepository
             ->andWhere('v.invalidatedAt IS NULL')
             ->andWhere('c = :candidate')
             ->setParameter('val', $value)
-            ->setParameter('candidate', $candidate)
-            ->getQuery()
-            ->getSingleScalarResult();;
+            ->setParameter('candidate', $candidate);
+
+        return $query->getQuery()
+            ->getSingleScalarResult();
     }
 
 
