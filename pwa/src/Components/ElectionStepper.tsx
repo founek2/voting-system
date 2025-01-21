@@ -97,7 +97,7 @@ prospěch kandidáta.`,
         }
       )}`,
     description:
-      "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill.",
+      "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill a má aktivní základní členství.",
     action: (election: Election) => (
       <Link to={`/auth/user/vote`}>
         <Button color="primary">Hlasovat</Button>
@@ -113,17 +113,21 @@ prospěch kandidáta.`,
           subDays: 1,
         }
       )}`,
-    description: "Hlasovat fyzicky je možné pouze ve stanovenou dobu.",
+    description:
+      "Hlasovat fyzicky je možné pouze ve stanovenou dobu. Bližší informace o urnovém hlasování najdete v usnesení.",
   },
   {
     label: (election: Election) => "Vyhlášení předběžných výsledků",
     date: (election: Election) =>
       `${dateToString(election.preliminaryResultsDate)}`,
+    description:
+      "Stížnosti na průběh voleb je možné zaslat na email volby@sh.cvut.cz.",
   },
   {
     label: (election: Election) => "Uzávěrka podávání stížností",
     date: (election: Election) =>
       `${dateToString(election.complaintsDeadlineDate)}`,
+    description: "Nyní již není možno podávat stížnosti.",
   },
   {
     label: (election: Election) => "Vyhlášení konečných výsledků",
@@ -155,7 +159,7 @@ export default function ElectionStepper({
   election,
   sx,
 }: ElectionStepperProps) {
-  const activeStep = getStep(election);
+  const activeStep = 7;
 
   return (
     // <Box sx={{ maxWidth: 400 }}>
@@ -170,7 +174,9 @@ export default function ElectionStepper({
             <StepLabel
               optional={
                 index === steps.length - 1 ? (
-                  <Typography variant="caption">Ukončení voleb</Typography>
+                  <Typography variant="caption">
+                    Volby byly ukončeny.
+                  </Typography>
                 ) : null
               }
             >

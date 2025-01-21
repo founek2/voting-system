@@ -78,6 +78,7 @@ export default function LayoutAuth() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [counter, setCount] = useState(0);
 
   useEffect(() => {
     if (open && isMobile) setOpen(false);
@@ -100,6 +101,15 @@ export default function LayoutAuth() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  function handleEaesterEgg() {
+    setCount(counter + 1);
+  }
+  useEffect(() => {
+    if (counter % 6 == 5) {
+      enqueueSnackbar("Devtools tady nenajdeš 🙈");
+    }
+  }, [counter]);
 
   return (
     <>
@@ -222,7 +232,10 @@ export default function LayoutAuth() {
             >
               <MenuIcon />
             </IconButton>
-            <Paper sx={{ display: "flex", alignItems: "center", p: 1 }}>
+            <Paper
+              sx={{ display: "flex", alignItems: "center", p: 1 }}
+              onClick={handleEaesterEgg}
+            >
               <Avatar
                 alt="Remy Sharp"
                 src={user?.photoSmallUrl || undefined}
