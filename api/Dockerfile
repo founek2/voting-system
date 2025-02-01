@@ -69,6 +69,7 @@ RUN set -eux; \
 	;
 
 COPY --link frankenphp/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
+COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 
@@ -81,6 +82,7 @@ ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --link frankenphp/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
 RUN sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=8M/g' $PHP_INI_DIR/php.ini
 

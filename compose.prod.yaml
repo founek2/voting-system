@@ -12,7 +12,6 @@ services:
   pwa:
     build:
       context: ./pwa
-      target: prod
 
   database:
     environment:
