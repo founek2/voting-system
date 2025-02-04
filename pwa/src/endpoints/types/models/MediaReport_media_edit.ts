@@ -5,5 +5,6 @@
 export type MediaReport_media_edit = {
     name?: string;
     publishedAt?: string;
+    election?: string | null;
 };
 

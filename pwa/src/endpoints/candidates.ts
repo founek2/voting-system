@@ -4,8 +4,11 @@ import { Candidate_candidate_edit, Candidate_candidate_write, Position_jsonld_po
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getCandidates: build.query<Hydra<Candidate>, void>({
-            query: () => `candidates`,
+        getCandidates: build.query<Hydra<Candidate>, { election: string } | void>({
+            query: (params) => ({
+                url: `candidates`,
+                params: params || undefined
+            }),
             providesTags: ['Candidates'],
         }),
         getUserCandidates: build.query<Hydra<Candidate>, { userId: number, electionIds: string[] }>({

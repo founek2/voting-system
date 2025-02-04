@@ -34,6 +34,14 @@ export default function ElectionPage() {
     navigate(`${election.id}/result`);
   }
 
+  function onViewCandidates(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    election: Election
+  ) {
+    e.preventDefault();
+    navigate(`${election.id}/candidates`);
+  }
+
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
@@ -56,6 +64,7 @@ export default function ElectionPage() {
                   isAdmin={isAdmin}
                   onViewVotes={onViewVotes}
                   onViewResult={onViewResult}
+                  onViewCandidates={onViewCandidates}
                 />
               </Link>
             </Grid2>

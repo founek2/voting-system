@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
 import ReportForm from "../Components/ReportForm";
 import {
+  useDeleteResolutionMutation,
   useGetPublicResolutionQuery,
   useUpdateResolutionMutation,
 } from "../endpoints/mediaResolution";
@@ -18,6 +19,8 @@ export default function ResolutionEditPage() {
   } = useGetPublicResolutionQuery(Number(params.id));
   const [updateResolution, { isLoading: isMutation }] =
     useUpdateResolutionMutation();
+  const [deleteResolution, { isLoading: isDeleteMutation }] =
+    useDeleteResolutionMutation();
   const navigate = useNavigate();
 
   async function onSubmit(data: {
@@ -38,6 +41,17 @@ export default function ResolutionEditPage() {
     }
   }
 
+  async function onDelete(data: { id?: number }) {
+    if (!data.id) return;
+
+    const { error } = await deleteResolution(data.id);
+    if (error) {
+      handleError(error);
+    } else {
+      navigate("/auth/admin/reports");
+    }
+  }
+
   if (isLoading) return <Loader />;
   if (isError)
     return <Typography>Nelze načíst informace o zvoleném usnesení.</Typography>;
@@ -45,7 +59,8 @@ export default function ResolutionEditPage() {
   return (
     <ReportForm
       onSubmit={onSubmit}
-      disabled={isMutation}
+      onDelete={onDelete}
+      disabled={isMutation || isDeleteMutation}
       title="Usnesení"
       defaultValues={resolution}
       edit

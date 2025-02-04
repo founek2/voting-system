@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
 import ReportForm from "../Components/ReportForm";
 import {
+  useDeleteReportMutation,
   useGetPublicReportQuery,
   useUpdateReportMutation,
 } from "../endpoints/mediaReport";
@@ -17,6 +18,8 @@ export default function ReportEditPage() {
     isError,
   } = useGetPublicReportQuery(Number(params.id));
   const [updateReport, { isLoading: isMutation }] = useUpdateReportMutation();
+  const [deleteReport, { isLoading: isDeleteMutation }] =
+    useDeleteReportMutation();
   const navigate = useNavigate();
 
   async function onSubmit(data: {
@@ -34,6 +37,17 @@ export default function ReportEditPage() {
     }
   }
 
+  async function onDelete(data: { id?: number }) {
+    if (!data.id) return;
+
+    const { error } = await deleteReport(data.id);
+    if (error) {
+      handleError(error);
+    } else {
+      navigate("/auth/admin/reports");
+    }
+  }
+
   if (isLoading) return <Loader />;
   if (isError)
     return <Typography>Nelze načíst informace o zvolené zprávě.</Typography>;
@@ -41,7 +55,8 @@ export default function ReportEditPage() {
   return (
     <ReportForm
       onSubmit={onSubmit}
-      disabled={isMutation}
+      onDelete={onDelete}
+      disabled={isMutation || isDeleteMutation}
       title="Závěrečná zpráva"
       defaultValues={report}
       edit

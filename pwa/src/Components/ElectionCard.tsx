@@ -23,6 +23,10 @@ interface ElectionCardProps {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     election: Election
   ) => any;
+  onViewCandidates?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    election: Election
+  ) => any;
 }
 export function ElectionCard({
   election,
@@ -30,6 +34,7 @@ export function ElectionCard({
   isAdmin,
   onViewVotes,
   onViewResult,
+  onViewCandidates,
 }: ElectionCardProps) {
   return (
     <Card>
@@ -41,17 +46,26 @@ export function ElectionCard({
         {isAdmin ? (
           <Grid2 container spacing={2}>
             <Grid2>
-              <Button
-                onClick={(e) => onViewResult && onViewResult(e, election)}
-              >
-                Zobrazit výsledky
-              </Button>
+              {onViewCandidates ? (
+                <Button onClick={(e) => onViewCandidates(e, election)}>
+                  Zobrazit kandidáty
+                </Button>
+              ) : null}
             </Grid2>
             <Grid2>
-              <Button onClick={(e) => onViewVotes && onViewVotes(e, election)}>
-                Zobrazit hlasy
-              </Button>
+              {onViewResult ? (
+                <Button onClick={(e) => onViewResult(e, election)}>
+                  Zobrazit výsledky
+                </Button>
+              ) : null}
             </Grid2>
+            {onViewVotes ? (
+              <Grid2>
+                <Button onClick={(e) => onViewVotes(e, election)}>
+                  Zobrazit hlasy
+                </Button>
+              </Grid2>
+            ) : null}
           </Grid2>
         ) : null}
       </CardContent>

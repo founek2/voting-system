@@ -36,24 +36,11 @@ class ElectionResultResource
         public array $candidates = [],
     ) {}
 
-    // /** @return CandidateResult[] */
-    // public function getCandidates(): array
-    // {
-    //     return $this->candidates;
-    // }
+    // required to proper OpenApi generation
+    public function addCandidate(CandidateResult $candidate): static
+    {
+        $this->candidates[] = $candidate;
 
-    // public function addCandidate(CandidateResult $candidate): static
-    // {
-    //     $this->candidates[] = $candidate;
-
-    //     return $this;
-    // }
-
-    // /** @param CandidateResult[] */
-    // public function setCandidates($candidates): static
-    // {
-    //     $this->candidates = $candidates;
-
-    //     return $this;
-    // }
+        return $this;
+    }
 }

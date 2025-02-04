@@ -10,5 +10,6 @@ export type MediaResolution_jsonld_media_read = {
     readonly contentUrl?: string | null;
     name?: string;
     publishedAt?: string;
+    election?: string | null;
 };
 

@@ -25,7 +25,16 @@ export const mediaPosterApi = api.injectEndpoints({
             },
             invalidatesTags: ['MediaPosters'],
         }),
+        deletePoster: build.mutation<void, number>({
+            query: (id) => {
+                return {
+                    url: `media/posters/${id}`,
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ['MediaPosters'],
+        }),
     }),
 });
 
-export const { useGetPosterQuery, useAddPosterMutation } = mediaPosterApi;
+export const { useGetPosterQuery, useAddPosterMutation, useDeletePosterMutation } = mediaPosterApi;

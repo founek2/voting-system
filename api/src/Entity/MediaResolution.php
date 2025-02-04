@@ -82,15 +82,19 @@ class MediaResolution
     public ?string $filePath = null;
 
     #[ORM\Column]
-    #[Groups(['Default', 'media:read', 'media:edit'])]
+    #[Groups(['media:read', 'media:edit'])]
     public ?string $name = null;
 
     #[ORM\Column(nullable: true)]
     public ?int $size = null;
 
     #[ORM\Column]
-    #[Groups(['Default', 'media:read', 'media:edit'])]
+    #[Groups(['media:read', 'media:edit'])]
     private ?\DateTimeImmutable $publishedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'mediaResolutions')]
+    #[Groups(['media:read', 'media:edit'])]
+    private ?Election $election = null;
 
     public function getId(): ?int
     {
@@ -105,6 +109,18 @@ class MediaResolution
     public function setPublishedAt(\DateTimeImmutable $publishedAt): static
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getElection(): ?Election
+    {
+        return $this->election;
+    }
+
+    public function setElection(?Election $election): static
+    {
+        $this->election = $election;
 
         return $this;
     }

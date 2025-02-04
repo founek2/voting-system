@@ -90,10 +90,24 @@ class Election
     #[Groups(['election:read', 'election:write'])]
     private Collection $positions;
 
+    /**
+     * @var Collection<int, MediaResolution>
+     */
+    #[ORM\OneToMany(mappedBy: 'election', targetEntity: MediaResolution::class)]
+    private Collection $mediaResolutions;
+
+    /**
+     * @var Collection<int, MediaReport>
+     */
+    #[ORM\OneToMany(mappedBy: 'election', targetEntity: MediaReport::class)]
+    private Collection $mediaReports;
+
     public function __construct()
     {
         $this->candidates = new ArrayCollection();
         $this->positions = new ArrayCollection();
+        $this->mediaResolutions = new ArrayCollection();
+        $this->mediaReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,5 +285,65 @@ class Election
     public function isFinished(): bool
     {
         return   $this->getStage() == ElectionStage::FINAL_RESULTS;
+    }
+
+    /**
+     * @return Collection<int, MediaResolution>
+     */
+    public function getMediaResolutions(): Collection
+    {
+        return $this->mediaResolutions;
+    }
+
+    public function addMediaResolution(MediaResolution $mediaResolution): static
+    {
+        if (!$this->mediaResolutions->contains($mediaResolution)) {
+            $this->mediaResolutions->add($mediaResolution);
+            $mediaResolution->setElection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaResolution(MediaResolution $mediaResolution): static
+    {
+        if ($this->mediaResolutions->removeElement($mediaResolution)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaResolution->getElection() === $this) {
+                $mediaResolution->setElection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MediaReport>
+     */
+    public function getMediaReports(): Collection
+    {
+        return $this->mediaReports;
+    }
+
+    public function addMediaReport(MediaReport $mediaReport): static
+    {
+        if (!$this->mediaReports->contains($mediaReport)) {
+            $this->mediaReports->add($mediaReport);
+            $mediaReport->setElection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaReport(MediaReport $mediaReport): static
+    {
+        if ($this->mediaReports->removeElement($mediaReport)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaReport->getElection() === $this) {
+                $mediaReport->setElection(null);
+            }
+        }
+
+        return $this;
     }
 }
