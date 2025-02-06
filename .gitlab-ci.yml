@@ -1,35 +1,34 @@
-stages:
-  - build
+.services-matrix:
+  parallel:
+    matrix:
+      - SERVICE_DIR: "api"
+      - SERVICE_DIR: "pwa"
 
-
-build-api:
-  image: docker:20.10.16
+build:
+  extends: ['.services-matrix']
+  image: quay.io/buildah/stable
   stage: build
   variables:
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/api:$CI_COMMIT_REF_SLUG
-    IMAGE_TAG_LATEST: $CI_REGISTRY_IMAGE/api:latest
+    STORAGE_DRIVER: vfs
+    BUILDAH_FORMAT: docker
+    IMAGE: $CUSTOM_CI_REGISTRY/voting-system/$SERVICE_DIR
+    IMAGE_TAG: $IMAGE:$CI_COMMIT_SHA
+    IMAGE_TAG_BRANCH: $IMAGE:CI_COMMIT_REF_SLUG
+  before_script:
+    - echo "$CUSTOM_CI_REGISTRY_PASSWORD" | buildah login -u "$CUSTOM_CI_REGISTRY_USER" --password-stdin $CUSTOM_CI_REGISTRY
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
-    - docker build -t $IMAGE_TAG -t $IMAGE_TAG_LATEST -f api/Dockerfile ./api
-    - docker run my-docker-image /script/to/run/tests
+    # Remove "--link" since it is not supported by buildah
+    - sed -i s/--link// $SERVICE_DIR/Dockerfile 
+    - buildah build 
+      --layers 
+      --cache-from $IMAGE-cache
+      --cache-to $IMAGE-cache
+      --tag "$IMAGE_TAG" 
+      --tag "$IMAGE_TAG_BRANCH" 
+      --file $SERVICE_DIR/Dockerfile 
+      ./$SERVICE_DIR
+    - buildah push $IMAGE_TAG $IMAGE_TAG_BRANCH
   rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: "$CI_COMMIT_BRANCH == 'main'"
       changes:
-        - api/**/*
-
-
-build-pwa:
-  image: docker:20.10.16
-  stage: build
-  variables:
-    CI_REGISTRY: docker-registry-write.iotdomu.cz
-    IMAGE_TAG: docker-registry-write.iotdomu.cz/voting-system/pwa:$CI_COMMIT_REF_SLUG
-    IMAGE_TAG_LATEST: docker-registry-write.iotdomu.cz/voting-system/api:latest
-  script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
-    - docker build -t $IMAGE_TAG -f $IMAGE_TAG_LATEST -f api/Dockerfile ./api
-    - docker run my-docker-image /script/to/run/tests
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
-      changes:
-        - pwa/**/*
+        - $SERVICE_DIR/**/*
