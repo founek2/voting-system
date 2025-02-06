@@ -22,8 +22,9 @@ build-pwa:
   image: docker:20.10.16
   stage: build
   variables:
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/pwa:$CI_COMMIT_REF_SLUG
-    IMAGE_TAG_LATEST: $CI_REGISTRY_IMAGE/api:latest
+    CI_REGISTRY: docker-registry-write.iotdomu.cz
+    IMAGE_TAG: docker-registry-write.iotdomu.cz/voting-system/pwa:$CI_COMMIT_REF_SLUG
+    IMAGE_TAG_LATEST: docker-registry-write.iotdomu.cz/voting-system/api:latest
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
     - docker build -t $IMAGE_TAG -f $IMAGE_TAG_LATEST -f api/Dockerfile ./api
