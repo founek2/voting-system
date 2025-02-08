@@ -55,7 +55,7 @@ HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
 # Dev FrankenPHP image
-FROM frankenphp_base AS frankenphp_dev
+FROM frankenphp_base AS dev
 
 ENV APP_ENV=dev XDEBUG_MODE=off
 VOLUME /app/var/
@@ -74,7 +74,7 @@ COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 
 # Prod FrankenPHP image
-FROM frankenphp_base AS frankenphp_prod
+FROM frankenphp_base AS prod
 
 ENV APP_ENV=prod
 ENV FRANKENPHP_CONFIG="import worker.Caddyfile"

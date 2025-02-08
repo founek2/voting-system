@@ -1,6 +1,9 @@
-# include:
-#   - project: 'admins/web-app-hosting/docker-host-deployer'
-#     file: '/.gitlab-ci.yml'
+include:
+  - project: 'admins/web-app-hosting/docker-host-deployer'
+    file: '/.gitlab-ci.yml'
+    ref: master
+    rules:
+      - if: "$CI_COMMIT_BRANCH == 'main'"
 
 .services-matrix:
   parallel:
@@ -34,6 +37,7 @@ build:
       --tag "$IMAGE_TAG" 
       --tag "$IMAGE_TAG_BRANCH" 
       --file $SERVICE_DIR/Dockerfile 
+      --target prod
       ./$SERVICE_DIR
     - buildah push $IMAGE_TAG $IMAGE_TAG_BRANCH
   rules:
