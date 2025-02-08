@@ -1,6 +1,6 @@
 include:
-  - project: 'admins/web-app-hosting/docker-host-deployer'
-    file: '/.gitlab-ci.yml'
+  - project: "admins/web-app-hosting/docker-host-deployer"
+    file: "/.gitlab-ci.yml"
     ref: master
     rules:
       - if: "$CI_COMMIT_BRANCH == 'main'"
@@ -16,7 +16,7 @@ stages:
   - deploy_to_sh_docker_host
 
 build:
-  extends: ['.services-matrix']
+  extends: [".services-matrix"]
   image: quay.io/buildah/stable
   stage: build
   variables:
@@ -29,14 +29,14 @@ build:
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     # Remove "--link" since it is not supported by buildah
-    - sed -i s/--link// $SERVICE_DIR/Dockerfile 
-    - buildah build 
-      --layers 
+    - sed -i s/--link// $SERVICE_DIR/Dockerfile
+    - buildah build
+      --layers
       --cache-from $IMAGE-cache
       --cache-to $IMAGE-cache
-      --tag "$IMAGE_TAG" 
-      --tag "$IMAGE_TAG_BRANCH" 
-      --file $SERVICE_DIR/Dockerfile 
+      --tag "$IMAGE_TAG"
+      --tag "$IMAGE_TAG_BRANCH"
+      --file $SERVICE_DIR/Dockerfile
       --target prod
       ./$SERVICE_DIR
     - buildah push $IMAGE_TAG $IMAGE_TAG_BRANCH
@@ -44,3 +44,4 @@ build:
     - if: "$CI_COMMIT_BRANCH == 'main'"
       changes:
         - $SERVICE_DIR/**/*
+        - .gitlab-ci.yml
