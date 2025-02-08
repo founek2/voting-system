@@ -1,8 +1,16 @@
+include:
+  - project: 'admins/web-app-hosting/docker-host-deployer'
+    file: '/.gitlab-ci.yml'
+
 .services-matrix:
   parallel:
     matrix:
       - SERVICE_DIR: "api"
       - SERVICE_DIR: "pwa"
+
+stages:
+  - build
+  - deploy_to_sh_docker_host
 
 build:
   extends: ['.services-matrix']
