@@ -22,3 +22,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - /opt/voting-system/db:/var/lib/postgresql/data:rw
+
+networks:
+  docker-net:
+    external: true
