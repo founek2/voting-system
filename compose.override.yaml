@@ -10,6 +10,10 @@ services:
       docker-net:
         ipv4_address: 100.80.0.12
       default:
+    volumes:
+      - /opt/voting-system/caddy/data:/data:rw
+      - /opt/voting-system/caddy/config:/config:rw
+      - /opt/voting-system/php/config/jwt:/app/config/jwt:rw
 
   pwa:
     image: git.sh.cvut.cz:5005/admins/web-app-hosting/voting-system/pwa:main
@@ -17,3 +21,5 @@ services:
   database:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /opt/voting-system/db:/var/lib/postgresql/data:rw

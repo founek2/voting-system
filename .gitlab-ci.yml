@@ -45,3 +45,7 @@ build:
       changes:
         - $SERVICE_DIR/**/*
         - .gitlab-ci.yml
+
+# deploy_to_sh_docker_host_job:
+#   environment:
+#     url: https://domain.com
