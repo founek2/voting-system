@@ -21,5 +21,5 @@ COPY . .
 RUN corepack up && yarn build
 
 # Serve files via Caddy
-FROM docker.io/caddy:2.9.1-alpine
+FROM docker.io/caddy:2.9.1-alpine AS prod
 COPY --from=builder /app/build /usr/share/caddy
