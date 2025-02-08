@@ -2,10 +2,8 @@ import {
   Autocomplete,
   Button,
   Card,
-  CardActionArea,
   CardContent,
   Grid2,
-  GridSize,
   Input,
   TextField,
   Typography,
@@ -13,32 +11,15 @@ import {
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
-import { MyDatePicker } from "../Components/MyDatePicker";
-import {
-  Candidate_candidate_edit,
-  Candidate_candidate_write,
-  Election_election_write,
-  MediaPoster_jsonld_candidate_read,
-  Position_jsonld_position_read,
-} from "../endpoints/types";
+import { useGetPosterQuery } from "../endpoints/mediaPoster";
 import { useGetPositionsQuery } from "../endpoints/positions";
-import { ResponsiveStyleValue } from "@mui/system";
+import { Candidate_candidate_write } from "../endpoints/types";
 import { Candidate, Election } from "../types";
-import { MuiFileInput } from "mui-file-input";
-import {
-  useAddPosterMutation,
-  useGetPosterQuery,
-} from "../endpoints/mediaPoster";
-import { enqueueSnackbar } from "notistack";
-import Loader from "./Loader";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import CloseIcon from "@mui/icons-material/Close";
-import { MyUploadFileInput } from "./MyUploadFileInput";
 import { parseId } from "../util/parseId";
-import { ConditionalTooltip } from "./ConditionalTooltip";
 import AlertDialog from "./AlertDialog";
-import { useWithdrawCandidateMutation } from "../endpoints/candidates";
-import { handleError } from "../util/handleError";
+import { ConditionalTooltip } from "./ConditionalTooltip";
+import Loader from "./Loader";
+import { MyUploadFileInput } from "./MyUploadFileInput";
 
 interface CandidateFormProps {
   defaultValues?: Candidate;

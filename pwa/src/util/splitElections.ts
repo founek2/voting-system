@@ -9,9 +9,9 @@ export function splitElections<T extends {
         isPassed(election) ? "passed" : "current"
     );
 
-    // Sort by some magical
+    // Newer election should be first
     result.current?.sort((a, b) => {
-        return a.id! - b.id!
+        return b.id! - a.id!
     })
 
     return result

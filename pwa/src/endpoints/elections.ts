@@ -1,22 +1,22 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
-import { Election_jsonld_election_read, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
+import { Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getElections: build.query<Hydra<Election_jsonld_election_read>, void>({
+        getElections: build.query<Hydra<Election>, void>({
             query: () => `elections`,
             providesTags: ['Elections'],
         }),
-        getPublicElections: build.query<Hydra<Election_jsonld_election_read>, void>({
+        getPublicElections: build.query<Hydra<Election>, void>({
             query: () => `public/elections?perPage=3`,
             providesTags: ['PublicElections'],
         }),
-        getPublicElectionsElectronic: build.query<Hydra<Election_jsonld_election_read>, void>({
+        getPublicElectionsElectronic: build.query<Hydra<Election>, void>({
             query: () => `public/elections?stage=electronic_voting`,
             providesTags: ['PublicElections'],
         }),
-        getElection: build.query<Election_jsonld_election_read, number>({
+        getElection: build.query<Election, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
         }),
@@ -31,7 +31,7 @@ export const signInApi = api.injectEndpoints({
                 return data;
             }
         }),
-        addElection: build.mutation<Election_jsonld_election_read, Election_jsonld_election_write>({
+        addElection: build.mutation<Election, Election_jsonld_election_write>({
             query(body) {
                 return {
                     url: `elections`,
@@ -41,7 +41,7 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Elections', 'PublicElections'],
         }),
-        updateElection: build.mutation<Election_jsonld_election_read, { id: number, body: Election_jsonld_election_write }>({
+        updateElection: build.mutation<Election, { id: number, body: Election_jsonld_election_write }>({
             query(data) {
                 return {
                     url: `elections/${data.id}`,

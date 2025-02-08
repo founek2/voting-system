@@ -11,7 +11,7 @@ export type { Candidate_jsonld_candidate_read } from './models/Candidate_jsonld_
 export type { Candidate_jsonld_candidate_write } from './models/Candidate_jsonld_candidate_write';
 export type { CandidateResult_jsonld_candidate_read } from './models/CandidateResult_jsonld_candidate_read';
 export type { Election_election_write } from './models/Election_election_write';
-export type { Election_jsonld_election_read } from './models/Election_jsonld_election_read';
+export type { Election_jsonld_election_read_media_read_url } from './models/Election_jsonld_election_read_media_read_url';
 export type { Election_jsonld_election_write } from './models/Election_jsonld_election_write';
 export type { ElectionResultResource_jsonld_candidate_read } from './models/ElectionResultResource_jsonld_candidate_read';
 export type { LoginResource_jsonld_code_write } from './models/LoginResource_jsonld_code_write';
@@ -19,8 +19,10 @@ export type { LoginResource_jsonld_url_read } from './models/LoginResource_jsonl
 export type { LoginResource_LoginResponseDto_jsonld } from './models/LoginResource_LoginResponseDto_jsonld';
 export type { MediaPoster_jsonld_candidate_read } from './models/MediaPoster_jsonld_candidate_read';
 export type { MediaPoster_jsonld_media_object_read } from './models/MediaPoster_jsonld_media_object_read';
+export type { MediaReport_jsonld_election_read_media_read_url } from './models/MediaReport_jsonld_election_read_media_read_url';
 export type { MediaReport_jsonld_media_read } from './models/MediaReport_jsonld_media_read';
 export type { MediaReport_media_edit } from './models/MediaReport_media_edit';
+export type { MediaResolution_jsonld_election_read_media_read_url } from './models/MediaResolution_jsonld_election_read_media_read_url';
 export type { MediaResolution_jsonld_media_read } from './models/MediaResolution_jsonld_media_read';
 export type { MediaResolution_media_edit } from './models/MediaResolution_media_edit';
 export type { Position_jsonld_candidate_read } from './models/Position_jsonld_candidate_read';

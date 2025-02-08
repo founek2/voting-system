@@ -5,6 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
+import MuiLink from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { Election } from "../types";
@@ -115,6 +116,19 @@ prospěch kandidáta.`,
       )}`,
     description:
       "Hlasovat fyzicky je možné pouze ve stanovenou dobu. Bližší informace o urnovém hlasování najdete v usnesení.",
+    action: (election: Election) => (
+      <>
+        {election.mediaResolutions?.map((resolution) => (
+          <MuiLink
+            underline="none"
+            target="_blank"
+            href={`${resolution.contentUrl}`}
+          >
+            <Button>Usnesení</Button>
+          </MuiLink>
+        ))}
+      </>
+    ),
   },
   {
     label: (election: Election) => "Vyhlášení předběžných výsledků",
@@ -132,6 +146,19 @@ prospěch kandidáta.`,
   {
     label: (election: Election) => "Vyhlášení konečných výsledků",
     date: (election: Election) => `${dateToString(election.finalResultsDate)}`,
+    action: (election: Election) => (
+      <>
+        {election.mediaReports?.map((report) => (
+          <MuiLink
+            underline="none"
+            target="_blank"
+            href={`${report.contentUrl}`}
+          >
+            <Button>Závěrečná zpráva</Button>
+          </MuiLink>
+        ))}
+      </>
+    ),
   },
 ];
 
@@ -159,10 +186,9 @@ export default function ElectionStepper({
   election,
   sx,
 }: ElectionStepperProps) {
-  const activeStep = 7;
+  const activeStep = getStep(election);
 
   return (
-    // <Box sx={{ maxWidth: 400 }}>
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
       {steps.map((step, index) => (
         <Step key={step.label(election)}>
@@ -195,6 +221,5 @@ export default function ElectionStepper({
         </Step>
       ))}
     </Stepper>
-    // </Box>
   );
 }

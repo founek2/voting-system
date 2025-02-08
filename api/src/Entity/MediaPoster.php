@@ -66,6 +66,7 @@ class MediaPoster
 
     #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull]
+    #[Assert\File(extensions: ['jpg', 'jpeg', 'png'])]
     public ?File $file = null;
 
     #[ApiProperty(writable: false)]

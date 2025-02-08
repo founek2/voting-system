@@ -46,6 +46,7 @@ export function MyUploadFileInput({
       InputProps={{
         startAdornment: <AttachFileIcon />,
       }}
+      inputProps={{ accept: ".png, .jpeg, .pdf" }}
       clearIconButtonProps={{
         children: <CloseIcon fontSize="small" />,
       }}

@@ -70,11 +70,12 @@ class MediaReport
     private ?int $id = null;
 
     #[ApiProperty(types: ['https://schema.org/contentUrl'], writable: false)]
-    #[Groups(['media:read'])]
+    #[Groups(['media:read', 'media:read_url'])]
     public ?string $contentUrl = null;
 
     #[Vich\UploadableField(mapping: 'report_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull]
+    #[Assert\File(extensions: ['jpg', 'jpeg', 'png'])]
     public ?File $file = null;
 
     #[ApiProperty(writable: false)]

@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
     ],
     mercure: true,
-    normalizationContext: ['groups' => ['election:read']],
+    normalizationContext: ['groups' => ['election:read', 'media:read_url']],
     denormalizationContext: ['groups' => ['election:write']],
     order: ['id' => 'DESC']
 )]
@@ -94,12 +94,14 @@ class Election
      * @var Collection<int, MediaResolution>
      */
     #[ORM\OneToMany(mappedBy: 'election', targetEntity: MediaResolution::class)]
+    #[Groups(['election:read'])]
     private Collection $mediaResolutions;
 
     /**
      * @var Collection<int, MediaReport>
      */
     #[ORM\OneToMany(mappedBy: 'election', targetEntity: MediaReport::class)]
+    #[Groups(['election:read'])]
     private Collection $mediaReports;
 
     public function __construct()
