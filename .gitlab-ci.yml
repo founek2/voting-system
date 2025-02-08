@@ -1,6 +1,6 @@
-include:
-  - project: 'admins/web-app-hosting/docker-host-deployer'
-    file: '/.gitlab-ci.yml'
+# include:
+#   - project: 'admins/web-app-hosting/docker-host-deployer'
+#     file: '/.gitlab-ci.yml'
 
 .services-matrix:
   parallel:
