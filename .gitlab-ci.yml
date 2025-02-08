@@ -11,11 +11,11 @@ build:
   variables:
     STORAGE_DRIVER: vfs
     BUILDAH_FORMAT: docker
-    IMAGE: $CUSTOM_CI_REGISTRY/voting-system/$SERVICE_DIR
+    IMAGE: $CI_REGISTRY_IMAGE/$SERVICE_DIR
     IMAGE_TAG: $IMAGE:$CI_COMMIT_SHA
     IMAGE_TAG_BRANCH: $IMAGE:$CI_COMMIT_REF_SLUG
   before_script:
-    - echo "$CUSTOM_CI_REGISTRY_PASSWORD" | buildah login -u "$CUSTOM_CI_REGISTRY_USER" --password-stdin $CUSTOM_CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     # Remove "--link" since it is not supported by buildah
     - sed -i s/--link// $SERVICE_DIR/Dockerfile 
