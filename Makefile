@@ -13,4 +13,7 @@ migration:
 	$(compose) exec php bin/console make:migration
 
 jwt:
-	$(compose) exec php bin/console lexik:jwt:generate-keypair
+	$(compose) exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+build:
+	$(compose) build

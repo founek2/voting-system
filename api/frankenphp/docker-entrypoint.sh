@@ -37,4 +37,7 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 fi
 
+bin/console doctrine:migrations:migrate -n
+bin/console lexik:jwt:generate-keypair --skip-if-exists
+
 exec docker-php-entrypoint "$@"
