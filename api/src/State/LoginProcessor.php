@@ -11,8 +11,8 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\ISProvider;
 use App\Services\UserService;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class LoginProcessor implements ProcessorInterface
@@ -24,6 +24,7 @@ class LoginProcessor implements ProcessorInterface
         private ISProvider $iSProvider,
         private ValidatorInterface $validator,
         private UserService $userService,
+        private JWTTokenManagerInterface $jwt,
     ) {}
 
     /**
@@ -39,15 +40,8 @@ class LoginProcessor implements ProcessorInterface
 
         /** @var User */
         $user = $this->iSProvider->getResourceOwner($token);
-        $this->userService->refresh($user);
+        $this->userService->refresh($user, $token);
 
-        return new LoginResponseDto($user->getAccessToken()->getToken(),  $user->getAccessToken()->getExpires());
-        // return new Response(
-        //     \json_encode([
-        //         'accessToken' => $user->getAccessToken()->getToken(),
-        //     ], JSON_THROW_ON_ERROR),
-        //     200,
-        //     ['Content-Type' => 'application/json']
-        // );
+        return new LoginResponseDto($this->jwt->create($user),  $user->getAccessToken()->getExpires());
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\AccessTokenDto;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,19 +49,7 @@ class UserRepository extends ServiceEntityRepository
             ->setEmail($email)
             ->setFirstName($firstName)
             ->setLastName($lastName)
-            ->setAccessToken($accessToken)
+            ->setAccessToken(new AccessTokenDto(['expires' => $accessToken->getExpires()]))
             ->setPhotoSmallUrl($photoSmallUrl ?? DEFAULT_PHOTO_URL);
-    }
-
-    public function findByAccessToken(string $accessToken): ?User
-    {
-        $query = $this->createQueryBuilder('e')
-            ->andWhere("JSON_GET_TEXT(e.accessToken, 'access_token') = :val")
-            ->setParameter('val', $accessToken)
-            ->getQuery();
-
-        // echo $query->getSQL(), "\n";
-
-        return $query->getOneOrNullResult();
     }
 }

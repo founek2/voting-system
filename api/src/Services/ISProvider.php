@@ -7,12 +7,10 @@ namespace App\Services;
 use App\Dto\LocationDto;
 use App\Dto\RoleDto;
 use App\Dto\ZoneDto;
-use App\Entity\User;
 use App\Repository\UserRepository;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
-use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
 class ISProvider extends AbstractProvider
@@ -23,7 +21,7 @@ class ISProvider extends AbstractProvider
         string $baseApiUri,
         private UserRepository $userRepository,
         array $options = [],
-        array $collaborators = []
+        array $collaborators = [],
     ) {
         parent::__construct($options, $collaborators);
         $this->baseApiUri = $baseApiUri;
@@ -95,9 +93,9 @@ class ISProvider extends AbstractProvider
         return $this->baseApiUri . '/v1/rooms/mine';
     }
 
-    public function getLocation(User $user): LocationDto
+    public function getLocation(AccessToken $accessToken): LocationDto
     {
-        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getLocationUrl(), $user->getAccessToken());
+        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getLocationUrl(), $accessToken);
         $response = $this->getParsedResponse($request);
         $zone = $response['zone'];
 
@@ -116,9 +114,9 @@ class ISProvider extends AbstractProvider
     }
 
     /** @return RoleDto[] */
-    public function getUserRoles(User $user): array
+    public function getUserRoles(AccessToken $accessToken): array
     {
-        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getUserRolesUrl(), $user->getAccessToken());
+        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getUserRolesUrl(), $accessToken);
         $response = $this->getParsedResponse($request);
 
         return array_map(fn($data) => new RoleDto($data['role'], $data['name'], $data['note'] ?? '', $data['name']), $response);

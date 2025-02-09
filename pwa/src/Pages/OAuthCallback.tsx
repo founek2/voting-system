@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { Suspense, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSignInMutation } from "../endpoints/signIn";
@@ -6,6 +6,7 @@ import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import { enqueueSnackbar } from "notistack";
 import Loader from "../Components/Loader";
 import internalStorage from "../storage/internalStorage";
+import { Link } from "react-router-dom";
 
 let firsRender = true;
 
@@ -41,7 +42,10 @@ export default function OAuthCallback() {
 
   return (
     <Typography>
-      Nastala chyba v procesu přihlašování. Zkuste to znovu
+      Nastala chyba v procesu přihlašování. Zkuste to znovu.{" "}
+      <Link to="/">
+        <Button>Hlavní stránka</Button>
+      </Link>
     </Typography>
   );
 }

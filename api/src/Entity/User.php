@@ -14,6 +14,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use App\Const\Role;
 use App\Doctrine\Types\AccessTokenType;
+use App\Dto\AccessTokenDto;
 use App\Repository\UserRepository;
 use App\State\UserProvider;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,11 +78,8 @@ class User implements ResourceOwnerInterface, UserInterface
     #[Groups(['user:read', 'candidate:read'])]
     private ?string $photoSmallUrl = null;
 
-    // TODO - for PROD build, it would be good idea to encrypt this column
-    // by implementing AES encryption in MYTYPE
     #[ORM\Column(length: 255, type: AccessTokenType::MYTYPE)]
-    #[Groups(['___'])]
-    private ?AccessToken $accessToken = null;
+    private ?AccessTokenDto $accessToken = null;
 
     #[ORM\ManyToOne]
     #[Groups(['user:read', 'vote:read'])]
@@ -194,12 +192,12 @@ class User implements ResourceOwnerInterface, UserInterface
         return ['id' => $this->id, 'username' => $this->username, 'email' => $this->email, 'roles' => $this->roles];
     }
 
-    public function getAccessToken(): ?AccessToken
+    public function getAccessToken(): ?AccessTokenDto
     {
         return $this->accessToken;
     }
 
-    public function setAccessToken(AccessToken $accessToken): static
+    public function setAccessToken(AccessTokenDto $accessToken): static
     {
         $this->accessToken = $accessToken;
 

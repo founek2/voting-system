@@ -2,20 +2,16 @@
 
 namespace App\Doctrine\Types;
 
+use App\Dto\AccessTokenDto;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use League\OAuth2\Client\Token\AccessToken;
 
-/**
- * My custom datatype.
- */
 class AccessTokenType extends Type
 {
     const MYTYPE = 'accessToken'; // modify to match your type name
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        // return the SQL used to create your column type. To create a portable column type, use the $platform.
         return 'JSONB';
     }
 
@@ -26,7 +22,7 @@ class AccessTokenType extends Type
         if ($value == null || empty($value)) return null;
 
         $json = json_decode($value, true);
-        return new AccessToken($json);
+        return new AccessTokenDto($json);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)

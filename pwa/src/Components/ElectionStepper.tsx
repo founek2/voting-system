@@ -123,6 +123,7 @@ prospěch kandidáta.`,
             underline="none"
             target="_blank"
             href={`${resolution.contentUrl}`}
+            key={resolution["@id"]}
           >
             <Button>Usnesení</Button>
           </MuiLink>
@@ -153,6 +154,7 @@ prospěch kandidáta.`,
             underline="none"
             target="_blank"
             href={`${report.contentUrl}`}
+            key={report["@id"]}
           >
             <Button>Závěrečná zpráva</Button>
           </MuiLink>
