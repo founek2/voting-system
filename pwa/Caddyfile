@@ -23,4 +23,7 @@
 
     # Enable the static file server.
     file_server
+
+    # Redirect all missmatched paths to index.html -> this is the way how PWA works
+    try_files {path} /index.html
 }
