@@ -3,6 +3,9 @@ compose=docker compose -f compose.yaml -f compose.dev.yaml
 up:
 	$(compose) up -d
 
+down:
+	$(compose) down
+
 migrate:
 	$(compose) exec php bin/console doctrine:migrations:migrate -n
 
