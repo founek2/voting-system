@@ -50,7 +50,7 @@ class Position
     private Collection $candidates;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['position:read', 'position:write', 'candidate:read'])]
+    #[Groups(['position:read', 'position:write', 'candidate:read', 'member:public:read'])]
     private ?string $name = null;
 
     /**
@@ -60,11 +60,18 @@ class Position
     #[Groups(['position:read'])]
     private Collection $elections;
 
+    /**
+     * @var Collection<int, BoardMember>
+     */
+    #[ORM\OneToMany(mappedBy: 'position', targetEntity: BoardMember::class)]
+    private Collection $boardMembers;
+
     public function __construct()
     {
         $this->zoneRestrictions = new ArrayCollection();
         $this->candidates = new ArrayCollection();
         $this->elections = new ArrayCollection();
+        $this->boardMembers = new ArrayCollection();
     }
 
 
@@ -161,6 +168,36 @@ class Position
     {
         if ($this->elections->removeElement($election)) {
             $election->removePosition($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BoardMember>
+     */
+    public function getBoardMembers(): Collection
+    {
+        return $this->boardMembers;
+    }
+
+    public function addBoardMember(BoardMember $boardMember): static
+    {
+        if (!$this->boardMembers->contains($boardMember)) {
+            $this->boardMembers->add($boardMember);
+            $boardMember->setPosition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBoardMember(BoardMember $boardMember): static
+    {
+        if ($this->boardMembers->removeElement($boardMember)) {
+            // set the owning side to null (unless already changed)
+            if ($boardMember->getPosition() === $this) {
+                $boardMember->setPosition(null);
+            }
         }
 
         return $this;

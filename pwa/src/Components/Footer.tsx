@@ -2,13 +2,36 @@ import { Box, Grid2, Paper, Typography, Link as MuiLink } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/system";
 import React from "react";
+import { useGetPublicBoardMemebersQuery } from "../endpoints/board";
+import { BoardMember_jsonld_member_public_read } from "../endpoints/types";
 
 const TypographyStyled = styled(Typography)({
   variant: "body2",
   color: grey[400],
 });
 
+function MemberRow({
+  member,
+}: {
+  member: BoardMember_jsonld_member_public_read;
+}) {
+  if (!member) return null;
+  return (
+    <TypographyStyled>
+      {member.appUser?.firstName} {member.appUser?.lastName} (
+      {member.position?.name})
+    </TypographyStyled>
+  );
+}
+
 export function Footer() {
+  const { data: membersData } = useGetPublicBoardMemebersQuery();
+  const members = membersData?.member || [];
+
+  const membersRows = members.map((member) => (
+    <MemberRow key={member["@id"]} member={member} />
+  ));
+
   return (
     <Paper component="footer" sx={{ py: 2, mt: 8 }}>
       <Grid2 container justifyContent="space-around" spacing={2}>
@@ -16,15 +39,11 @@ export function Footer() {
           <Grid2 container>
             <Grid2 px={2} size={{}}>
               <Typography color={grey[300]}>Členové volební komise:</Typography>
-              <TypographyStyled>Tomáš Taraba (předseda)</TypographyStyled>
-              <TypographyStyled>Jaroslav Rozmuš</TypographyStyled>
-              <TypographyStyled>Filip Smolek</TypographyStyled>
+              {...membersRows.slice(0, 3)}
             </Grid2>
             <Grid2 px={2}>
               <TypographyStyled>&nbsp;</TypographyStyled>
-              <TypographyStyled>Ondřej Svoboda</TypographyStyled>
-              <TypographyStyled>Jaroslav Rozmuš</TypographyStyled>
-              <TypographyStyled>Barbora Svobodová</TypographyStyled>
+              {...membersRows.slice(3)}
             </Grid2>
           </Grid2>
         </Grid2>

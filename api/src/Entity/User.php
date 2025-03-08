@@ -63,11 +63,11 @@ class User implements ResourceOwnerInterface, UserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'candidate:read', 'vote:read'])]
+    #[Groups(['user:read', 'candidate:read', 'vote:read', 'member:public:read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'candidate:read', 'vote:read'])]
+    #[Groups(['user:read', 'candidate:read', 'vote:read', 'member:public:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, unique: true)]

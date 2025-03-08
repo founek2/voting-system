@@ -5,6 +5,10 @@
 
 export type { BallotResource_jsonld } from './models/BallotResource_jsonld';
 export type { BallotResource_jsonld_vote_write } from './models/BallotResource_jsonld_vote_write';
+export type { BoardMember_jsonld_member_public_read } from './models/BoardMember_jsonld_member_public_read';
+export type { BoardMember_jsonld_member_read } from './models/BoardMember_jsonld_member_read';
+export type { BoardMember_jsonld_member_write } from './models/BoardMember_jsonld_member_write';
+export type { BoardMember_member_write } from './models/BoardMember_member_write';
 export type { Candidate_candidate_edit } from './models/Candidate_candidate_edit';
 export type { Candidate_candidate_write } from './models/Candidate_candidate_write';
 export type { Candidate_jsonld_candidate_read } from './models/Candidate_jsonld_candidate_read';
@@ -26,10 +30,12 @@ export type { MediaResolution_jsonld_election_read_media_read_url } from './mode
 export type { MediaResolution_jsonld_media_read } from './models/MediaResolution_jsonld_media_read';
 export type { MediaResolution_media_edit } from './models/MediaResolution_media_edit';
 export type { Position_jsonld_candidate_read } from './models/Position_jsonld_candidate_read';
+export type { Position_jsonld_member_public_read } from './models/Position_jsonld_member_public_read';
 export type { Position_jsonld_position_read } from './models/Position_jsonld_position_read';
 export type { Position_jsonld_position_write } from './models/Position_jsonld_position_write';
 export type { Position_position_write } from './models/Position_position_write';
 export type { User_jsonld_candidate_read } from './models/User_jsonld_candidate_read';
+export type { User_jsonld_member_public_read } from './models/User_jsonld_member_public_read';
 export type { User_jsonld_user_read } from './models/User_jsonld_user_read';
 export type { User_jsonld_vote_read } from './models/User_jsonld_vote_read';
 export type { Vote_jsonld__ } from './models/Vote_jsonld__';

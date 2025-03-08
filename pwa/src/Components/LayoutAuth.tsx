@@ -35,6 +35,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/app";
 import { authorizationReducerActions } from "../store/slices/authorizationSlice";
 import { Role } from "../types";
 import { cs } from "date-fns/locale/cs";
+import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 
 const drawerWidth = 240;
 
@@ -57,6 +58,7 @@ const adminMenuItems = [
     Icon: <InboxIcon />,
   },
   { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
+  { path: "/auth/admin/board", text: "Komise", Icon: <SnowboardingIcon /> },
 ];
 
 const userMenuItems = [
