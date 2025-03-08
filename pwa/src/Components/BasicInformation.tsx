@@ -25,50 +25,6 @@ export default function BasicInformation() {
       </Grid2>
       <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
         <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
-          <Typography variant="h3">Představenstvo</Typography>
-          <Typography>
-            Představenstvo klubu Silicon Hill má nejvýše 15 členů:
-          </Typography>
-
-          <Typography variant="h5" pt={2}>
-            10 zástupců bloků
-          </Typography>
-          <Typography>
-            Voleni všemi obyvateli daného bloku, členové klubu mohou využít
-            elektronické verze hlasování.
-          </Typography>
-          <Typography>
-            Řeší kromě celoklubových záležitostí také problémy bloku. Jedná se o
-            udržení chodu služeb (síť, zájmové místnosti) a také o zajištění
-            důstojné prezentace názorů ubytovaných/zastupovaných studentů
-            (nespokojenost s úklidem, potížisté, rozvoj bloku). Předpokládá se
-            úzká spolupráce s hospodářkou bloku a s technicko-síťovým manažerem.
-          </Typography>
-
-          <Typography variant="h5" pt={2}>
-            4 celokluboví zástupci
-          </Typography>
-          <Typography>
-            Voleni pouze členy klubu v elektronickém hlasování.
-          </Typography>
-          <Typography>
-            Nemají blokovou příslušnost, nejsou tedy zatíženi starostmi o
-            konkrétní blok a mohou se plně věnovat dalšímu rozvoji studentských
-            aktivit na kolejích.
-          </Typography>
-
-          <Typography variant="h5" pt={2}>
-            Předseda
-          </Typography>
-          <Typography>Volen představenstvem klubu.</Typography>
-          <Typography>
-            Zastupuje klub navenek, každopádně neměl by být jedinou akční
-            složkou.
-          </Typography>
-        </Paper>
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
-        <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
           <Typography variant="h3">Chceš kandidovat?</Typography>
           <Typography variant="h5" pt={2}>
             Přihlášení
@@ -122,6 +78,50 @@ export default function BasicInformation() {
             V případě, že informační plakát nebude vyhovovat popsaným
             požadavkům, volební komise ho nemusí přijmout a vrátí ho kandidátovi
             k opravení.
+          </Typography>
+        </Paper>
+      </Grid2>
+      <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
+        <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
+          <Typography variant="h3">Představenstvo</Typography>
+          <Typography>
+            Představenstvo klubu Silicon Hill má nejvýše 15 členů:
+          </Typography>
+
+          <Typography variant="h5" pt={2}>
+            10 zástupců bloků
+          </Typography>
+          <Typography>
+            Voleni všemi obyvateli daného bloku, členové klubu mohou využít
+            elektronické verze hlasování.
+          </Typography>
+          <Typography>
+            Řeší kromě celoklubových záležitostí také problémy bloku. Jedná se o
+            udržení chodu služeb (síť, zájmové místnosti) a také o zajištění
+            důstojné prezentace názorů ubytovaných/zastupovaných studentů
+            (nespokojenost s úklidem, potížisté, rozvoj bloku). Předpokládá se
+            úzká spolupráce s hospodářkou bloku a s technicko-síťovým manažerem.
+          </Typography>
+
+          <Typography variant="h5" pt={2}>
+            4 celokluboví zástupci
+          </Typography>
+          <Typography>
+            Voleni pouze členy klubu v elektronickém hlasování.
+          </Typography>
+          <Typography>
+            Nemají blokovou příslušnost, nejsou tedy zatíženi starostmi o
+            konkrétní blok a mohou se plně věnovat dalšímu rozvoji studentských
+            aktivit na kolejích.
+          </Typography>
+
+          <Typography variant="h5" pt={2}>
+            Předseda
+          </Typography>
+          <Typography>Volen představenstvem klubu.</Typography>
+          <Typography>
+            Zastupuje klub navenek, každopádně neměl by být jedinou akční
+            složkou.
           </Typography>
         </Paper>
       </Grid2>

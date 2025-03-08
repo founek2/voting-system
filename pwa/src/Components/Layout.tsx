@@ -1,10 +1,19 @@
 import LoginIcon from "@mui/icons-material/Login";
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid2,
+  Paper,
+  Typography,
+  Link as MuiLink,
+} from "@mui/material";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppSelector } from "../hooks/app";
 import { Role } from "../types";
+import { grey } from "@mui/material/colors";
+import { Footer } from "./Footer";
 
 // function VoteButton() {
 //   return (
@@ -67,15 +76,20 @@ export default function Layout() {
   useGetUserMeQuery(undefined, { skip: !loggedId });
 
   return (
-    <Box p={2}>
-      <Box pb={2} display="flex" justifyContent="flex-end">
-        {loggedId ? (
-          <AdminButton admin={user?.roles?.includes(Role.ROLE_ADMIN)} />
-        ) : (
-          <LoginButton />
-        )}
+    <Box>
+      <Box p={2}>
+        <Box display="flex" justifyContent="flex-end">
+          {loggedId ? (
+            <AdminButton admin={user?.roles?.includes(Role.ROLE_ADMIN)} />
+          ) : (
+            <LoginButton />
+          )}
+        </Box>
+        <main>
+          <Outlet />
+        </main>
       </Box>
-      <Outlet />
+      <Footer />
     </Box>
   );
 }
