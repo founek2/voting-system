@@ -10,6 +10,7 @@ import { useGetPublicCandidatesQuery } from "../endpoints/candidates";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 function StepperSection() {
   return (
@@ -83,7 +84,12 @@ function CandidatesSection() {
       >
         {isLoading || loadingCandidates ? <Loader /> : null}
         {isError || errorCandidates ? (
-          <Typography>Nelze načíst kandidáty</Typography>
+          <TypographyInfo>Nelze načíst kandidáty</TypographyInfo>
+        ) : null}
+        {candidates?.member.length === 0 ? (
+          <TypographyInfo>
+            Zatím nebyli přihlášení žádní kandidáti
+          </TypographyInfo>
         ) : null}
         {candidates?.member.map((candidate) => (
           <Grid2 size={{ xs: 8, md: 3, lg: 2, xl: 1.7 }} key={candidate.id}>

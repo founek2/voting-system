@@ -6,6 +6,8 @@ import {
   CardContent,
   CardHeader,
   Grid2,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { Election } from "../types";
@@ -36,15 +38,24 @@ export function ElectionCard({
   onViewResult,
   onViewCandidates,
 }: ElectionCardProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Card>
       <CardHeader title={title ? title : electionTitle(election)} />
       <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box>
-          <HowToVoteIcon fontSize="large" />
-        </Box>
+        {!isMobile ? (
+          <Box>
+            <HowToVoteIcon fontSize="large" />
+          </Box>
+        ) : null}
         {isAdmin ? (
-          <Grid2 container spacing={2}>
+          <Grid2
+            container
+            spacing={2}
+            justifyContent={{ xs: "center", md: "flex-end" }}
+          >
             <Grid2>
               {onViewCandidates ? (
                 <Button onClick={(e) => onViewCandidates(e, election)}>
@@ -55,7 +66,7 @@ export function ElectionCard({
             <Grid2>
               {onViewResult ? (
                 <Button onClick={(e) => onViewResult(e, election)}>
-                  Zobrazit výsledky
+                  Výsledky hlasování
                 </Button>
               ) : null}
             </Grid2>

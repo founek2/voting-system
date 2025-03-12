@@ -37,7 +37,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             uriVariables: [
                 'id' => new Link(fromClass: self::class),
             ],
-            security: 'user.getId() == object.getAppUser().getId(',
+            security: 'user.getId() == object.getAppUser().getId()',
             denormalizationContext: ['groups' => ['candidate:edit']],
         ),
         new GetCollection(

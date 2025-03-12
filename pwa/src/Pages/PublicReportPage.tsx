@@ -3,13 +3,14 @@ import React from "react";
 import FileList from "../Components/FileList";
 import Loader from "../Components/Loader";
 import { useGetPublicReportsQuery } from "../endpoints/mediaReport";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function PublicReportPage() {
   const { data, isLoading, error } = useGetPublicReportsQuery();
 
   if (isLoading) return <Loader />;
   if (error || !data)
-    return <Typography>Nelze načíst závěrečné zprávy.</Typography>;
+    return <TypographyInfo>Nelze načíst závěrečné zprávy.</TypographyInfo>;
 
   return (
     <Grid2 container spacing={4}>

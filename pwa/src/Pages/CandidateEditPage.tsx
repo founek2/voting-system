@@ -23,6 +23,7 @@ import Loader from "../Components/Loader";
 import { Typography } from "@mui/material";
 import { parseId } from "../util/parseId";
 import { handleError } from "../util/handleError";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function CandidateEditPage() {
   const params = useParams<{ id: string }>();
@@ -71,7 +72,8 @@ export default function CandidateEditPage() {
   }
 
   if (isLoading || loadingCandidate) return <Loader />;
-  if (isError || errorCandidate) return <Typography>Nastala chyba</Typography>;
+  if (isError || errorCandidate)
+    return <TypographyInfo>Nastala chyba</TypographyInfo>;
 
   return (
     <CandidateForm

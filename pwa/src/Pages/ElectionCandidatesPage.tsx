@@ -9,6 +9,7 @@ import { useGetCandidatesQuery } from "../endpoints/candidates";
 import { Election } from "../types";
 import { useGetElectionQuery } from "../endpoints/elections";
 import { CandidateFancyCard } from "../Components/CandidateFancyCard";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 interface ContentProps {
   election: Election;
@@ -18,9 +19,9 @@ function Content({ election }: ContentProps) {
     election: election["@id"]!,
   });
 
-  if (isError) return <Typography>Nelze načíst data</Typography>;
+  if (isError) return <TypographyInfo>Nelze načíst data</TypographyInfo>;
   if (candidates?.totalItems === 0)
-    return <Typography>Nebyli nalezeni žádní kandidáti.</Typography>;
+    return <TypographyInfo>Nebyli nalezeni žádní kandidáti.</TypographyInfo>;
 
   return (
     <>
@@ -49,7 +50,9 @@ export default function ElectionCandidatesPage() {
 
   if (isLoading) return <Loader />;
   if (isError || !election)
-    return <Typography>Nelze načíst informace o zvolené volbě.</Typography>;
+    return (
+      <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>
+    );
 
   return (
     <Grid2 container spacing={2}>
@@ -57,11 +60,6 @@ export default function ElectionCandidatesPage() {
         <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Kandidáti
         </Typography>
-        <Link to="create">
-          <IconButton>
-            <AddIcon fontSize="large" />
-          </IconButton>
-        </Link>
       </Grid2>
       <Grid2 container size={12} spacing={2}>
         {params.id ? <Content election={election} /> : null}

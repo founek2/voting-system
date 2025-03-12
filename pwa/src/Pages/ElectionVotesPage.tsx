@@ -38,6 +38,7 @@ import { CandidateVoteCard } from "../Components/CandidateVoteCard";
 import { VoteCard } from "../Components/VoteCard";
 import { useDebounce } from "use-debounce";
 import { useGetVotedForElectionQuery } from "../endpoints/users";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -240,7 +241,9 @@ export default function ElectionVotesPage() {
 
   if (isLoading) return <Loader />;
   if (isError || !election)
-    return <Typography>Nelze načíst informace o zvolené volbě.</Typography>;
+    return (
+      <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>
+    );
 
   return (
     <>

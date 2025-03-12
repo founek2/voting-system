@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 import Loader from "../Components/Loader";
 import { SimpleCard } from "../Components/SimpleCard";
 import { useGetPublicReportsQuery } from "../endpoints/mediaReport";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 function Content() {
   const { data: reports, isError } = useGetPublicReportsQuery();
 
-  if (isError) return <Typography>Nelze načíst data</Typography>;
+  if (isError) return <TypographyInfo>Nelze načíst data</TypographyInfo>;
   if (reports?.totalItems === 0)
-    return <Typography>Nebyli nalezeny žádné závěrečné zprávy.</Typography>;
+    return (
+      <TypographyInfo>Nebyli nalezeny žádné závěrečné zprávy.</TypographyInfo>
+    );
 
   return (
     <>

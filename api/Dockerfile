@@ -61,7 +61,8 @@ ENV APP_ENV=dev XDEBUG_MODE=off
 VOLUME /app/var/
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
-RUN sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=8M/g' $PHP_INI_DIR/php.ini
+RUN sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=16M/g' $PHP_INI_DIR/php.ini
+RUN sed -i 's/post_max_size\s*=.*/post_max_size=16M/g' $PHP_INI_DIR/php.ini
 
 RUN set -eux; \
 	install-php-extensions \
@@ -84,7 +85,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link frankenphp/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
-RUN sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=8M/g' $PHP_INI_DIR/php.ini
+RUN sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=16M/g' $PHP_INI_DIR/php.ini
+RUN sed -i 's/post_max_size\s*=.*/post_max_size=16M/g' $PHP_INI_DIR/php.ini
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* ./

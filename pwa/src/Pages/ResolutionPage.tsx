@@ -6,13 +6,14 @@ import FileButton from "../Components/FileButton";
 import Loader from "../Components/Loader";
 import { useGetPublicResolutionsQuery } from "../endpoints/mediaResolution";
 import { SimpleCard } from "../Components/SimpleCard";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 function Content() {
   const { data: resolutions, isError } = useGetPublicResolutionsQuery();
 
-  if (isError) return <Typography>Nelze načíst data</Typography>;
+  if (isError) return <TypographyInfo>Nelze načíst data</TypographyInfo>;
   if (resolutions?.totalItems === 0)
-    return <Typography>Nebyli nalezeny žádné usnesení.</Typography>;
+    return <TypographyInfo>Nebyli nalezeny žádné usnesení.</TypographyInfo>;
 
   return (
     <>

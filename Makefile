@@ -3,6 +3,9 @@ compose=docker compose -f compose.yaml -f compose.dev.yaml
 up:
 	$(compose) up -d
 
+upb:
+	$(compose) up -d --build
+
 down:
 	$(compose) down
 

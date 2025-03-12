@@ -12,6 +12,7 @@ import { Election } from "../types";
 import { dateToString } from "../util/dateToString";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -83,9 +84,9 @@ export default function DashboardUserPage() {
                 </Link>
               ))
             ) : (
-              <Typography color="textSecondary">
+              <TypographyInfo>
                 Neprobíhá žádné elektronické hlasování
-              </Typography>
+              </TypographyInfo>
             )
           ) : (
             <Loader />
@@ -116,9 +117,7 @@ export default function DashboardUserPage() {
                 </Link>
               ))
             ) : (
-              <Typography color="textSecondary">
-                Nemáte žádné podané kandidátky
-              </Typography>
+              <TypographyInfo>Nemáte žádné podané kandidátky</TypographyInfo>
             )
           ) : (
             <Loader />

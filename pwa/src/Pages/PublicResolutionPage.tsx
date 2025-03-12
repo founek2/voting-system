@@ -3,13 +3,16 @@ import React from "react";
 import FileList from "../Components/FileList";
 import Loader from "../Components/Loader";
 import { useGetPublicResolutionsQuery } from "../endpoints/mediaResolution";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function PublicReportPage() {
   const { data, isLoading, error } = useGetPublicResolutionsQuery();
 
   if (isLoading) return <Loader />;
   if (error || !data)
-    return <Typography>Nelze načíst usnesení volební komise.</Typography>;
+    return (
+      <TypographyInfo>Nelze načíst usnesení volební komise.</TypographyInfo>
+    );
 
   return (
     <Grid2 container spacing={4}>

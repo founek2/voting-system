@@ -16,6 +16,7 @@ import {
 import PositionForm from "../Components/PositionForm";
 import Loader from "../Components/Loader";
 import { Typography } from "@mui/material";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function PositionEditPage() {
   const params = useParams<{ id: string }>();
@@ -42,7 +43,9 @@ export default function PositionEditPage() {
 
   if (isLoading) return <Loader />;
   if (isError)
-    return <Typography>Nelze načíst informace o zvolené volbě.</Typography>;
+    return (
+      <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>
+    );
 
   return (
     <PositionForm

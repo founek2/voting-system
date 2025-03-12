@@ -1,4 +1,4 @@
-import { Grid2, Typography } from "@mui/material";
+import { Grid2, Paper, Typography } from "@mui/material";
 import { subDays } from "date-fns";
 import React from "react";
 import Loader from "../Components/Loader";
@@ -7,6 +7,7 @@ import { Election } from "../types";
 import { electionTitle } from "../util/electionTitle";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 function toDate(
   date?: string | null,
@@ -49,50 +50,55 @@ function DateRow({
 
 function DateList({ election }: { election: Election }) {
   return (
-    <Grid2 container spacing={2}>
-      <DateRow
-        from={election.announcementDate}
-        to={election.registrationOfCandidatesDate}
-      >
-        Vyhlášení voleb
-      </DateRow>
-      <DateRow
-        from={election.registrationOfCandidatesDate}
-        to={election.campaignDate}
-      >
-        Registrace kandidátů
-      </DateRow>
-      <DateRow from={election.campaignDate} to={election.electronicVotingDate}>
-        Kampaň
-      </DateRow>
-      <DateRow
-        from={election.electronicVotingDate}
-        to={election.ballotVotingDate}
-      >
-        Elektronické hlasování
-      </DateRow>
-      <DateRow
-        from={election.ballotVotingDate}
-        to={election.preliminaryResultsDate}
-      >
-        Urnové hlasování
-      </DateRow>
-      <DateRow
-        from={election.preliminaryResultsDate}
-        to={election.complaintsDeadlineDate}
-      >
-        Vyhlášení předběžných výsledků
-      </DateRow>
-      <DateRow
-        from={election.complaintsDeadlineDate}
-        to={election.finalResultsDate}
-      >
-        Uzávěrka podávání stížností
-      </DateRow>
-      <DateRow from={election.finalResultsDate}>
-        Vyhlášení konečných výsledků
-      </DateRow>
-    </Grid2>
+    <Paper sx={{ p: 2 }}>
+      <Grid2 container spacing={2}>
+        <DateRow
+          from={election.announcementDate}
+          to={election.registrationOfCandidatesDate}
+        >
+          Vyhlášení voleb
+        </DateRow>
+        <DateRow
+          from={election.registrationOfCandidatesDate}
+          to={election.campaignDate}
+        >
+          Registrace kandidátů
+        </DateRow>
+        <DateRow
+          from={election.campaignDate}
+          to={election.electronicVotingDate}
+        >
+          Kampaň
+        </DateRow>
+        <DateRow
+          from={election.electronicVotingDate}
+          to={election.ballotVotingDate}
+        >
+          Elektronické hlasování
+        </DateRow>
+        <DateRow
+          from={election.ballotVotingDate}
+          to={election.preliminaryResultsDate}
+        >
+          Urnové hlasování
+        </DateRow>
+        <DateRow
+          from={election.preliminaryResultsDate}
+          to={election.complaintsDeadlineDate}
+        >
+          Vyhlášení předběžných výsledků
+        </DateRow>
+        <DateRow
+          from={election.complaintsDeadlineDate}
+          to={election.finalResultsDate}
+        >
+          Uzávěrka podávání stížností
+        </DateRow>
+        <DateRow from={election.finalResultsDate}>
+          Vyhlášení konečných výsledků
+        </DateRow>
+      </Grid2>
+    </Paper>
   );
 }
 
@@ -114,7 +120,7 @@ export default function DashboardPage() {
           ongoingElection ? (
             <DateList election={ongoingElection} />
           ) : (
-            <Typography>Neprobíhá žádná volba</Typography>
+            <TypographyInfo>Neprobíhá žádná volba</TypographyInfo>
           )
         ) : (
           <Loader />

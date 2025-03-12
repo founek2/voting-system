@@ -41,7 +41,7 @@ export default function OAuthCallback() {
   if (isLoading) return <Loader />;
 
   return (
-    <Typography>
+    <Typography color="textPrimary">
       Nastala chyba v procesu přihlašování. Zkuste to znovu.{" "}
       <Link to="/">
         <Button>Hlavní stránka</Button>

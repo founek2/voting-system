@@ -9,6 +9,7 @@ import {
   useUpdateResolutionMutation,
 } from "../endpoints/mediaResolution";
 import { handleError } from "../util/handleError";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function ResolutionEditPage() {
   const params = useParams<{ id: string }>();
@@ -54,7 +55,11 @@ export default function ResolutionEditPage() {
 
   if (isLoading) return <Loader />;
   if (isError)
-    return <Typography>Nelze načíst informace o zvoleném usnesení.</Typography>;
+    return (
+      <TypographyInfo>
+        Nelze načíst informace o zvoleném usnesení.
+      </TypographyInfo>
+    );
 
   return (
     <ReportForm

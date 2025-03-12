@@ -75,7 +75,7 @@ class MediaReport
 
     #[Vich\UploadableField(mapping: 'report_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull]
-    #[Assert\File(extensions: ['jpg', 'jpeg', 'png'])]
+    #[Assert\File(extensions: ['jpg', 'jpeg', 'png', 'pdf'])]
     public ?File $file = null;
 
     #[ApiProperty(writable: false)]

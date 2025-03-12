@@ -30,6 +30,7 @@ import {
   useUpdateBoardMemberMutation,
 } from "../endpoints/board";
 import BoardMemberForm from "../Components/BoardMemberForm";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function BoardMemberEditPage() {
   const params = useParams<{ id: string }>();
@@ -66,7 +67,7 @@ export default function BoardMemberEditPage() {
   }
 
   if (isLoading) return <Loader />;
-  if (isError) return <Typography>Nastala chyba</Typography>;
+  if (isError) return <TypographyInfo>Nastala chyba</TypographyInfo>;
 
   return (
     <BoardMemberForm

@@ -13,6 +13,7 @@ import {
 import Loader from "../Components/Loader";
 import { Election_election_write } from "../endpoints/types";
 import { enqueueSnackbar } from "notistack";
+import { TypographyInfo } from "../Components/TypographyInfo";
 
 export default function ElectionEditPage() {
   const params = useParams<{ id: string }>();
@@ -39,7 +40,9 @@ export default function ElectionEditPage() {
 
   if (isLoading) return <Loader />;
   if (isError)
-    return <Typography>Nelze načíst informace o zvolené volbě.</Typography>;
+    return (
+      <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>
+    );
 
   return (
     <ElectionForm
