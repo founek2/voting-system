@@ -1,4 +1,4 @@
-import { Box, Grid2, Paper, Typography, Link as MuiLink } from "@mui/material";
+import { Grid2, Link as MuiLink, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/system";
 import React from "react";

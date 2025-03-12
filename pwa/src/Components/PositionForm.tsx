@@ -8,24 +8,11 @@ import {
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
-import { MyDatePicker } from "../Components/MyDatePicker";
 import {
-  Election_election_write,
   Position_jsonld_position_write,
   Zone_jsonld_zone_read,
 } from "../endpoints/types";
 import { useGetZonesQuery } from "../endpoints/zones";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-];
 
 interface PositionFormProps {
   defaultValues?: Position_jsonld_position_write;
@@ -45,8 +32,6 @@ export default function PositionForm({
   } = methods;
   const { data: zones } = useGetZonesQuery();
   const handleOnSubmit = handleSubmit(onSubmit);
-
-  // const autocompleteField = register("zoneRestrictions", { required: true });
 
   return (
     <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>

@@ -122,22 +122,15 @@ export default function ElectionForm({
           defaultValue={defaultValues?.positions}
           render={({ field }) => (
             <Autocomplete
-              options={
-                positions?.member || []
-                // top100Films
-              }
+              options={positions?.member || []}
               getOptionKey={(z) => z["@id"]!}
               getOptionLabel={(z) => z.name!}
               renderInput={(params) => (
                 <TextField {...params} label="Volené pozice" />
               )}
               multiple
-              // {...autocompleteField}
               onChange={(e, values) => {
                 field.onChange(values.map((v) => v["@id"]));
-                // autocompleteField.onChange({
-                //   target: { value, name: autocompleteField.name },
-                // });
               }}
               onBlur={field.onBlur}
               value={
