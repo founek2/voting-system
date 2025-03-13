@@ -77,9 +77,9 @@ export default function LayoutAuth() {
 
   const [open, setOpen] = useState(true);
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [counter, setCount] = useState(0);
 
   useEffect(() => {

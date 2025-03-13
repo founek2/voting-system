@@ -7,7 +7,7 @@ when@dev:
         handlers:
             main:
                 type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                path: php://stdout
                 level: debug
                 channels: ["!event"]
             # uncomment to get logging in your browser
@@ -22,23 +22,6 @@ when@dev:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!console"]
-
-when@test:
-    monolog:
-        handlers:
-            main:
-                type: stream
-                level: '%env(LOG_LEVEL)%'
-                action_level: error
-                handler: nested
-                channels: [ "app" ]
-            nested:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-            console:
-                type: console
-                process_psr_3_messages: false
 
 when@prod:
     monolog:

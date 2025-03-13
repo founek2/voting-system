@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
@@ -25,6 +26,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     normalizationContext: ['groups' => ['position:read']]
 )]
 #[ORM\Entity(repositoryClass: PositionRepository::class)]
+#[UniqueEntity('name')]
 class Position
 {
     use TimestampableEntity;
@@ -49,7 +51,7 @@ class Position
     #[Groups(['position:read'])]
     private Collection $candidates;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Groups(['position:read', 'position:write', 'candidate:read', 'member:public:read'])]
     private ?string $name = null;
 
