@@ -10,13 +10,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\OAuth2\Client\Token\AccessToken;
 
-const DEFAULT_PHOTO_URL = "https://static.is.sh.cvut.cz/assets/bag_on_head_white-eaa457debaec8080de4e7f800fa9033b.jpg";
-
 /**
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository
 {
+    static $DEFAULT_PHOTO_URL = "https://static.is.sh.cvut.cz/assets/bag_on_head_white-eaa457debaec8080de4e7f800fa9033b.jpg";
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -29,7 +29,7 @@ class UserRepository extends ServiceEntityRepository
         /** @var User|null */
         $user = $this->find($id);
         if ($user) {
-            $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl ?? DEFAULT_PHOTO_URL, $accessToken);
+            $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl ?? self::$DEFAULT_PHOTO_URL, $accessToken);
         } else {
             $user = new User();
             $this->update($user, $id,  $username,  $email, $firstName, $lastName, $photoSmallUrl, $accessToken);
