@@ -50,6 +50,6 @@ class UserRepository extends ServiceEntityRepository
             ->setFirstName($firstName)
             ->setLastName($lastName)
             ->setAccessToken(new AccessTokenDto(['expires' => $accessToken->getExpires()]))
-            ->setPhotoSmallUrl($photoSmallUrl ?? DEFAULT_PHOTO_URL);
+            ->setPhotoSmallUrl($photoSmallUrl ?? self::$DEFAULT_PHOTO_URL);
     }
 }
