@@ -59,13 +59,20 @@ const config = {
                 resolve: {
                     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
                 },
-                loader: 'ts-loader',
-                options: {
-                    getCustomTransformers: () => ({
-                        before: [!isEnvProduction && ReactRefreshTypeScript()].filter(Boolean),
-                    }),
-                    projectReferences: true,
-                },
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                    , {
+                        loader: 'ts-loader',
+                        options: {
+                            getCustomTransformers: () => ({
+                                before: [!isEnvProduction && ReactRefreshTypeScript()].filter(Boolean),
+                            }),
+                            projectReferences: true,
+                        },
+                    }]
+
             },
             {
                 test: /\.css$/,
