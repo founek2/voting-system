@@ -51,17 +51,19 @@ export default function FileList({ data }: PublicReportPageProps) {
               {year}
             </Typography>
           </Grid2>
-          {data.map((resolution) => (
-            <Grid2 size={{ xs: 12, lg: 6, xl: 4 }} key={resolution["@id"]}>
-              <Link
-                underline="none"
-                target="_blank"
-                href={`${resolution.contentUrl}`}
-              >
-                <SimpleCard title={resolution.name} />
-              </Link>
-            </Grid2>
-          ))}
+          <Grid2 container spacing={2}>
+            {data.map((resolution) => (
+              <Grid2 size={{ xs: 12, lg: 6, xl: 4 }} key={resolution["@id"]}>
+                <Link
+                  underline="none"
+                  target="_blank"
+                  href={`${resolution.contentUrl}`}
+                >
+                  <SimpleCard title={resolution.name} />
+                </Link>
+              </Grid2>
+            ))}
+          </Grid2>
         </Grid2>
       ))}
     </Grid2>

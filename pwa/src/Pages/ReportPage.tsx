@@ -46,7 +46,7 @@ export default function ReportPage() {
           </IconButton>
         </Link>
       </Grid2>
-      <Grid2 container size={12} spacing={2}>
+      <Grid2 container size={12} spacing={4}>
         <Content />
       </Grid2>
     </Grid2>

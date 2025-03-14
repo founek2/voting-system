@@ -13,5 +13,6 @@ enum ElectionStage: string
     case BALLOG_VOTING = 'ballot_voting';
     case PRELIMINARY_RESULTS = 'preliminary_results';
     case COMPLAINTS = 'complaints';
+    case COUNTING_VOTES = 'counting_votes';
     case FINAL_RESULTS = 'final_results';
 }

@@ -45,7 +45,8 @@ function getStep(election: Election) {
   if (election.stage == "ballot_voting") return 4;
   if (election.stage == "preliminary_results") return 5;
   if (election.stage == "complaints") return 6;
-  if (election.stage == "final_results") return 7;
+  if (election.stage == "counting_votes") return 7;
+  if (election.stage == "final_results") return 8;
 
   return 0;
 }
@@ -143,6 +144,11 @@ prospěch kandidáta.`,
     date: (election: Election) =>
       `${dateToString(election.complaintsDeadlineDate)}`,
     description: "Nyní již není možno podávat stížnosti.",
+  },
+  {
+    label: (election: Election) => "Vyhodnocení výsledků",
+    date: (election: Election) => `${dateToString(election.countingVotesDate)}`,
+    description: "Komise provede vyhodnocení výsledků.",
   },
   {
     label: (election: Election) => "Vyhlášení konečných výsledků",

@@ -74,6 +74,10 @@ class Election
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['election:read', 'election:write'])]
+    private ?\DateTimeInterface $countingVotesDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['election:read', 'election:write'])]
     private ?\DateTimeInterface $finalResultsDate = null;
 
     /**
@@ -201,6 +205,18 @@ class Election
         return $this;
     }
 
+    public function getCountingVotesDate(): ?\DateTimeInterface
+    {
+        return $this->countingVotesDate;
+    }
+
+    public function setCountingVotesDate(?\DateTimeInterface $countingVotesDate): static
+    {
+        $this->countingVotesDate = $countingVotesDate;
+
+        return $this;
+    }
+
     public function getFinalResultsDate(): ?\DateTimeInterface
     {
         return $this->finalResultsDate;
@@ -273,6 +289,7 @@ class Election
         $now = new DateTime();
 
         if ($this->finalResultsDate <= $now) return ElectionStage::FINAL_RESULTS;
+        if ($this->countingVotesDate <= $now) return ElectionStage::COUNTING_VOTES;
         if ($this->complaintsDeadlineDate <= $now) return ElectionStage::COMPLAINTS;
         if ($this->preliminaryResultsDate <= $now) return ElectionStage::PRELIMINARY_RESULTS;
         if ($this->ballotVotingDate <= $now) return ElectionStage::BALLOG_VOTING;

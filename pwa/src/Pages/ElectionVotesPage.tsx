@@ -74,7 +74,7 @@ function VoteListMobile({
 }
 
 interface VoteListProps {
-  users: User_jsonld_vote_read[];
+  users: User_jsonld_user_read[];
   disabled?: boolean;
   zones: Zone_jsonld_zone_read[];
   onInvalidate: (user: User_jsonld_vote_read) => any;
@@ -155,7 +155,9 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
                 </MuiLink>
               </Grid2>
               <Grid2 size={sizePosition} sx={opacity}>
-                <Typography textAlign="center">{zone?.name}</Typography>
+                <Typography textAlign="center">
+                  {zone?.name}/{user.doorNumber}
+                </Typography>
               </Grid2>
               <Grid2 size={sizeVoting} justifyContent="center" display="flex">
                 <Button

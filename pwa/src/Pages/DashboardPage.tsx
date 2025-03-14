@@ -1,5 +1,5 @@
-import { Grid2, Paper, Typography } from "@mui/material";
-import { subDays } from "date-fns";
+import { Divider, Grid2, Paper, Typography } from "@mui/material";
+import { differenceInDays, subDays } from "date-fns";
 import React from "react";
 import Loader from "../Components/Loader";
 import { useGetElectionsQuery } from "../endpoints/elections";
@@ -8,6 +8,7 @@ import { electionTitle } from "../util/electionTitle";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
 import { TypographyInfo } from "../Components/TypographyInfo";
+import { dayText } from "../util/dayText";
 
 function toDate(
   date?: string | null,
@@ -38,11 +39,19 @@ function DateRow({
   to?: string | null;
   children: React.ReactNode;
 }) {
+  const numberOfDays =
+    from && to ? differenceInDays(new Date(to), new Date(from)) : 0;
+
   return (
     <>
-      <Grid2 size={{ xs: 12, md: 6 }}>{toDate(from, to)}</Grid2>
-      <Grid2 size={{ xs: 12, md: 6 }}>
+      <Grid2 size={{ xs: 12, md: 5 }}>{toDate(from, to)}</Grid2>
+      <Grid2 size={{ xs: 9, md: 5 }}>
         <Typography color="textPrimary">{children}</Typography>
+      </Grid2>
+      <Grid2 size={{ xs: 3, md: 2 }}>
+        <Typography color="textPrimary">
+          {numberOfDays} {dayText(numberOfDays)}
+        </Typography>
       </Grid2>
     </>
   );
@@ -90,9 +99,15 @@ function DateList({ election }: { election: Election }) {
         </DateRow>
         <DateRow
           from={election.complaintsDeadlineDate}
-          to={election.finalResultsDate}
+          to={election.countingVotesDate}
         >
           Uzávěrka podávání stížností
+        </DateRow>
+        <DateRow
+          from={election.countingVotesDate}
+          to={election.finalResultsDate}
+        >
+          Vyhodnocení výsledků
         </DateRow>
         <DateRow from={election.finalResultsDate}>
           Vyhlášení konečných výsledků
@@ -115,7 +130,7 @@ export default function DashboardPage() {
           Přehled voleb {ongoingElection ? electionTitle(ongoingElection) : ""}
         </Typography>
       </Grid2>
-      <Grid2 container size={{ xs: 12, sm: 6, xl: 4 }} spacing={2}>
+      <Grid2 container size={{ xs: 12, sm: 9, md: 8, xl: 5 }} spacing={2}>
         {!isLoading ? (
           ongoingElection ? (
             <DateList election={ongoingElection} />

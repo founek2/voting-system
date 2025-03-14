@@ -13,6 +13,12 @@ import {
   Zone_jsonld_zone_read,
 } from "../endpoints/types";
 import { useGetZonesQuery } from "../endpoints/zones";
+import { head } from "../util/head";
+
+const allZone = {
+  name: "Všichni",
+  "@id": "all",
+};
 
 interface PositionFormProps {
   defaultValues?: Position_jsonld_position_write;
@@ -33,6 +39,10 @@ export default function PositionForm({
   const { data: zones } = useGetZonesQuery();
   const handleOnSubmit = handleSubmit(onSubmit);
 
+  const zoneOptions: Zone_jsonld_zone_read[] = [
+    allZone,
+    ...(zones?.member || []),
+  ];
   return (
     <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>
       <Grid2 size={12}>
@@ -45,7 +55,7 @@ export default function PositionForm({
         </Typography>
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={{ xs: 12, md: 4, lg: 3 }}>
         <TextField
           label="Název"
           {...register("name", { required: true })}
@@ -53,34 +63,30 @@ export default function PositionForm({
         />
       </Grid2>
 
-      <Grid2 size={5}>
+      <Grid2 size={{ xs: 12, md: 4, lg: 3 }}>
         <Controller
           control={methods.control}
           name="zoneRestrictions"
           render={({ field }) => (
             <Autocomplete
-              options={
-                zones?.member || []
-                // top100Films
-              }
+              options={zoneOptions}
               getOptionKey={(z) => z["@id"]!}
               getOptionLabel={(z) => z.name!}
               renderInput={(params) => (
                 <TextField {...params} label="Omezení volby na zóny" />
               )}
               multiple
-              // {...autocompleteField}
               onChange={(e, values) => {
-                field.onChange(values.map((v) => v["@id"]));
-                // autocompleteField.onChange({
-                //   target: { value, name: autocompleteField.name },
-                // });
+                const filtered = values.filter((v) => v !== allZone);
+                field.onChange(filtered.map((v) => v["@id"]));
               }}
               onBlur={field.onBlur}
               value={
-                field.value
-                  ?.map((id) => zones?.member.find((z) => z["@id"] == id))
-                  .filter(Boolean) as Zone_jsonld_zone_read[]
+                field.value && field.value.length > 0
+                  ? (field.value
+                      ?.map((id) => zoneOptions.find((z) => z["@id"] == id))
+                      .filter(Boolean) as Zone_jsonld_zone_read[])
+                  : [allZone]
               }
             />
           )}

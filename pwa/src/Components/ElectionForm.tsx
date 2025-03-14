@@ -16,8 +16,47 @@ import {
 } from "../endpoints/types";
 import { useGetPositionsQuery } from "../endpoints/positions";
 import { ResponsiveStyleValue } from "@mui/system";
+import { Election } from "../types";
+import { differenceInDays } from "date-fns";
 
 const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6, lg: 3 };
+
+type keys =
+  | "announcementDate"
+  | "registrationOfCandidatesDate"
+  | "campaignDate"
+  | "electronicVotingDate"
+  | "ballotVotingDate"
+  | "preliminaryResultsDate"
+  | "complaintsDeadlineDate"
+  | "countingVotesDate"
+  | "finalResultsDate";
+const nextDateMapper: Record<keys, keys | undefined> = {
+  announcementDate: "registrationOfCandidatesDate",
+  registrationOfCandidatesDate: "campaignDate",
+  campaignDate: "electronicVotingDate",
+  electronicVotingDate: "ballotVotingDate",
+  ballotVotingDate: "preliminaryResultsDate",
+  preliminaryResultsDate: "complaintsDeadlineDate",
+  complaintsDeadlineDate: "countingVotesDate",
+  countingVotesDate: "finalResultsDate",
+  finalResultsDate: undefined,
+};
+function getNumberOfDays(key: keyof typeof nextDateMapper, election: Election) {
+  const date = election[key];
+  const nextKey = nextDateMapper[key];
+  if (!date || !nextKey) return null;
+  const nextDate = election[nextKey];
+  if (!nextDate) return null;
+
+  const d = new Date(date);
+  const dd = new Date(nextDate);
+  if (key == "announcementDate") {
+    return election.registrationOfCandidatesDate
+      ? differenceInDays(d, dd)
+      : null;
+  }
+}
 
 interface ElectionFormProps {
   defaultValues?: Omit<Election_election_write, "candidates">;
@@ -33,11 +72,13 @@ export default function ElectionForm({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = methods;
   const { data: positions } = useGetPositionsQuery();
 
   const handleOnSubmit = handleSubmit(onSubmit);
+  const a = watch();
 
   return (
     <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>
@@ -104,6 +145,14 @@ export default function ElectionForm({
           label="Uzávěr podávání stížností"
           {...register("complaintsDeadlineDate", { required: true })}
           defaultValue={defaultValues?.complaintsDeadlineDate}
+        />
+      </Grid2>
+
+      <Grid2 size={dateSize}>
+        <MyDatePicker
+          label="Vyhodnocení výsledků"
+          {...register("countingVotesDate", { required: true })}
+          defaultValue={defaultValues?.countingVotesDate}
         />
       </Grid2>
 

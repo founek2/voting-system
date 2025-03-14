@@ -39,7 +39,7 @@ export function MyUploadFileInput({
 
   return (
     <MuiFileInput
-      value={file}
+      value={file || (value ? new File([], "plakát") : undefined)}
       onChange={handleChange}
       label="Vyberte plakát"
       placeholder="Klikněte pro výběr souboru"
