@@ -60,9 +60,10 @@ const config = {
                     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
                 },
                 use: [
-                    {
+                    // Babel is adding polifills
+                    ...(isEnvProduction ? [{
                         loader: 'babel-loader',
-                    },
+                    }] : []),
                     , {
                         loader: 'ts-loader',
                         options: {

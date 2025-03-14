@@ -17,9 +17,9 @@ import {
 import { useGetPositionsQuery } from "../endpoints/positions";
 import { ResponsiveStyleValue } from "@mui/system";
 import { Election } from "../types";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, subDays, parse } from "date-fns";
 
-const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6, lg: 3 };
+const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6 };
 
 type keys =
   | "announcementDate"
@@ -57,6 +57,22 @@ function getNumberOfDays(key: keyof typeof nextDateMapper, election: Election) {
       : null;
   }
 }
+function getEndDate(
+  key: keyof typeof nextDateMapper,
+  election: Election
+): string {
+  const nextKey = nextDateMapper[key];
+  if (!nextKey) return "";
+  const nextDateStr = election[nextKey];
+  if (!nextDateStr) return "";
+
+  let nextDate = parse(nextDateStr, "dd.MM.yyyy", new Date());
+  if (isNaN(nextDate.getTime())) {
+    nextDate = new Date(nextDateStr);
+  }
+
+  return subDays(nextDate, 1).toLocaleDateString();
+}
 
 interface ElectionFormProps {
   defaultValues?: Omit<Election_election_write, "candidates">;
@@ -78,10 +94,16 @@ export default function ElectionForm({
   const { data: positions } = useGetPositionsQuery();
 
   const handleOnSubmit = handleSubmit(onSubmit);
-  const a = watch();
-
+  const formData = watch();
+  console.log("data", formData);
   return (
-    <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>
+    <Grid2
+      component="form"
+      container
+      spacing={2}
+      onSubmit={handleOnSubmit}
+      maxWidth={600}
+    >
       <Grid2 size={12}>
         <FormStatus errors={errors} />
       </Grid2>
@@ -99,12 +121,26 @@ export default function ElectionForm({
           defaultValue={defaultValues?.announcementDate}
         />
       </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("announcementDate", formData)}
+          disabled
+        />
+      </Grid2>
 
       <Grid2 size={dateSize}>
         <MyDatePicker
           label="Přihlašování kandidátů"
           {...register("registrationOfCandidatesDate", { required: true })}
           defaultValue={defaultValues?.registrationOfCandidatesDate}
+        />
+      </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("registrationOfCandidatesDate", formData)}
+          disabled
         />
       </Grid2>
 
@@ -115,12 +151,26 @@ export default function ElectionForm({
           defaultValue={defaultValues?.campaignDate}
         />
       </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("campaignDate", formData)}
+          disabled
+        />
+      </Grid2>
 
       <Grid2 size={dateSize}>
         <MyDatePicker
           label="Elektronické hlasování"
           {...register("electronicVotingDate", { required: true })}
           defaultValue={defaultValues?.electronicVotingDate}
+        />
+      </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("electronicVotingDate", formData)}
+          disabled
         />
       </Grid2>
 
@@ -131,12 +181,26 @@ export default function ElectionForm({
           defaultValue={defaultValues?.ballotVotingDate}
         />
       </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("ballotVotingDate", formData)}
+          disabled
+        />
+      </Grid2>
 
       <Grid2 size={dateSize}>
         <MyDatePicker
           label="Vyhlášení předběžných výsledků"
           {...register("preliminaryResultsDate", { required: true })}
           defaultValue={defaultValues?.preliminaryResultsDate}
+        />
+      </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("preliminaryResultsDate", formData)}
+          disabled
         />
       </Grid2>
 
@@ -147,12 +211,26 @@ export default function ElectionForm({
           defaultValue={defaultValues?.complaintsDeadlineDate}
         />
       </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("complaintsDeadlineDate", formData)}
+          disabled
+        />
+      </Grid2>
 
       <Grid2 size={dateSize}>
         <MyDatePicker
           label="Vyhodnocení výsledků"
           {...register("countingVotesDate", { required: true })}
           defaultValue={defaultValues?.countingVotesDate}
+        />
+      </Grid2>
+      <Grid2 size={dateSize}>
+        <TextField
+          fullWidth
+          value={getEndDate("countingVotesDate", formData)}
+          disabled
         />
       </Grid2>
 
@@ -164,7 +242,7 @@ export default function ElectionForm({
         />
       </Grid2>
 
-      <Grid2 size={{ xs: 12, md: 6 }}>
+      <Grid2 size={{ xs: 12 }}>
         <Controller
           control={methods.control}
           name="positions"
