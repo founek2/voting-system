@@ -33,10 +33,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             denormalizationContext: ['groups' => ['candidate:write']],
         ),
         new Patch(
-            uriTemplate: 'candidates/{id}',
-            uriVariables: [
-                'id' => new Link(fromClass: self::class),
-            ],
             security: 'user.getId() == object.getAppUser().getId()',
             denormalizationContext: ['groups' => ['candidate:edit']],
         ),
@@ -61,10 +57,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             filters: [VoteCandidateFilter::class],
         ),
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
-        new Patch(
-            security: 'user.hasRole("ROLE_ADMIN")',
-            denormalizationContext: ['groups' => ['candidate:write']],
-        ),
         new Delete(
             uriTemplate: 'candidates/{id}',
             security: 'object.getAppUser().getId() == user.getId() or user.hasRole("ROLE_ADMIN")',
@@ -122,9 +114,20 @@ class Candidate
     #[Groups(['candidate:read'])]
     private ?\DateTimeImmutable $withdrewAt = null;
 
+    /**
+     * @var Collection<int, BallotResult>
+     */
+    #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: BallotResult::class)]
+    private Collection $ballotResults;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['candidate:read',  'candidate:admin:write'])]
+    private ?\DateTimeImmutable $winnerMarkedAt = null;
+
     public function __construct()
     {
         $this->votes = new ArrayCollection();
+        $this->ballotResults = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,5 +229,47 @@ class Candidate
     public function isWithdrawAllowed(): bool
     {
         return $this->getElection()->getStage() != ElectionStage::FINAL_RESULTS && $this->withdrewAt == null;
+    }
+
+    /**
+     * @return Collection<int, BallotResult>
+     */
+    public function getBallotResults(): Collection
+    {
+        return $this->ballotResults;
+    }
+
+    public function addBallotResult(BallotResult $ballotResult): static
+    {
+        if (!$this->ballotResults->contains($ballotResult)) {
+            $this->ballotResults->add($ballotResult);
+            $ballotResult->setCandidate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBallotResult(BallotResult $ballotResult): static
+    {
+        if ($this->ballotResults->removeElement($ballotResult)) {
+            // set the owning side to null (unless already changed)
+            if ($ballotResult->getCandidate() === $this) {
+                $ballotResult->setCandidate(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getWinnerMarkedAt(): ?\DateTimeImmutable
+    {
+        return $this->winnerMarkedAt;
+    }
+
+    public function setWinnerMarkedAt(?\DateTimeImmutable $winnerMarkedAt): static
+    {
+        $this->winnerMarkedAt = $winnerMarkedAt;
+
+        return $this;
     }
 }

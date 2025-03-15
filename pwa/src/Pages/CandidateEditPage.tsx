@@ -1,29 +1,19 @@
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import ElectionForm from "../Components/ElectionForm";
-import {
-  useAddElectionMutation,
-  useGetElectionQuery,
-} from "../endpoints/elections";
-import {
-  Candidate_candidate_edit,
-  Candidate_candidate_write,
-  Election_election_write,
-} from "../endpoints/types";
 import { useNavigate, useParams } from "react-router-dom";
+import CandidateForm from "../Components/CandidateForm";
+import Loader from "../Components/Loader";
+import { TypographyInfo } from "../Components/TypographyInfo";
 import {
-  useAddCandidateMutation,
   useGetCandidateQuery,
   useUpdateCandidateMutation,
   useWithdrawCandidateMutation,
 } from "../endpoints/candidates";
+import { useGetElectionQuery } from "../endpoints/elections";
+import { Candidate_candidate_edit } from "../endpoints/types";
 import { useAppSelector } from "../hooks/app";
-import CandidateForm from "../Components/CandidateForm";
-import Loader from "../Components/Loader";
-import { Typography } from "@mui/material";
-import { parseId } from "../util/parseId";
 import { handleError } from "../util/handleError";
-import { TypographyInfo } from "../Components/TypographyInfo";
+import { parseId } from "../util/parseId";
 
 export default function CandidateEditPage() {
   const params = useParams<{ id: string }>();

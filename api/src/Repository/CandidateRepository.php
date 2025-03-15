@@ -51,7 +51,7 @@ class CandidateRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.election = :election')
-            ->andWhere('c.withdrewAt IS NULL')
+            // ->andWhere('c.withdrewAt IS NULL')
             ->setParameter('election', $election)
             ->getQuery()
             ->getResult()

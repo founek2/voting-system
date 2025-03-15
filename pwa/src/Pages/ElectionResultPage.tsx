@@ -1,15 +1,14 @@
 import { Breadcrumbs, Grid2, Typography, Link as MuiLink } from "@mui/material";
 import React from "react";
-import { useParams } from "react-router-dom";
-import { CandidateFancyCard } from "../Components/CandidateFancyCard";
+import { useLocation, useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
-import {
-  useGetElectionQuery,
-  useGetElectionResultQuery,
-} from "../endpoints/elections";
+import { useGetElectionQuery } from "../endpoints/elections";
 import { electionTitle } from "../util/electionTitle";
 import { TypographyInfo } from "../Components/TypographyInfo";
 import { Box } from "@mui/system";
+import { ElectronicResultList } from "./ElectionResultPage/ElectronicResultList";
+import { BallotResultList } from "./ElectionResultPage/BallotResultList";
+import { TotalResultList } from "./ElectionResultPage/TotalResultList";
 
 const breadcrumbs = [
   {
@@ -24,7 +23,7 @@ const breadcrumbs = [
   },
   {
     label: "Celkové",
-    href: "#",
+    href: "#total",
     current: true,
   },
 ];
@@ -43,14 +42,13 @@ function BreadcrumItem({ label, href, current }: any) {
 
 export default function ElectionResultPage() {
   const params = useParams<{ id: string }>();
+  const location = useLocation();
+
   const {
     data: election,
     isLoading,
     isError,
   } = useGetElectionQuery(Number(params.id));
-  const { data: results } = useGetElectionResultQuery(election?.id!, {
-    skip: !election,
-  });
 
   if (isError || !election)
     return (
@@ -67,34 +65,23 @@ export default function ElectionResultPage() {
       <Box display="flex" justifyContent="center" width="100%">
         <Breadcrumbs aria-label="breadcrumb">
           {breadcrumbs.map((breadcrumb) => (
-            <BreadcrumItem {...breadcrumb} />
+            <BreadcrumItem
+              key={breadcrumb.href}
+              {...breadcrumb}
+              current={breadcrumb.href == location.hash}
+            />
           ))}
         </Breadcrumbs>
       </Box>
-      <Grid2 container size={12} spacing={2}>
-        {results?.candidates?.length === 0 ? (
-          <TypographyInfo>Nebyli přihlášení žádní kandidáti.</TypographyInfo>
-        ) : null}
-        {results ? (
-          results.candidates?.map((result) => (
-            <Grid2 size={{ xs: 12, sm: 8, md: 5, lg: 2 }} key={result["@id"]}>
-              <CandidateFancyCard candidate={result.candidate!}>
-                <Typography variant="body1" component="div">
-                  Pro {result.positiveVotes}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Zdrželo se {result.neutralVotes}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Proti {result.negativeVotes}
-                </Typography>
-              </CandidateFancyCard>
-            </Grid2>
-          ))
-        ) : (
-          <Loader />
-        )}
-      </Grid2>
+      {location.hash === "#electronic" ? (
+        <ElectronicResultList election={election} />
+      ) : null}
+      {location.hash === "#ballot" ? (
+        <BallotResultList election={election} />
+      ) : null}
+      {location.hash === "#total" ? (
+        <TotalResultList election={election} />
+      ) : null}
     </Grid2>
   );
 }

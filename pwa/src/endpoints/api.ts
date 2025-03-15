@@ -52,6 +52,7 @@ export const api = createApi({
         'Votes',
         'Users',
         'BoardMembers',
+        'Ballot',
     ],
     /**
      * This api has endpoints injected in adjacent files,

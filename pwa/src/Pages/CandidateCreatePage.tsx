@@ -6,7 +6,7 @@ import {
   useGetElectionQuery,
 } from "../endpoints/elections";
 import {
-  Candidate_candidate_write,
+  Candidate_jsonld_candidate_write,
   Election_election_write,
 } from "../endpoints/types";
 import { useNavigate, useParams } from "react-router-dom";
@@ -41,7 +41,7 @@ export default function CandidateCreatePage() {
   );
   const navigate = useNavigate();
 
-  async function onSubmit(data: Candidate_candidate_write) {
+  async function onSubmit(data: Candidate_jsonld_candidate_write) {
     const { error } = await createCandidate({ userId: user?.id!, body: data });
     if (error) {
       handleError(error);

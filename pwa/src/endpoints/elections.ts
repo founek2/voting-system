@@ -1,6 +1,6 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
-import { Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
+import { BallotResult_jsonld_result_read_candidate_read, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -19,17 +19,6 @@ export const signInApi = api.injectEndpoints({
         getElection: build.query<Election, number>({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
-        }),
-        getElectionResult: build.query<ElectionResultResource_jsonld_candidate_read, number>({
-            query: (id) => `elections/${id}/result`,
-            providesTags: ['Elections', 'Votes'],
-            transformResponse: (data: ElectionResultResource_jsonld_candidate_read) => {
-                data.candidates?.sort((a, b) => {
-                    return (a.candidate?.position.id ?? 0) - (b.candidate?.position.id ?? 0);
-                })
-
-                return data;
-            }
         }),
         addElection: build.mutation<Election, Election_jsonld_election_write>({
             query(body) {
@@ -51,6 +40,17 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Elections', 'PublicElections'],
         }),
+        getElectionElectronicResult: build.query<ElectionResultResource_jsonld_candidate_read, number>({
+            query: (id) => `elections/${id}/result`,
+            providesTags: ['Elections', 'Votes'],
+            transformResponse: (data: ElectionResultResource_jsonld_candidate_read) => {
+                data.candidates?.sort((a, b) => {
+                    return (a.candidate?.position.id ?? 0) - (b.candidate?.position.id ?? 0);
+                })
+
+                return data;
+            }
+        }),
     }),
 });
 
@@ -61,5 +61,5 @@ export const {
     useGetElectionQuery,
     useGetPublicElectionsQuery,
     useGetPublicElectionsElectronicQuery,
-    useGetElectionResultQuery,
+    useGetElectionElectronicResultQuery,
 } = signInApi;

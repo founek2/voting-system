@@ -1,36 +1,16 @@
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import ElectionForm from "../Components/ElectionForm";
-import {
-  useAddElectionMutation,
-  useGetElectionQuery,
-} from "../endpoints/elections";
-import {
-  BoardMember_jsonld_member_write,
-  Candidate_candidate_edit,
-  Candidate_candidate_write,
-  Election_election_write,
-} from "../endpoints/types";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useAddCandidateMutation,
-  useGetCandidateQuery,
-  useUpdateCandidateMutation,
-  useWithdrawCandidateMutation,
-} from "../endpoints/candidates";
-import { useAppSelector } from "../hooks/app";
-import CandidateForm from "../Components/CandidateForm";
+import BoardMemberForm from "../Components/BoardMemberForm";
 import Loader from "../Components/Loader";
-import { Typography } from "@mui/material";
-import { parseId } from "../util/parseId";
-import { handleError } from "../util/handleError";
+import { TypographyInfo } from "../Components/TypographyInfo";
 import {
   useDeleteBoardMemberMutation,
   useGetBoardMemberQuery,
   useUpdateBoardMemberMutation,
 } from "../endpoints/board";
-import BoardMemberForm from "../Components/BoardMemberForm";
-import { TypographyInfo } from "../Components/TypographyInfo";
+import { BoardMember_jsonld_member_write } from "../endpoints/types";
+import { handleError } from "../util/handleError";
 
 export default function BoardMemberEditPage() {
   const params = useParams<{ id: string }>();

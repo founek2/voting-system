@@ -1,6 +1,6 @@
 import { Candidate, Hydra } from '../types';
 import { api } from './api';
-import { Candidate_candidate_edit, Candidate_candidate_write, Position_jsonld_position_read, Position_position_write } from './types';
+import { Candidate_candidate_edit, Candidate_jsonld_candidate_write, Position_jsonld_position_read, Position_position_write } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -36,6 +36,17 @@ export const signInApi = api.injectEndpoints({
                 return data;
             }
         }),
+        getCandidatesForElection: build.query<Hydra<Candidate>, number>({
+            query: (electionId) => `elections/${electionId}/candidates`,
+            providesTags: ['Candidates'],
+            transformResponse: (data: Hydra<Candidate>) => {
+                data.member?.sort((a, b) => {
+                    return (a.position.id ?? 0) - (b.position.id ?? 0);
+                })
+
+                return data;
+            }
+        }),
         getCandidatesVoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=voted`,
             providesTags: ['Candidates', 'Votes'],
@@ -44,7 +55,7 @@ export const signInApi = api.injectEndpoints({
             query: (electionId) => `elections/${electionId}/candidates?type=unvoted`,
             providesTags: ['Candidates', 'Votes'],
         }),
-        addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write }>({
+        addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_jsonld_candidate_write }>({
             query({ userId, body }) {
                 return {
                     url: `candidates`,
@@ -85,5 +96,6 @@ export const {
     useGetPublicCandidatesQuery,
     useGetCandidatesUnvotedQuery,
     useGetCandidatesVotedQuery,
-    useWithdrawCandidateMutation
+    useWithdrawCandidateMutation,
+    useGetCandidatesForElectionQuery,
 } = signInApi;
