@@ -36,96 +36,140 @@ import BoardMemeberPage from "../Pages/BoardMemeberPage";
 import BoardMemberCreatePage from "../Pages/BoardMemberCreatePage";
 import BoardMemberEditPage from "../Pages/BoardMemberEditPage";
 
-const SuspenseTrigger = () => {
-  throw new Promise(() => {});
-};
-
-export default function MyRoutes() {
-  return (
-    <Routes>
-      {/* <Route path="/registration" element={<Registration />} /> */}
-      <Route path="/auth" element={<AuthGuard />}>
-        <Route path="/auth/admin" element={<LayoutAuth />}>
-          <Route
-            path="/auth/admin/elections/create"
-            element={<ElectionCreatePage />}
-          />
-          <Route
-            path="/auth/admin/elections/:id"
-            element={<ElectionEditPage />}
-          />
-          <Route
-            path="/auth/admin/elections/:id/votes"
-            element={<ElectionVotesPage />}
-          />
-          <Route
-            path="/auth/admin/elections/:id/result"
-            element={<ElectionResultPage />}
-          />
-          <Route
-            path="/auth/admin/elections/:id/candidates"
-            element={<ElectionCandidatesPage />}
-          />
-          <Route
-            path="/auth/admin/positions/create"
-            element={<PositionCreatePage />}
-          />
-          <Route
-            path="/auth/admin/positions/:id"
-            element={<PositionEditPage />}
-          />
-          <Route path="/auth/admin" element={<DashboardPage />} />
-          <Route path="/auth/admin/positions" element={<PositionPage />} />
-          <Route path="/auth/admin/elections" element={<ElectionPage />} />
-          <Route
-            path="/auth/admin/resolutions/create"
-            element={<ResolutionCreatePage />}
-          />
-          <Route
-            path="/auth/admin/resolutions/:id"
-            element={<ResolutionEditPage />}
-          />
-          <Route path="/auth/admin/resolutions" element={<ResolutionPage />} />
-          <Route
-            path="/auth/admin/reports/create"
-            element={<ReportCreatePage />}
-          />
-          <Route path="/auth/admin/reports/:id" element={<ReportEditPage />} />
-          <Route path="/auth/admin/reports" element={<ReportPage />} />
-          <Route
-            path="/auth/admin/candidates/:id"
-            element={<CandidateEditPage />}
-          />
-          <Route
-            path="/auth/admin/board/create"
-            element={<BoardMemberCreatePage />}
-          />
-          <Route
-            path="/auth/admin/board/:id"
-            element={<BoardMemberEditPage />}
-          />
-          <Route path="/auth/admin/board" element={<BoardMemeberPage />} />
-        </Route>
-        <Route path="/auth/user" element={<LayoutAuth />}>
-          <Route
-            path="/auth/user/elections/:electionId/candidates/create"
-            element={<CandidateCreatePage />}
-          />
-          <Route
-            path="/auth/user/candidates/:id"
-            element={<CandidateEditPage />}
-          />
-          <Route path="/auth/user/vote" element={<VotePage />} />
-          <Route path="/auth/user" element={<DashboardUserPage />} />
-        </Route>
-      </Route>
-
-      <Route path="/oauth/callback" element={<OAuthCallback />} />
-      <Route path="/" element={<Layout />}>
-        <Route path="/reports" element={<PublicReportPage />} />
-        <Route path="/resolutions" element={<PublicResolutionPage />} />
-        <Route path="" element={<PublicHomePage />} />
-      </Route>
-    </Routes>
-  );
-}
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <PublicHomePage />,
+      },
+      {
+        path: "reports",
+        element: <PublicReportPage />,
+      },
+      {
+        path: "resolutions",
+        element: <PublicResolutionPage />,
+      },
+    ],
+  },
+  {
+    path: "/oauth/callback",
+    element: <OAuthCallback />,
+  },
+  {
+    path: "/auth",
+    element: <AuthGuard />,
+    // loader: rootLoader,
+    children: [
+      {
+        path: "admin",
+        element: <LayoutAuth />,
+        // loader: teamLoader,
+        children: [
+          {
+            index: true,
+            element: <DashboardPage />,
+          },
+          {
+            path: "elections/create",
+            element: <ElectionCreatePage />,
+          },
+          {
+            path: "elections/:id",
+            element: <ElectionEditPage />,
+          },
+          {
+            path: "elections/:id/votes",
+            element: <ElectionVotesPage />,
+          },
+          {
+            path: "elections/:id/result",
+            element: <ElectionResultPage />,
+          },
+          {
+            path: "elections/:id/candidates",
+            element: <ElectionCandidatesPage />,
+          },
+          {
+            path: "positions/create",
+            element: <PositionCreatePage />,
+          },
+          {
+            path: "positions/:id",
+            element: <PositionEditPage />,
+          },
+          {
+            path: "positions",
+            element: <PositionPage />,
+          },
+          {
+            path: "elections",
+            element: <ElectionPage />,
+          },
+          {
+            path: "resolutions/create",
+            element: <ResolutionCreatePage />,
+          },
+          {
+            path: "resolutions/:id",
+            element: <ResolutionEditPage />,
+          },
+          {
+            path: "resolutions",
+            element: <ResolutionPage />,
+          },
+          {
+            path: "reports/create",
+            element: <ReportCreatePage />,
+          },
+          {
+            path: "reports/:id",
+            element: <ReportEditPage />,
+          },
+          {
+            path: "reports",
+            element: <ReportPage />,
+          },
+          {
+            path: "candidates/:id",
+            element: <CandidateEditPage />,
+          },
+          {
+            path: "borad/create",
+            element: <BoardMemberCreatePage />,
+          },
+          {
+            path: "borad/:id",
+            element: <BoardMemberEditPage />,
+          },
+          {
+            path: "borad",
+            element: <BoardMemeberPage />,
+          },
+        ],
+      },
+      {
+        path: "user",
+        element: <LayoutAuth />,
+        children: [
+          { index: true, element: <DashboardUserPage /> },
+          {
+            path: "vote",
+            element: <VotePage />,
+          },
+          {
+            path: "candidates/:id",
+            element: <CandidateEditPage />,
+          },
+          {
+            path: "elections/:electionId/candidates/create",
+            element: <CandidateCreatePage />,
+          },
+        ],
+      },
+    ],
+  },
+]);

@@ -1,13 +1,12 @@
-import { Breadcrumbs, Grid2, Typography, Link as MuiLink } from "@mui/material";
+import { Breadcrumbs, Grid2, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
-import Loader from "../Components/Loader";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { TypographyInfo } from "../Components/TypographyInfo";
 import { useGetElectionQuery } from "../endpoints/elections";
 import { electionTitle } from "../util/electionTitle";
-import { TypographyInfo } from "../Components/TypographyInfo";
-import { Box } from "@mui/system";
-import { ElectronicResultList } from "./ElectionResultPage/ElectronicResultList";
 import { BallotResultList } from "./ElectionResultPage/BallotResultList";
+import { ElectronicResultList } from "./ElectionResultPage/ElectronicResultList";
 import { TotalResultList } from "./ElectionResultPage/TotalResultList";
 
 const breadcrumbs = [
@@ -23,7 +22,7 @@ const breadcrumbs = [
   },
   {
     label: "Celkové",
-    href: "#total",
+    href: "",
     current: true,
   },
 ];
@@ -34,9 +33,9 @@ function BreadcrumItem({ label, href, current }: any) {
   }
 
   return (
-    <MuiLink underline="hover" color="inherit" href={href}>
-      {label}
-    </MuiLink>
+    <Link to={{ hash: href }}>
+      <Typography>{label}</Typography>
+    </Link>
   );
 }
 
@@ -79,9 +78,7 @@ export default function ElectionResultPage() {
       {location.hash === "#ballot" ? (
         <BallotResultList election={election} />
       ) : null}
-      {location.hash === "#total" ? (
-        <TotalResultList election={election} />
-      ) : null}
+      {location.hash === "" ? <TotalResultList election={election} /> : null}
     </Grid2>
   );
 }

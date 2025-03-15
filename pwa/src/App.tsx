@@ -1,12 +1,11 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import { SnackbarProvider } from "notistack";
-import React, { Suspense } from "react";
-import { BrowserRouter } from "react-router-dom";
-import MyRoutes from "./Containers/Routes";
+import React from "react";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+import { router } from "./Containers/Routes";
 import { MyThemeProvider } from "./Containers/ThemeProvider";
 import { persistor, store } from "./store";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
@@ -17,11 +16,7 @@ function App() {
             maxSnack={3}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <BrowserRouter>
-              <Suspense fallback={<CircularProgress />}>
-                <MyRoutes />
-              </Suspense>
-            </BrowserRouter>
+            <RouterProvider router={router} />
           </SnackbarProvider>
         </MyThemeProvider>
       </PersistGate>

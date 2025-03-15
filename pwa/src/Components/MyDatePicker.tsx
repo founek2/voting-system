@@ -1,8 +1,8 @@
+import { PickerValidDate } from "@mui/x-date-pickers/models/pickers";
 import {
   DatePickerProps,
   DatePicker as OriginalDatePicker,
-  PickerValidDate,
-} from "@mui/x-date-pickers";
+} from "@mui/x-date-pickers/DatePicker";
 import React from "react";
 import { ChangeHandler } from "react-hook-form";
 
