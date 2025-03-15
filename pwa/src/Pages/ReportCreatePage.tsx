@@ -4,7 +4,7 @@ import ReportForm from "../Components/ReportForm";
 import { useAddReportMutation } from "../endpoints/mediaReport";
 import { handleError } from "../util/handleError";
 
-export default function ReportCreatePage() {
+export function Component() {
   const [createReport, { isLoading: isMutation }] = useAddReportMutation();
   const navigate = useNavigate();
 
@@ -29,3 +29,5 @@ export default function ReportCreatePage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

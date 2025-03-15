@@ -12,7 +12,7 @@ import { Candidate_jsonld_candidate_write } from "../endpoints/types";
 import { useAppSelector } from "../hooks/app";
 import { handleError } from "../util/handleError";
 
-export default function CandidateCreatePage() {
+export function Component() {
   const user = useAppSelector((state) => state.authorization.currentUser);
   const params = useParams<{ electionId: string }>();
   const {
@@ -67,3 +67,5 @@ export default function CandidateCreatePage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

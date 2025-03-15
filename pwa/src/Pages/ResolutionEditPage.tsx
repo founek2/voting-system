@@ -11,7 +11,7 @@ import {
 import { handleError } from "../util/handleError";
 import { TypographyInfo } from "../Components/TypographyInfo";
 
-export default function ResolutionEditPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: resolution,
@@ -72,3 +72,5 @@ export default function ResolutionEditPage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

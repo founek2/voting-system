@@ -2,11 +2,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Grid2, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import FileButton from "../Components/FileButton";
 import Loader from "../Components/Loader";
-import { useGetPublicResolutionsQuery } from "../endpoints/mediaResolution";
 import { SimpleCard } from "../Components/SimpleCard";
 import { TypographyInfo } from "../Components/TypographyInfo";
+import { useGetPublicResolutionsQuery } from "../endpoints/mediaResolution";
 
 function Content() {
   const { data: resolutions, isError } = useGetPublicResolutionsQuery();

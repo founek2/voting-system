@@ -4,7 +4,7 @@ import ReportForm from "../Components/ReportForm";
 import { useAddResolutionMutation } from "../endpoints/mediaResolution";
 import { handleError } from "../util/handleError";
 
-export default function ResolutionCreatePage() {
+export function Component() {
   const [createResolution, { isLoading: isMutation }] =
     useAddResolutionMutation();
   const navigate = useNavigate();
@@ -26,3 +26,5 @@ export default function ResolutionCreatePage() {
     <ReportForm onSubmit={onSubmit} disabled={isMutation} title="Usnesení" />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

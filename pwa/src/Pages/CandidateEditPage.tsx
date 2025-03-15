@@ -15,7 +15,7 @@ import { useAppSelector } from "../hooks/app";
 import { handleError } from "../util/handleError";
 import { parseId } from "../util/parseId";
 
-export default function CandidateEditPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: candidate,
@@ -76,3 +76,5 @@ export default function CandidateEditPage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

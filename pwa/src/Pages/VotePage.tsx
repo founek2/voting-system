@@ -274,7 +274,7 @@ interface VoteValue {
 interface FormType {
   votes: (VoteValue | undefined)[];
 }
-export default function VotePage() {
+export function Component() {
   const { data: elections, isLoading: isLoadingElections } =
     useGetPublicElectionsElectronicQuery();
   const election = elections ? elections.member[0] : undefined;
@@ -349,3 +349,5 @@ export default function VotePage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

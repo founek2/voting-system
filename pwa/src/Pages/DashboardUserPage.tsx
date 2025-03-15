@@ -39,7 +39,7 @@ function AddCandidate({ disabled, election }: AddCandidateProps) {
   );
 }
 
-export default function DashboardUserPage() {
+export function Component() {
   const user = useAppSelector((state) => state.authorization.currentUser);
   const { data: elections, isLoading } = useGetPublicElectionsQuery();
   const electionsData = splitElections(elections?.member || []);
@@ -127,3 +127,5 @@ export default function DashboardUserPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

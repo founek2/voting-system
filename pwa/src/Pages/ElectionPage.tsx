@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { splitElections } from "../util/splitElections";
 import { useAppSelector } from "../hooks/app";
 
-export default function ElectionPage() {
+export function Component() {
   const { data: elections } = useGetElectionsQuery();
   const electionsData = splitElections(elections?.member || []);
   const roles = useAppSelector(
@@ -94,3 +94,5 @@ export default function ElectionPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

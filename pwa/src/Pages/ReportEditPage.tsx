@@ -11,7 +11,7 @@ import {
 import { handleError } from "../util/handleError";
 import { TypographyInfo } from "../Components/TypographyInfo";
 
-export default function ReportEditPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: report,
@@ -66,3 +66,5 @@ export default function ReportEditPage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

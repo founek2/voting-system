@@ -5,14 +5,14 @@ import Layout from "../Components/Layout";
 import BoardMemberCreatePage from "../Pages/BoardMemberCreatePage";
 import BoardMemberEditPage from "../Pages/BoardMemberEditPage";
 import BoardMemeberPage from "../Pages/BoardMemeberPage";
-import CandidateCreatePage from "../Pages/CandidateCreatePage";
-import CandidateEditPage from "../Pages/CandidateEditPage";
+// import CandidateCreatePage from "../Pages/CandidateCreatePage";
+// import CandidateEditPage from "../Pages/CandidateEditPage";
 // import DashboardPage from "../Pages/DashboardPage";
-import DashboardUserPage from "../Pages/DashboardUserPage";
+// import DashboardUserPage from "../Pages/DashboardUserPage";
 // import ElectionCandidatesPage from "../Pages/ElectionCandidatesPage";
 // import ElectionCreatePage from "../Pages/ElectionCreatePage";
 // import ElectionEditPage from "../Pages/ElectionEditPage";
-import ElectionPage from "../Pages/ElectionPage";
+// import ElectionPage from "../Pages/ElectionPage";
 // import ElectionResultPage from "../Pages/ElectionResultPage";
 // import ElectionVotesPage from "../Pages/ElectionVotesPage";
 import OAuthCallback from "../Pages/OAuthCallback";
@@ -22,14 +22,13 @@ import PositionPage from "../Pages/PositionPage";
 import PublicHomePage from "../Pages/PublicHomePage";
 import PublicReportPage from "../Pages/PublicReportPage";
 import PublicResolutionPage from "../Pages/PublicResolutionPage";
-import ReportCreatePage from "../Pages/ReportCreatePage";
-import ReportEditPage from "../Pages/ReportEditPage";
+// import ReportCreatePage from "../Pages/ReportCreatePage";
+// import ReportEditPage from "../Pages/ReportEditPage";
 import ReportPage from "../Pages/ReportPage";
-import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
-import ResolutionEditPage from "../Pages/ResolutionEditPage";
+// import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
+// import ResolutionEditPage from "../Pages/ResolutionEditPage";
 import ResolutionPage from "../Pages/ResolutionPage";
-import VotePage from "../Pages/VotePage";
-import Loader from "../Components/Loader";
+// import VotePage from "../Pages/VotePage";
 
 export const router = createBrowserRouter([
   {
@@ -121,15 +120,22 @@ export const router = createBrowserRouter([
           },
           {
             path: "elections",
-            element: <ElectionPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/ElectionPage"),
           },
           {
             path: "resolutions/create",
-            element: <ResolutionCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ResolutionCreatePage"
+              ),
           },
           {
             path: "resolutions/:id",
-            element: <ResolutionEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ResolutionEditPage"
+              ),
           },
           {
             path: "resolutions",
@@ -137,11 +143,15 @@ export const router = createBrowserRouter([
           },
           {
             path: "reports/create",
-            element: <ReportCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ReportCreatePage"
+              ),
           },
           {
             path: "reports/:id",
-            element: <ReportEditPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/ReportEditPage"),
           },
           {
             path: "reports",
@@ -149,7 +159,10 @@ export const router = createBrowserRouter([
           },
           {
             path: "candidates/:id",
-            element: <CandidateEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/CandidateEditPage"
+              ),
           },
           {
             path: "board/create",
@@ -169,18 +182,31 @@ export const router = createBrowserRouter([
         path: "user",
         lazy: () => import("../Components/LayoutAuth"),
         children: [
-          { index: true, element: <DashboardUserPage /> },
+          {
+            index: true,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "user" */ "../Pages/DashboardUserPage"
+              ),
+          },
           {
             path: "vote",
-            element: <VotePage />,
+            lazy: () =>
+              import(/* webpackChunkName: "user" */ "../Pages/VotePage"),
           },
           {
             path: "candidates/:id",
-            element: <CandidateEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "user" */ "../Pages/CandidateEditPage"
+              ),
           },
           {
             path: "elections/:electionId/candidates/create",
-            element: <CandidateCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "user" */ "../Pages/CandidateCreatePage"
+              ),
           },
         ],
       },
