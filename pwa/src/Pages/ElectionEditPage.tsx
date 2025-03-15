@@ -10,7 +10,7 @@ import {
 import { Election_election_write } from "../endpoints/types";
 import ElectionForm from "../Components/ElectionForm";
 
-export default function Component() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: election,

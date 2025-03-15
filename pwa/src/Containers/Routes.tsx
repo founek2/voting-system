@@ -152,15 +152,15 @@ export const router = createBrowserRouter([
             element: <CandidateEditPage />,
           },
           {
-            path: "borad/create",
+            path: "board/create",
             element: <BoardMemberCreatePage />,
           },
           {
-            path: "borad/:id",
+            path: "board/:id",
             element: <BoardMemberEditPage />,
           },
           {
-            path: "borad",
+            path: "board",
             element: <BoardMemeberPage />,
           },
         ],

@@ -40,7 +40,7 @@ function Content({ election }: ContentProps) {
   );
 }
 
-export default function Component() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: election,
