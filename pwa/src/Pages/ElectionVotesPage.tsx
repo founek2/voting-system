@@ -176,7 +176,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
   );
 }
 
-export default function ElectionVotesPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const [zoneValue, setZoneValue] = useState("");
   const {
@@ -306,3 +306,5 @@ export default function ElectionVotesPage() {
     </>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

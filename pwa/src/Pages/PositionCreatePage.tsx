@@ -1,16 +1,11 @@
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import ElectionForm from "../Components/ElectionForm";
-import { useAddElectionMutation } from "../endpoints/elections";
-import {
-  Election_election_write,
-  Position_jsonld_position_write,
-} from "../endpoints/types";
 import { useNavigate } from "react-router-dom";
-import { useAddPositionMutation } from "../endpoints/positions";
 import PositionForm from "../Components/PositionForm";
+import { useAddPositionMutation } from "../endpoints/positions";
+import { Position_jsonld_position_write } from "../endpoints/types";
 
-export default function PositionCreatePage() {
+export function Component() {
   const [createPosition, { isLoading: isMutation }] = useAddPositionMutation();
   const navigate = useNavigate();
 
@@ -25,3 +20,5 @@ export default function PositionCreatePage() {
 
   return <PositionForm onSubmit={onSubmit} disabled={isMutation} />;
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

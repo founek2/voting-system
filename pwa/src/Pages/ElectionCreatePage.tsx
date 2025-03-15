@@ -1,11 +1,11 @@
 import { enqueueSnackbar } from "notistack";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ElectionForm from "../Components/ElectionForm";
 import { useAddElectionMutation } from "../endpoints/elections";
 import { Election_election_write } from "../endpoints/types";
-import { useNavigate } from "react-router-dom";
 
-export default function ElectionCreatePage() {
+export function Component() {
   const [createElection, { isLoading: isMutation }] = useAddElectionMutation();
   const navigate = useNavigate();
 
@@ -20,3 +20,5 @@ export default function ElectionCreatePage() {
 
   return <ElectionForm onSubmit={onSubmit} disabled={isMutation} />;
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

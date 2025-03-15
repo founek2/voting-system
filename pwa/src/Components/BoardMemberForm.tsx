@@ -8,15 +8,8 @@ import {
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
-import { MyDatePicker } from "../Components/MyDatePicker";
-import {
-  BoardMember_jsonld_member_write,
-  Election_election_write,
-  Position_jsonld_position_write,
-  Zone_jsonld_zone_read,
-} from "../endpoints/types";
-import { useGetZonesQuery } from "../endpoints/zones";
 import { useGetPositionsQuery } from "../endpoints/positions";
+import { BoardMember_jsonld_member_write } from "../endpoints/types";
 
 interface PositionFormProps {
   defaultValues?: BoardMember_jsonld_member_write;

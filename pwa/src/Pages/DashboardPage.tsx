@@ -117,7 +117,7 @@ function DateList({ election }: { election: Election }) {
   );
 }
 
-export default function DashboardPage() {
+export function Component() {
   const { data: elections, isLoading } = useGetElectionsQuery();
 
   const electionsData = splitElections(elections?.member || []);
@@ -144,3 +144,5 @@ export default function DashboardPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

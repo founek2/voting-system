@@ -1,40 +1,35 @@
-import React, { Suspense, useEffect } from "react";
-import {
-  createBrowserRouter,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-import PublicHomePage from "../Pages/PublicHomePage";
-import OAuthCallback from "../Pages/OAuthCallback";
-import Layout from "../Components/Layout";
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
 import AuthGuard from "../Components/AuthGuard";
-import ElectionPage from "../Pages/ElectionPage";
-import ElectionEditPage from "../Pages/ElectionEditPage";
-import ElectionCreatePage from "../Pages/ElectionCreatePage";
-import PositionPage from "../Pages/PositionPage";
-import PositionCreatePage from "../Pages/PositionCreatePage";
-import PositionEditPage from "../Pages/PositionEditPage";
-import DashboardPage from "../Pages/DashboardPage";
-import DashboardUserPage from "../Pages/DashboardUserPage";
-import LayoutAuth from "../Components/LayoutAuth";
-import CandidateCreatePage from "../Pages/CandidateCreatePage";
-import CandidateEditPage from "../Pages/CandidateEditPage";
-import VotePage from "../Pages/VotePage";
-import ReportPage from "../Pages/ReportPage";
-import ResolutionPage from "../Pages/ResolutionPage";
-import ReportCreatePage from "../Pages/ReportCreatePage";
-import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
-import ReportEditPage from "../Pages/ReportEditPage";
-import ResolutionEditPage from "../Pages/ResolutionEditPage";
-import PublicReportPage from "../Pages/PublicReportPage";
-import PublicResolutionPage from "../Pages/PublicResolutionPage";
-import ElectionVotesPage from "../Pages/ElectionVotesPage";
-import ElectionResultPage from "../Pages/ElectionResultPage";
-import ElectionCandidatesPage from "../Pages/ElectionCandidatesPage";
-import BoardMemeberPage from "../Pages/BoardMemeberPage";
+import Layout from "../Components/Layout";
 import BoardMemberCreatePage from "../Pages/BoardMemberCreatePage";
 import BoardMemberEditPage from "../Pages/BoardMemberEditPage";
+import BoardMemeberPage from "../Pages/BoardMemeberPage";
+import CandidateCreatePage from "../Pages/CandidateCreatePage";
+import CandidateEditPage from "../Pages/CandidateEditPage";
+// import DashboardPage from "../Pages/DashboardPage";
+import DashboardUserPage from "../Pages/DashboardUserPage";
+// import ElectionCandidatesPage from "../Pages/ElectionCandidatesPage";
+// import ElectionCreatePage from "../Pages/ElectionCreatePage";
+// import ElectionEditPage from "../Pages/ElectionEditPage";
+import ElectionPage from "../Pages/ElectionPage";
+// import ElectionResultPage from "../Pages/ElectionResultPage";
+// import ElectionVotesPage from "../Pages/ElectionVotesPage";
+import OAuthCallback from "../Pages/OAuthCallback";
+// import PositionCreatePage from "../Pages/PositionCreatePage";
+import PositionEditPage from "../Pages/PositionEditPage";
+import PositionPage from "../Pages/PositionPage";
+import PublicHomePage from "../Pages/PublicHomePage";
+import PublicReportPage from "../Pages/PublicReportPage";
+import PublicResolutionPage from "../Pages/PublicResolutionPage";
+import ReportCreatePage from "../Pages/ReportCreatePage";
+import ReportEditPage from "../Pages/ReportEditPage";
+import ReportPage from "../Pages/ReportPage";
+import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
+import ResolutionEditPage from "../Pages/ResolutionEditPage";
+import ResolutionPage from "../Pages/ResolutionPage";
+import VotePage from "../Pages/VotePage";
+import Loader from "../Components/Loader";
 
 export const router = createBrowserRouter([
   {
@@ -66,36 +61,55 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "admin",
-        element: <LayoutAuth />,
-        // loader: teamLoader,
+        lazy: () =>
+          import(/* webpackChunkName: "admin" */ "../Components/LayoutAuth"),
         children: [
           {
             index: true,
-            element: <DashboardPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/DashboardPage"),
           },
           {
             path: "elections/create",
-            element: <ElectionCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ElectionCreatePage"
+              ),
           },
           {
             path: "elections/:id",
-            element: <ElectionEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ElectionEditPage"
+              ),
           },
           {
             path: "elections/:id/votes",
-            element: <ElectionVotesPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ElectionVotesPage"
+              ),
           },
           {
             path: "elections/:id/result",
-            element: <ElectionResultPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ElectionResultPage"
+              ),
           },
           {
             path: "elections/:id/candidates",
-            element: <ElectionCandidatesPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/ElectionCandidatesPage"
+              ),
           },
           {
             path: "positions/create",
-            element: <PositionCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/PositionCreatePage"
+              ),
           },
           {
             path: "positions/:id",
@@ -153,7 +167,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: <LayoutAuth />,
+        lazy: () => import("../Components/LayoutAuth"),
         children: [
           { index: true, element: <DashboardUserPage /> },
           {

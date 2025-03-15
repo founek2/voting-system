@@ -186,6 +186,12 @@ const config = {
                     name: 'vendor',
                     chunks: 'all',
                 },
+                mui: {
+                    test: /[\\/]node_modules[\\/](@mui[\\/]x[-]date[-]pickers)[\\/]/,
+                    name: 'mui',
+                    chunks: 'all',
+                },
+
 
                 // default: {
                 //     minChunks: 2,

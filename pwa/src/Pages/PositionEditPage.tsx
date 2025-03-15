@@ -1,22 +1,14 @@
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import ElectionForm from "../Components/ElectionForm";
-import { useAddElectionMutation } from "../endpoints/elections";
-import {
-  Election_election_write,
-  Position_jsonld_position_write,
-} from "../endpoints/types";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../Components/Loader";
+import PositionForm from "../Components/PositionForm";
+import { TypographyInfo } from "../Components/TypographyInfo";
 import {
-  useAddPositionMutation,
   useGetPositionQuery,
-  useGetPositionsQuery,
   useUpdatePositionMutation,
 } from "../endpoints/positions";
-import PositionForm from "../Components/PositionForm";
-import Loader from "../Components/Loader";
-import { Typography } from "@mui/material";
-import { TypographyInfo } from "../Components/TypographyInfo";
+import { Position_jsonld_position_write } from "../endpoints/types";
 
 export default function PositionEditPage() {
   const params = useParams<{ id: string }>();

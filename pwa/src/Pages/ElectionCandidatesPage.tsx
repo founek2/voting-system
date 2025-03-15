@@ -40,7 +40,7 @@ function Content({ election }: ContentProps) {
   );
 }
 
-export default function ElectionCandidatesPage() {
+export default function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: election,
@@ -67,3 +67,5 @@ export default function ElectionCandidatesPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

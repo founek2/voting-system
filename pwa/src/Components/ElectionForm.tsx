@@ -18,6 +18,9 @@ import { useGetPositionsQuery } from "../endpoints/positions";
 import { ResponsiveStyleValue } from "@mui/system";
 import { Election } from "../types";
 import { differenceInDays, subDays, parse } from "date-fns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { cs } from "date-fns/locale/cs";
 
 const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6 };
 
@@ -79,7 +82,7 @@ interface ElectionFormProps {
   onSubmit: SubmitHandler<Election_election_write>;
   disabled?: boolean;
 }
-export default function ElectionForm({
+function ElectionForm({
   defaultValues,
   onSubmit,
   disabled,
@@ -276,5 +279,21 @@ export default function ElectionForm({
         </Button>
       </Grid2>
     </Grid2>
+  );
+}
+
+export default function ({
+  defaultValues,
+  onSubmit,
+  disabled,
+}: ElectionFormProps) {
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={cs}>
+      <ElectionForm
+        defaultValues={defaultValues}
+        onSubmit={onSubmit}
+        disabled={disabled}
+      />
+    </LocalizationProvider>
   );
 }

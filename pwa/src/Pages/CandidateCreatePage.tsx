@@ -1,25 +1,16 @@
-import { enqueueSnackbar } from "notistack";
+import { Button, Typography } from "@mui/material";
 import React from "react";
-import ElectionForm from "../Components/ElectionForm";
-import {
-  useAddElectionMutation,
-  useGetElectionQuery,
-} from "../endpoints/elections";
-import {
-  Candidate_jsonld_candidate_write,
-  Election_election_write,
-} from "../endpoints/types";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import CandidateForm from "../Components/CandidateForm";
+import Loader from "../Components/Loader";
 import {
   useAddCandidateMutation,
   useGetUserCandidatesQuery,
 } from "../endpoints/candidates";
+import { useGetElectionQuery } from "../endpoints/elections";
+import { Candidate_jsonld_candidate_write } from "../endpoints/types";
 import { useAppSelector } from "../hooks/app";
-import CandidateForm from "../Components/CandidateForm";
-import Loader from "../Components/Loader";
-import { Button, Typography } from "@mui/material";
 import { handleError } from "../util/handleError";
-import { Link } from "react-router-dom";
 
 export default function CandidateCreatePage() {
   const user = useAppSelector((state) => state.authorization.currentUser);

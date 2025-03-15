@@ -6,11 +6,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Drawer,
   IconButton,
@@ -25,8 +25,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { enqueueSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -34,8 +32,6 @@ import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppDispatch, useAppSelector } from "../hooks/app";
 import { authorizationReducerActions } from "../store/slices/authorizationSlice";
 import { Role } from "../types";
-import { cs } from "date-fns/locale/cs";
-import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 
 const drawerWidth = 240;
 
@@ -69,7 +65,7 @@ const userMenuItems = [
   },
 ];
 
-export default function LayoutAuth() {
+export function Component() {
   const loggedId = useAppSelector((state) => state.authorization.loggedIn);
   const user = useAppSelector((state) => state.authorization.currentUser);
   useGetUserMeQuery(undefined, { skip: !loggedId });
@@ -113,6 +109,7 @@ export default function LayoutAuth() {
     }
   }, [counter]);
 
+  // throw new Error("hahah");
   return (
     <>
       <Box display="flex">
@@ -246,13 +243,14 @@ export default function LayoutAuth() {
               <Typography>{user?.username}</Typography>
             </Paper>
           </Box>
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={cs}>
-            <Box p={2}>
-              <Outlet />
-            </Box>
-          </LocalizationProvider>
+
+          <Box p={2}>
+            <Outlet />
+          </Box>
         </Box>
       </Box>
     </>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

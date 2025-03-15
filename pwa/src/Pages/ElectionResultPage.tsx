@@ -39,7 +39,7 @@ function BreadcrumItem({ label, href, current }: any) {
   );
 }
 
-export default function ElectionResultPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const location = useLocation();
 
@@ -82,3 +82,5 @@ export default function ElectionResultPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";
