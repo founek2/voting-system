@@ -14,7 +14,10 @@ use ApiPlatform\Metadata\Post;
 use App\Const\ElectionStage;
 use App\Filter\VoteCandidateFilter;
 use App\Repository\CandidateRepository;
+use App\State\MarkWinnerCandidateProcessor;
 use App\State\NewCandidateProcessor;
+use App\State\RejectCandidateProcessor;
+use App\State\UnmarkWinnerCandidateProcessor;
 use App\State\WithdrawCandidateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,11 +60,29 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             filters: [VoteCandidateFilter::class],
         ),
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
-        new Delete(
-            uriTemplate: 'candidates/{id}',
+        new Post(
+            uriTemplate: 'candidates/{id}/withdraw',
             security: 'object.getAppUser().getId() == user.getId() or user.hasRole("ROLE_ADMIN")',
             processor: WithdrawCandidateProcessor::class,
             validationContext: ['groups' => ['candidate:delete']]
+        ),
+        new Post(
+            uriTemplate: 'candidates/{id}/reject',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            processor: RejectCandidateProcessor::class,
+            validationContext: ['groups' => ['_']]
+        ),
+        new Post(
+            uriTemplate: 'candidates/{id}/mark-winner',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            processor: MarkWinnerCandidateProcessor::class,
+            validationContext: ['groups' => ['_']]
+        ),
+        new Post(
+            uriTemplate: 'candidates/{id}/unmark-winner',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            processor: UnmarkWinnerCandidateProcessor::class,
+            validationContext: ['groups' => ['_']]
         ),
     ],
     mercure: true,
@@ -114,6 +135,10 @@ class Candidate
     #[Groups(['candidate:read'])]
     private ?\DateTimeImmutable $withdrewAt = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['candidate:read'])]
+    private ?\DateTimeImmutable $rejectedAt = null;
+
     /**
      * @var Collection<int, BallotResult>
      */
@@ -121,7 +146,7 @@ class Candidate
     private Collection $ballotResults;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['candidate:read',  'candidate:admin:write'])]
+    #[Groups(['candidate:read'])]
     private ?\DateTimeImmutable $winnerMarkedAt = null;
 
     public function __construct()
@@ -269,6 +294,18 @@ class Candidate
     public function setWinnerMarkedAt(?\DateTimeImmutable $winnerMarkedAt): static
     {
         $this->winnerMarkedAt = $winnerMarkedAt;
+
+        return $this;
+    }
+
+    public function getRejectedAt(): ?\DateTimeImmutable
+    {
+        return $this->rejectedAt;
+    }
+
+    public function setRejectedAt(?\DateTimeImmutable $rejectedAt): static
+    {
+        $this->rejectedAt = $rejectedAt;
 
         return $this;
     }

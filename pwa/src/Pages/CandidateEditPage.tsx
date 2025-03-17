@@ -6,6 +6,7 @@ import Loader from "../Components/Loader";
 import { TypographyInfo } from "../Components/TypographyInfo";
 import {
   useGetCandidateQuery,
+  useRejectCandidateMutation,
   useUpdateCandidateMutation,
   useWithdrawCandidateMutation,
 } from "../endpoints/candidates";
@@ -35,7 +36,10 @@ export function Component() {
   const user = useAppSelector((state) => state.authorization.currentUser);
   const [withdraw, { isLoading: isLoadingWithdraw }] =
     useWithdrawCandidateMutation();
-  const isLoadingMutation = isLoadingUpdate || isLoadingWithdraw;
+  const [reject, { isLoading: isLoadingReject }] = useRejectCandidateMutation();
+  const isLoadingMutation =
+    isLoadingUpdate || isLoadingWithdraw || isLoadingReject;
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
   async function onSubmit(data: Candidate_candidate_edit) {
     const { error } = await updateCandidate({
@@ -61,6 +65,18 @@ export function Component() {
     }
   }
 
+  async function handleReject() {
+    if (!candidate?.id) return;
+
+    const result = await reject(Number(candidate.id));
+    if (result.error) {
+      handleError(result.error);
+    } else {
+      enqueueSnackbar("Kandidátka zamítnuta");
+      navigate("/auth/user");
+    }
+  }
+
   if (isLoading || loadingCandidate) return <Loader />;
   if (isError || errorCandidate)
     return <TypographyInfo>Nastala chyba</TypographyInfo>;
@@ -69,6 +85,7 @@ export function Component() {
     <CandidateForm
       onSubmit={onSubmit}
       onWithdraw={handleWithdraw}
+      onReject={isAdmin ? handleReject : undefined}
       disabled={isLoadingMutation || Boolean(candidate?.withdrewAt)}
       election={election!}
       defaultValues={candidate}

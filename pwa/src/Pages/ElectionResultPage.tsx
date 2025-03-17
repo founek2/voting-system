@@ -8,6 +8,7 @@ import { electionTitle } from "../util/electionTitle";
 import { BallotResultList } from "./ElectionResultPage/BallotResultList";
 import { ElectronicResultList } from "./ElectionResultPage/ElectronicResultList";
 import { TotalResultList } from "./ElectionResultPage/TotalResultList";
+import Loader from "../Components/Loader";
 
 const breadcrumbs = [
   {
@@ -49,6 +50,7 @@ export function Component() {
     isError,
   } = useGetElectionQuery(Number(params.id));
 
+  if (isLoading) return <Loader />;
   if (isError || !election)
     return (
       <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>

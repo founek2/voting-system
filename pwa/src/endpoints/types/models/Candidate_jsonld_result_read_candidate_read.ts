@@ -15,6 +15,7 @@ export type Candidate_jsonld_result_read_candidate_read = {
     position: Position_jsonld_result_read_candidate_read;
     poster?: (MediaPoster_jsonld_result_read_candidate_read | null);
     withdrewAt?: string | null;
+    rejectedAt?: string | null;
     winnerMarkedAt?: string | null;
     readonly withdrawAllowed?: boolean;
 };

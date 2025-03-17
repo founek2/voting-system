@@ -19,16 +19,17 @@ interface ElectionCardProps {
 }
 export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
   const fullName = `${candidate.appUser?.firstName} ${candidate.appUser?.lastName}`;
+  const disabled = candidate.withdrewAt || candidate.rejectedAt;
   return (
     <Card
       sx={{
         overflow: "hidden",
         position: "relative",
-        opacity: candidate.withdrewAt ? 0.7 : undefined,
+        opacity: disabled ? 0.7 : undefined,
         height: "100%",
       }}
     >
-      {candidate.withdrewAt ? (
+      {disabled ? (
         <Typography
           sx={{
             position: "absolute",
@@ -41,7 +42,11 @@ export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
           }}
           width="100%"
         >
-          Odstoupil
+          {candidate.withdrewAt
+            ? "Odstoupil"
+            : candidate.rejectedAt
+            ? "Zamítnut"
+            : null}
         </Typography>
       ) : null}
       <CardHeader title={candidate.position.name} />

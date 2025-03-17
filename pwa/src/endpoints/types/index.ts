@@ -13,6 +13,8 @@ export type { BoardMember_jsonld_member_read } from './models/BoardMember_jsonld
 export type { BoardMember_jsonld_member_write } from './models/BoardMember_jsonld_member_write';
 export type { BoardMember_member_write } from './models/BoardMember_member_write';
 export type { Candidate_candidate_edit } from './models/Candidate_candidate_edit';
+export type { Candidate_candidate_edit_candidate_admin_edit } from './models/Candidate_candidate_edit_candidate_admin_edit';
+export type { Candidate_jsonld } from './models/Candidate_jsonld';
 export type { Candidate_jsonld_candidate_read } from './models/Candidate_jsonld_candidate_read';
 export type { Candidate_jsonld_candidate_write } from './models/Candidate_jsonld_candidate_write';
 export type { Candidate_jsonld_result_read_candidate_read } from './models/Candidate_jsonld_result_read_candidate_read';

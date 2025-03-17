@@ -25,6 +25,7 @@ interface CandidateFormProps {
   defaultValues?: Candidate;
   onSubmit: SubmitHandler<Candidate_jsonld_candidate_write>;
   onWithdraw?: () => any;
+  onReject?: () => any;
   disabled?: boolean;
   election: Election;
   edit?: boolean;
@@ -36,6 +37,7 @@ export default function CandidateForm({
   election,
   edit,
   onWithdraw,
+  onReject,
 }: CandidateFormProps) {
   const methods = useForm<Candidate_jsonld_candidate_write>({
     defaultValues: { poster: defaultValues?.poster?.["@id"] },
@@ -51,6 +53,7 @@ export default function CandidateForm({
     skip: !posterId,
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const [openRejectDialog, setOpenRejectDialog] = useState(false);
 
   const availablePositions =
     allPositions?.member.filter((position) =>
@@ -157,6 +160,17 @@ export default function CandidateForm({
               </ConditionalTooltip>
             </Grid2>
           ) : null}
+          {onReject ? (
+            <Grid2 size={{ xs: 12, md: 3 }}>
+              <Button
+                disabled={!defaultValues?.withdrawAllowed || disabled}
+                color="error"
+                onClick={() => setOpenRejectDialog(true)}
+              >
+                Zamítnout
+              </Button>
+            </Grid2>
+          ) : null}
         </Grid2>
         <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
           {posterMedia?.contentUrl ? (
@@ -182,6 +196,15 @@ export default function CandidateForm({
           onConfirm={onWithdraw}
           title="Opravdu si přeješ odstoupit?"
           description="V seznamech tvoje kandidátka zůstane, ale bude označena jako neplatná."
+        />
+      ) : null}
+      {onReject ? (
+        <AlertDialog
+          open={openRejectDialog}
+          onClose={() => setOpenRejectDialog(false)}
+          onConfirm={onReject}
+          title="Opravdu si přeješ zamítnout jeho kandidaturu?"
+          description="V seznamech kandidátka zůstane, ale bude označena jako zamítnutá."
         />
       ) : null}
     </>

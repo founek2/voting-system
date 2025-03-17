@@ -1,24 +1,22 @@
-import { Button, Grid2, Paper, Typography } from "@mui/material";
+import { Button, Grid2, Paper } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FormStatus } from "../../Components/FormStatus";
 import Loader from "../../Components/Loader";
 import { TypographyInfo } from "../../Components/TypographyInfo";
+import { FormType, VoteResultRow } from "../../Components/VoteResultRow";
+import {
+  useGetElectionBallotResultQuery,
+  useSaveBallotResultMutation,
+} from "../../endpoints/ballotResult";
 import { useGetCandidatesForElectionQuery } from "../../endpoints/candidates";
 import {
-  useAddBallotResultMutation,
-  useGetElectionBallotResultQuery,
-  useUpdateBallotResultMutation,
-} from "../../endpoints/ballotResult";
-import {
   BallotResult_jsonld_result_read_candidate_read,
-  BallotResult_jsonld_result_write,
   Candidate_jsonld_candidate_read,
 } from "../../endpoints/types";
 import { Election, Hydra } from "../../types";
-import { FormType, VoteResultRow } from "../../Components/VoteResultRow";
-import { useForm } from "react-hook-form";
 import { handleError } from "../../util/handleError";
-import { FormStatus } from "../../Components/FormStatus";
-import { enqueueSnackbar } from "notistack";
 import { isEmpty } from "../../util/isEmpty";
 
 function Content({
@@ -49,37 +47,15 @@ function Content({
       }),
     },
   });
-  const [addBallotResult] = useAddBallotResultMutation();
-  const [updateBallotResult] = useUpdateBallotResultMutation();
+  const [saveBallotResult, { isLoading: isMutating }] =
+    useSaveBallotResultMutation();
   const [isEdit, setIsEdit] = useState(false);
 
   async function onSubmit(data: FormType) {
-    let errorDetected = false;
-    for (const result of data.candidates) {
-      const resultConverted: BallotResult_jsonld_result_write = {
-        candidate: result.candidate,
-        negativeVotes: Number(result.negativeVotes),
-        neutralVotes: Number(result.neutralVotes),
-        positiveVotes: Number(result.positiveVotes),
-      };
-      if (result.resultId) {
-        const { error } = await updateBallotResult({
-          id: result.resultId,
-          body: resultConverted,
-        });
-        if (error) {
-          errorDetected = true;
-          handleError(error);
-        }
-      } else {
-        const { error } = await addBallotResult(resultConverted);
-        if (error) {
-          errorDetected = true;
-          handleError(error);
-        }
-      }
-    }
-    if (!errorDetected) {
+    const { error } = await saveBallotResult(data);
+    if (error) {
+      handleError(error);
+    } else {
       enqueueSnackbar("Uloženo");
       setIsEdit(false);
     }
@@ -115,9 +91,9 @@ function Content({
         </Grid2>
       ) : null}
       {rows}
-      <Grid2>
+      <Grid2 size={12}>
         {isEdit ? (
-          <Button type="submit" id="save">
+          <Button type="submit" id="save" disabled={isMutating}>
             Uložit
           </Button>
         ) : (

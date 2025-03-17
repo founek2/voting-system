@@ -1,6 +1,7 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
 import { BallotResult_jsonld_result_read_candidate_read, BallotResult_jsonld_result_write, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
+import { FormType } from '../Components/VoteResultRow';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -40,6 +41,40 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Ballot'],
         }),
+        saveBallotResult: build.mutation<void, FormType>({
+            async queryFn(data, _queryApi, _extraOptions, baseQuery) {
+                for (const result of data.candidates) {
+                    const resultConverted: BallotResult_jsonld_result_write = {
+                        candidate: result.candidate,
+                        negativeVotes: Number(result.negativeVotes),
+                        neutralVotes: Number(result.neutralVotes),
+                        positiveVotes: Number(result.positiveVotes),
+                    };
+                    if (result.resultId) {
+                        const { error } = await baseQuery({
+                            url: `ballot_results/${result.resultId}`,
+                            method: 'PATCH',
+                            body: JSON.stringify(resultConverted),
+                        });
+                        if (error) {
+                            return { error };
+                        }
+                    } else {
+                        const { error } = await baseQuery({
+                            url: `ballot_results`,
+                            method: 'POST',
+                            body: JSON.stringify(resultConverted),
+                        });
+
+                        if (error) {
+                            return { error };
+                        }
+                    }
+                }
+                return { data: undefined };
+            },
+            invalidatesTags: ['Ballot'],
+        })
     }),
 
 });
@@ -47,5 +82,6 @@ export const signInApi = api.injectEndpoints({
 export const {
     useGetElectionBallotResultQuery,
     useAddBallotResultMutation,
-    useUpdateBallotResultMutation
+    useUpdateBallotResultMutation,
+    useSaveBallotResultMutation
 } = signInApi;

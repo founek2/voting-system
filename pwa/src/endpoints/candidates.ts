@@ -1,6 +1,12 @@
+import { FormType } from '../Components/VoteResultRow';
 import { Candidate, Hydra } from '../types';
 import { api } from './api';
-import { Candidate_candidate_edit, Candidate_jsonld_candidate_write, Position_jsonld_position_read, Position_position_write } from './types';
+import { BallotResult_jsonld_result_write, Candidate_candidate_edit, Candidate_candidate_edit_candidate_admin_edit, Candidate_jsonld_candidate_write, Position_jsonld_position_read, Position_position_write } from './types';
+
+type ResultType = {
+    candidateId: number;
+    winner: boolean;
+}[]
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -78,12 +84,71 @@ export const signInApi = api.injectEndpoints({
         withdrawCandidate: build.mutation<void, number>({
             query(id) {
                 return {
-                    url: `candidates/${id}`,
-                    method: 'DELETE',
+                    url: `candidates/${id}/withdraw`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
                 };
             },
             invalidatesTags: ['Candidates'],
         }),
+        rejectCandidate: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `candidates/${id}/reject`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                };
+            },
+            invalidatesTags: ['Candidates'],
+        }),
+        markWinnerCandidate: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `candidates/${id}/mark-winner`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                };
+            },
+            invalidatesTags: ['Candidates'],
+        }),
+        unmarkWinnerCandidate: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `candidates/${id}/unmark-winner`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                };
+            },
+            invalidatesTags: ['Candidates'],
+        }),
+        saveWinnerResult: build.mutation<void, ResultType>({
+            async queryFn(results, _queryApi, _extraOptions, baseQuery) {
+                for (const result of results) {
+
+                    if (result.candidateId && result.winner) {
+                        const { error } = await baseQuery({
+                            url: `candidates/${result.candidateId}/mark-winner`,
+                            method: 'POST',
+                            body: JSON.stringify({}),
+                        });
+                        if (error) {
+                            return { error };
+                        }
+                    } else if (result.candidateId && !result.winner) {
+                        const { error } = await baseQuery({
+                            url: `candidates/${result.candidateId}/unmark-winner`,
+                            method: 'POST',
+                            body: JSON.stringify({}),
+                        });
+                        if (error) {
+                            return { error };
+                        }
+                    }
+                }
+                return { data: undefined };
+            },
+            invalidatesTags: ['Candidates'],
+        })
     }),
 });
 
@@ -98,4 +163,8 @@ export const {
     useGetCandidatesVotedQuery,
     useWithdrawCandidateMutation,
     useGetCandidatesForElectionQuery,
+    useRejectCandidateMutation,
+    useMarkWinnerCandidateMutation,
+    useUnmarkWinnerCandidateMutation,
+    useSaveWinnerResultMutation,
 } = signInApi;
