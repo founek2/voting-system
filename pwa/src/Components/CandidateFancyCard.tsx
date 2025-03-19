@@ -10,16 +10,25 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Candidate } from "../types";
-import { DARK_BACKGROUND } from "../Containers/ThemeProvider";
+import { DARK_BACKGROUND, WINNER_COLOR } from "../Containers/ThemeProvider";
 import { PosterButton } from "./PosterButton";
+import CrownIcon from "./assets/crown.svg";
+import { Box } from "@mui/system";
 
 interface ElectionCardProps {
   candidate: Candidate;
   children?: JSX.Element | JSX.Element[];
+  showResult?: boolean;
 }
-export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
+export function CandidateFancyCard({
+  candidate,
+  children,
+  showResult,
+}: ElectionCardProps) {
   const fullName = `${candidate.appUser?.firstName} ${candidate.appUser?.lastName}`;
   const disabled = candidate.withdrewAt || candidate.rejectedAt;
+  const isWinner = Boolean(candidate.winnerMarkedAt);
+
   return (
     <Card
       sx={{
@@ -29,23 +38,28 @@ export function CandidateFancyCard({ candidate, children }: ElectionCardProps) {
         height: "100%",
       }}
     >
-      {disabled ? (
+      {disabled || showResult ? (
         <Typography
           sx={{
             position: "absolute",
-            backgroundColor: DARK_BACKGROUND,
+            backgroundColor:
+              showResult && isWinner ? WINNER_COLOR : DARK_BACKGROUND,
             transform: "rotate(50deg) translate(50%, 0%)",
-            top: "7%",
-            right: "10%",
+            top: "8.5%",
+            right: "8%",
             transformOrigin: "100% 0",
             textAlign: "center",
           }}
           width="100%"
         >
-          {candidate.withdrewAt
-            ? "Odstoupil"
-            : candidate.rejectedAt
+          {candidate.rejectedAt
             ? "Zamítnut"
+            : candidate.withdrewAt
+            ? "Odstoupil"
+            : showResult && isWinner
+            ? "Zvolen"
+            : showResult
+            ? "Nezvolen"
             : null}
         </Typography>
       ) : null}

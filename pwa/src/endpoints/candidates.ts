@@ -1,12 +1,19 @@
-import { FormType } from '../Components/VoteResultRow';
 import { Candidate, Hydra } from '../types';
 import { api } from './api';
-import { BallotResult_jsonld_result_write, Candidate_candidate_edit, Candidate_candidate_edit_candidate_admin_edit, Candidate_jsonld_candidate_write, Position_jsonld_position_read, Position_position_write } from './types';
+import { Candidate_candidate_edit, Candidate_jsonld_candidate_write, Position_jsonld_position_read } from './types';
 
 type ResultType = {
     candidateId: number;
     winner: boolean;
 }[]
+
+function orderByPosition(data: Hydra<Candidate>) {
+    data.member?.sort((a, b) => {
+        return (a.position.id ?? 0) - (b.position.id ?? 0);
+    })
+
+    return data;
+}
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -42,16 +49,21 @@ export const signInApi = api.injectEndpoints({
                 return data;
             }
         }),
+        getPublicResultCandidates: build.query<Hydra<Candidate>, number>({
+            query: (electionId) => ({
+                url: `public/elections/${electionId}/candidates`,
+                query: {
+                    'exists[withdrewAt]': false,
+                    'exists[rejectedAt]': false
+                }
+            }),
+            providesTags: ['Candidates'],
+            transformResponse: orderByPosition
+        }),
         getCandidatesForElection: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates`,
             providesTags: ['Candidates'],
-            transformResponse: (data: Hydra<Candidate>) => {
-                data.member?.sort((a, b) => {
-                    return (a.position.id ?? 0) - (b.position.id ?? 0);
-                })
-
-                return data;
-            }
+            transformResponse: orderByPosition
         }),
         getCandidatesVoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=voted`,
@@ -167,4 +179,5 @@ export const {
     useMarkWinnerCandidateMutation,
     useUnmarkWinnerCandidateMutation,
     useSaveWinnerResultMutation,
+    useGetPublicResultCandidatesQuery
 } = signInApi;

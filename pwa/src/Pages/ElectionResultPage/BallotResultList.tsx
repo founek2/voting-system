@@ -91,7 +91,7 @@ function Content({
         </Grid2>
       ) : null}
       {rows}
-      <Grid2 size={12}>
+      <Grid2 size={12} display="flex" justifyContent="end">
         {isEdit ? (
           <Button type="submit" id="save" disabled={isMutating}>
             Uložit

@@ -20,6 +20,7 @@
     "@mui/system": "^6.4.7",
     "@mui/x-date-pickers": "^7.27.3",
     "@reduxjs/toolkit": "^2.6.1",
+    "@svgr/webpack": "^8.1.0",
     "date-fns": "^4.1.0",
     "mui-file-input": "^6.0.0",
     "notistack": "^3.0.2",

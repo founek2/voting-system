@@ -4,11 +4,10 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import createTheme from "@mui/material/styles/createTheme";
 import { orange } from "@mui/material/colors";
 import { PaletteMode } from "@mui/material";
-// import { useAppSelector } from "../hooks";
-// import { getColorMode } from "../selectors/getters";
 
 export const LIGHT_BACKGROUND = "#fafafa";
 export const DARK_BACKGROUND = "#4c4c4c";
+export const WINNER_COLOR = "#c88d2e";
 
 declare module "@mui/material/styles" {
   interface Theme {

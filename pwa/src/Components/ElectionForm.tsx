@@ -98,7 +98,7 @@ function ElectionForm({
 
   const handleOnSubmit = handleSubmit(onSubmit);
   const formData = watch();
-  console.log("data", formData);
+
   return (
     <Grid2
       component="form"

@@ -11,6 +11,8 @@ use ApiPlatform\Metadata\Post;
 use App\Const\ElectionStage;
 use App\Filter\ElectionStageFilter;
 use App\Repository\ElectionRepository;
+use App\State\CompleteElectionProcessor;
+use App\State\EvaluateElectionProcessor;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,6 +27,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new GetCollection(uriTemplate: 'public/elections'),
         new Get(),
         new Post(security: 'user.hasRole("ROLE_ADMIN")'),
+        new Post(
+            uriTemplate: 'elections/{id}/evaluate',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            processor: EvaluateElectionProcessor::class,
+        ),
+        new Post(
+            uriTemplate: 'elections/{id}/complete',
+            security: 'user.hasRole("ROLE_ADMIN")',
+            processor: CompleteElectionProcessor::class,
+        ),
         new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
     ],
     mercure: true,
@@ -107,6 +119,14 @@ class Election
     #[ORM\OneToMany(mappedBy: 'election', targetEntity: MediaReport::class)]
     #[Groups(['election:read'])]
     private Collection $mediaReports;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['election:read'])]
+    private ?\DateTimeImmutable $evaluatedAt = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['election:read'])]
+    private ?\DateTimeImmutable $completedAt = null;
 
     public function __construct()
     {
@@ -362,6 +382,30 @@ class Election
                 $mediaReport->setElection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvaluatedAt(): ?\DateTimeImmutable
+    {
+        return $this->evaluatedAt;
+    }
+
+    public function setEvaluatedAt(?\DateTimeImmutable $evaluatedAt): static
+    {
+        $this->evaluatedAt = $evaluatedAt;
+
+        return $this;
+    }
+
+    public function getCompletedAt(): ?\DateTimeImmutable
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?\DateTimeImmutable $completedAt): static
+    {
+        $this->completedAt = $completedAt;
 
         return $this;
     }

@@ -40,6 +40,26 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Elections', 'PublicElections'],
         }),
+        evaluateElection: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `elections/${id}/evaluate`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                };
+            },
+            invalidatesTags: ['Elections', 'PublicElections'],
+        }),
+        completeElection: build.mutation<void, number>({
+            query(id) {
+                return {
+                    url: `elections/${id}/complete`,
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                };
+            },
+            invalidatesTags: ['Elections', 'PublicElections'],
+        }),
         getElectionElectronicResult: build.query<ElectionResultResource_jsonld_candidate_read, number>({
             query: (id) => `elections/${id}/result`,
             providesTags: ['Elections', 'Votes'],
@@ -62,4 +82,6 @@ export const {
     useGetPublicElectionsQuery,
     useGetPublicElectionsElectronicQuery,
     useGetElectionElectronicResultQuery,
+    useEvaluateElectionMutation,
+    useCompleteElectionMutation,
 } = signInApi;

@@ -83,7 +83,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const sizeName = { sm: 3 };
+  const sizeName = { sm: 4 };
   const sizeUid = { sm: 1 };
   const sizeVoting = { sm: 3 };
   const sizePosition = { sm: 3 };
@@ -106,7 +106,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
     );
 
   return (
-    <Paper sx={{ p: 2, width: "100%" }}>
+    <Paper sx={{ p: 2 }}>
       <Grid2 container>
         <Grid2 size={sizeName}>
           <Typography variant="h6">Jméno</Typography>
@@ -132,7 +132,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
         </Grid2>
         {users.map((user, i) => {
           const zone = zones.find((z) => z["@id"] === user.zone);
-          // const invalidated = Boolean(user.invalidatedAt);
+          // invalidated votes are not being displayed
           const invalidated = Boolean(false);
           const opacity = {
             opacity: invalidated ? 0.6 : undefined,
@@ -282,7 +282,7 @@ export function Component() {
             </Select>
           </FormControl>
         </Grid2>
-        <Grid2 container size={12} spacing={2}>
+        <Grid2 container size={{ xs: 12, xl: 8 }} spacing={2}>
           {!isLoadingUsers ? (
             <VoteList
               users={filteredUsers}

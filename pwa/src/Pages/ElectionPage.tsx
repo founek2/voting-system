@@ -57,7 +57,7 @@ export function Component() {
       <Grid2 container size={12} spacing={2}>
         {elections ? (
           electionsData.current?.map((e) => (
-            <Grid2 size={12} key={e.id}>
+            <Grid2 size={{ xs: 12, md: 8, xl: 4 }} key={e.id}>
               <Link to={`${e.id}`}>
                 <ElectionCard
                   election={e}
@@ -81,7 +81,7 @@ export function Component() {
       <Grid2 container size={12} spacing={2}>
         {elections ? (
           electionsData.passed?.map((e: Election) => (
-            <Grid2 size={4} key={e.id}>
+            <Grid2 size={{ xs: 12, md: 4 }} key={e.id}>
               <Link to={`${e.id}`}>
                 <ElectionCard election={e} isAdmin />
               </Link>

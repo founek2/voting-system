@@ -74,13 +74,15 @@ export function Component() {
           ))}
         </Breadcrumbs>
       </Box>
-      {location.hash === "#electronic" ? (
-        <ElectronicResultList election={election} />
-      ) : null}
-      {location.hash === "#ballot" ? (
-        <BallotResultList election={election} />
-      ) : null}
-      {location.hash === "" ? <TotalResultList election={election} /> : null}
+      <Grid2 size={{ xs: 12, md: 8, xl: 6 }}>
+        {location.hash === "#electronic" ? (
+          <ElectronicResultList election={election} />
+        ) : null}
+        {location.hash === "#ballot" ? (
+          <BallotResultList election={election} />
+        ) : null}
+        {location.hash === "" ? <TotalResultList election={election} /> : null}
+      </Grid2>
     </Grid2>
   );
 }

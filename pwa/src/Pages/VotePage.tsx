@@ -41,6 +41,7 @@ import {
 import { FormStatus } from "../Components/FormStatus";
 import { useAddBallotVoteMutation } from "../endpoints/ballots";
 import { handleError } from "../util/handleError";
+import { getCandidateStyle } from "../util/candidateOpacity";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -171,9 +172,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
         </Grid2>
         {candidates.map((candidate, i) => {
           const withdrew = Boolean(candidate.withdrewAt);
-          const opacity = {
-            opacity: withdrew ? 0.6 : undefined,
-          };
+          const opacity = getCandidateStyle(candidate);
 
           return (
             <React.Fragment key={candidate.id}>

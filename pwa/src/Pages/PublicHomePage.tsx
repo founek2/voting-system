@@ -64,6 +64,9 @@ function CandidatesSection() {
   } = useGetPublicCandidatesQuery(Number(ongoingElection?.id!), {
     skip: !ongoingElection?.id,
   });
+  const showResult = Boolean(
+    ongoingElection?.evaluatedAt || ongoingElection?.completedAt
+  );
 
   if (!ongoingElection) return null;
 
@@ -71,7 +74,11 @@ function CandidatesSection() {
     <Grid2 container spacing={4} size={12}>
       <Grid2 size={12} justifyContent="center" display="flex">
         <Typography variant="h3" color="primary" textAlign="center">
-          Přihlášení kandidáti
+          {ongoingElection.completedAt
+            ? "Konečné výsledky"
+            : ongoingElection.evaluatedAt
+            ? "Předběžné výsledky"
+            : "Přihlášení kandidáti"}
         </Typography>
       </Grid2>
 
@@ -93,7 +100,7 @@ function CandidatesSection() {
         ) : null}
         {candidates?.member.map((candidate) => (
           <Grid2 size={{ xs: 8, md: 3, lg: 2, xl: 1.7 }} key={candidate.id}>
-            <CandidateFancyCard candidate={candidate} />
+            <CandidateFancyCard candidate={candidate} showResult={showResult} />
           </Grid2>
         ))}
       </Grid2>

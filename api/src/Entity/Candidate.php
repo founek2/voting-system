@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -90,6 +91,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['election' => 'exact', 'appUser' => 'exact', 'position' => 'exact'])]
+#[ApiFilter(ExistsFilter::class, properties: ['withdrewAt', 'rejectedAt', 'winnerMarkedAt'])]
 #[Validator\WithdrawalAllowed(groups: ['candidate:delete'])]
 #[Validator\CandidateAllowed(groups: ['candidate:write'])]
 #[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id', 'withdrew_at'])]
@@ -102,7 +104,6 @@ class Candidate
     #[ORM\Column]
     #[Groups(['candidate:read'])]
     private ?int $id = null;
-
 
     #[Assert\NotNull(groups: ['Default', 'candidate:write'])]
     #[ORM\ManyToOne(inversedBy: 'candidates')]

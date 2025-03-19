@@ -8,7 +8,6 @@ export function handleError(error: FetchBaseQueryError | SerializedError | undef
         enqueueSnackbar({ message: 'Nastala chyba', variant: 'error' })
     }
     else if ('status' in error && 'data' in error && error.status === 422) {
-        console.log("here")
         const err = error as { data?: { detail: string }, status?: string | number }
         enqueueSnackbar({ message: err.data?.detail || 'Nastala chyba', variant: 'error' })
     } else {
