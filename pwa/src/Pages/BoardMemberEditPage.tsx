@@ -12,7 +12,7 @@ import {
 import { BoardMember_jsonld_member_write } from "../endpoints/types";
 import { handleError } from "../util/handleError";
 
-export default function BoardMemberEditPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: member,
@@ -61,3 +61,5 @@ export default function BoardMemberEditPage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

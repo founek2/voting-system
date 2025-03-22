@@ -2,33 +2,10 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AuthGuard from "../Components/AuthGuard";
 import Layout from "../Components/Layout";
-import BoardMemberCreatePage from "../Pages/BoardMemberCreatePage";
-import BoardMemberEditPage from "../Pages/BoardMemberEditPage";
-import BoardMemeberPage from "../Pages/BoardMemeberPage";
-// import CandidateCreatePage from "../Pages/CandidateCreatePage";
-// import CandidateEditPage from "../Pages/CandidateEditPage";
-// import DashboardPage from "../Pages/DashboardPage";
-// import DashboardUserPage from "../Pages/DashboardUserPage";
-// import ElectionCandidatesPage from "../Pages/ElectionCandidatesPage";
-// import ElectionCreatePage from "../Pages/ElectionCreatePage";
-// import ElectionEditPage from "../Pages/ElectionEditPage";
-// import ElectionPage from "../Pages/ElectionPage";
-// import ElectionResultPage from "../Pages/ElectionResultPage";
-// import ElectionVotesPage from "../Pages/ElectionVotesPage";
 import OAuthCallback from "../Pages/OAuthCallback";
-// import PositionCreatePage from "../Pages/PositionCreatePage";
-import PositionEditPage from "../Pages/PositionEditPage";
-import PositionPage from "../Pages/PositionPage";
 import PublicHomePage from "../Pages/PublicHomePage";
 import PublicReportPage from "../Pages/PublicReportPage";
 import PublicResolutionPage from "../Pages/PublicResolutionPage";
-// import ReportCreatePage from "../Pages/ReportCreatePage";
-// import ReportEditPage from "../Pages/ReportEditPage";
-import ReportPage from "../Pages/ReportPage";
-// import ResolutionCreatePage from "../Pages/ResolutionCreatePage";
-// import ResolutionEditPage from "../Pages/ResolutionEditPage";
-import ResolutionPage from "../Pages/ResolutionPage";
-// import VotePage from "../Pages/VotePage";
 
 export const router = createBrowserRouter([
   {
@@ -112,11 +89,15 @@ export const router = createBrowserRouter([
           },
           {
             path: "positions/:id",
-            element: <PositionEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/PositionEditPage"
+              ),
           },
           {
             path: "positions",
-            element: <PositionPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/PositionPage"),
           },
           {
             path: "elections",
@@ -139,7 +120,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "resolutions",
-            element: <ResolutionPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/ResolutionPage"),
           },
           {
             path: "reports/create",
@@ -155,7 +137,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "reports",
-            element: <ReportPage />,
+            lazy: () =>
+              import(/* webpackChunkName: "admin" */ "../Pages/ReportPage"),
           },
           {
             path: "candidates/:id",
@@ -166,15 +149,24 @@ export const router = createBrowserRouter([
           },
           {
             path: "board/create",
-            element: <BoardMemberCreatePage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/BoardMemberCreatePage"
+              ),
           },
           {
             path: "board/:id",
-            element: <BoardMemberEditPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/BoardMemberEditPage"
+              ),
           },
           {
             path: "board",
-            element: <BoardMemeberPage />,
+            lazy: () =>
+              import(
+                /* webpackChunkName: "admin" */ "../Pages/BoardMemeberPage"
+              ),
           },
         ],
       },

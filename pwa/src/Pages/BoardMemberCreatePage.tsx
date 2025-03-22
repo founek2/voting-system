@@ -1,13 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ReportForm from "../Components/ReportForm";
-import { useAddResolutionMutation } from "../endpoints/mediaResolution";
-import { handleError } from "../util/handleError";
+import BoardMemberForm from "../Components/BoardMemberForm";
 import { useAddBoardMemberMutation } from "../endpoints/board";
 import { BoardMember_jsonld_member_write } from "../endpoints/types";
-import BoardMemberForm from "../Components/BoardMemberForm";
+import { handleError } from "../util/handleError";
 
-export default function BoardMemberCreatePage() {
+export function Component() {
   const [createBoardMember, { isLoading: isMutation }] =
     useAddBoardMemberMutation();
   const navigate = useNavigate();
@@ -23,3 +21,5 @@ export default function BoardMemberCreatePage() {
 
   return <BoardMemberForm onSubmit={onSubmit} disabled={isMutation} />;
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

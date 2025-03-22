@@ -31,7 +31,7 @@ function Content() {
   );
 }
 
-export default function ResolutionPage() {
+export default function Component() {
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
@@ -50,3 +50,5 @@ export default function ResolutionPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

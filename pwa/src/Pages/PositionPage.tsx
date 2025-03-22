@@ -6,7 +6,7 @@ import Loader from "../Components/Loader";
 import { PositionCard } from "../Components/PositionCard";
 import { useGetPositionsQuery } from "../endpoints/positions";
 
-export default function PositionPage() {
+export function Component() {
   const { data: positions } = useGetPositionsQuery();
 
   return (
@@ -37,3 +37,5 @@ export default function PositionPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

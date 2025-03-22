@@ -3,13 +3,11 @@ import { Grid2, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loader from "../Components/Loader";
-import { PositionCard } from "../Components/PositionCard";
-import { useGetPositionsQuery } from "../endpoints/positions";
+import { MemberBoardCard } from "../Components/MemberBoardCard";
 import { useGetPublicBoardMemebersQuery } from "../endpoints/board";
 import { parseId } from "../util/parseId";
-import { MemberBoardCard } from "../Components/MemberBoardCard";
 
-export default function BoardMemeberPage() {
+export function Component() {
   const { data: members } = useGetPublicBoardMemebersQuery();
 
   return (
@@ -40,3 +38,5 @@ export default function BoardMemeberPage() {
     </Grid2>
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";

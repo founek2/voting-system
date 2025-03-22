@@ -10,7 +10,7 @@ import {
 } from "../endpoints/positions";
 import { Position_jsonld_position_write } from "../endpoints/types";
 
-export default function PositionEditPage() {
+export function Component() {
   const params = useParams<{ id: string }>();
   const {
     data: position,
@@ -47,3 +47,5 @@ export default function PositionEditPage() {
     />
   );
 }
+
+export { ErrorBoundary } from "../Components/ErrorBoundary2";
