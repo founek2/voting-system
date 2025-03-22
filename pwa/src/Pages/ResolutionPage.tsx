@@ -31,7 +31,7 @@ function Content() {
   );
 }
 
-export default function Component() {
+export function Component() {
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
