@@ -30,7 +30,7 @@ export default function OAuthCallback() {
     } else {
       const originalUrl = internalStorage.popOriginalUrl();
       if (originalUrl) navigate(originalUrl);
-      else navigate("/auth/admin");
+      else navigate("/auth/user");
     }
   }
 

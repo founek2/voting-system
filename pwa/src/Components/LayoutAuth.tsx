@@ -109,7 +109,6 @@ export function Component() {
     }
   }, [counter]);
 
-  // throw new Error("hahah");
   return (
     <>
       <Box display="flex">

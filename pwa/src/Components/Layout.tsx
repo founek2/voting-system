@@ -43,7 +43,7 @@ import { Footer } from "./Footer";
 
 function LoginButton({ admin }: { admin?: boolean }) {
   return (
-    <Link to="/auth/admin">
+    <Link to={admin ? "/auth/admin" : "/auth/user"}>
       <Button
         color="secondary"
         aria-label="enter candidate"
@@ -64,7 +64,7 @@ function AdminButton({ admin }: { admin?: boolean }) {
         // sx={}
         startIcon={<LoginIcon />}
       >
-        Administrace
+        {admin ? "Administrace" : "Vstoupit"}
       </Button>
     </Link>
   );
