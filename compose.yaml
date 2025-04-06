@@ -3,7 +3,7 @@ services:
     image: ${IMAGES_PREFIX:-}app-php
     depends_on:
       - database
-    restart: unless-stopped
+    restart: always
     environment:
       PWA_UPSTREAM: pwa:80
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
@@ -24,6 +24,7 @@ services:
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     command: ["postgres", "-c", "log_statement=all"]
+    restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}
       # You should definitely change the password in production
