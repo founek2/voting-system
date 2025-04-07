@@ -10,3 +10,11 @@ make up
 # Run frontend dev stack
 cd api && yarn && yarn dev
 ```
+
+## Persistence
+
+### File upload
+Files are being saved into disk, location `api/public/media`.
+
+### Jwt
+Lexik jwt bundle requires persistent jwt certificates, location `api/config/jwt`.

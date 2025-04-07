@@ -14,6 +14,7 @@ services:
       - /opt/voting-system/caddy/data:/data:rw
       - /opt/voting-system/caddy/config:/config:rw
       - /opt/voting-system/api/config/jwt:/app/config/jwt:rw
+      - /opt/voting-system/php/media:/app/public/media:rw
 
   pwa:
     image: git.sh.cvut.cz:5005/admins/web-app-hosting/voting-system/pwa:main

@@ -105,7 +105,7 @@ function VoteListMobile({
       ))}
       <Grid2 size={12}>
         <Button type="submit" disabled={disabled}>
-          Uložit
+          Hlasovat
         </Button>
       </Grid2>
     </Grid2>
@@ -254,7 +254,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
         })}
         <Grid2 size={12}>
           <Button type="submit" disabled={disabled}>
-            Uložit
+            Hlasovat
           </Button>
         </Grid2>
       </Grid2>
