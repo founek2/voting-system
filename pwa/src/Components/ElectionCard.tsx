@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardProps,
   Grid2,
   useMediaQuery,
   useTheme,
@@ -29,6 +30,7 @@ interface ElectionCardProps {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     election: Election
   ) => any;
+  sx?: CardProps["sx"];
 }
 export function ElectionCard({
   election,
@@ -37,12 +39,13 @@ export function ElectionCard({
   onViewVotes,
   onViewResult,
   onViewCandidates,
+  sx,
 }: ElectionCardProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Card>
+    <Card sx={sx}>
       <CardHeader title={title ? title : electionTitle(election)} />
       <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
         {!isMobile ? (

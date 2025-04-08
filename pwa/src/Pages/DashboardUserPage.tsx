@@ -74,14 +74,16 @@ export function Component() {
           {!isLoading ? (
             electronicVotingElections.length > 0 ? (
               electronicVotingElections.map((election) => (
-                <Link to={`/auth/user/vote`} key={election.id}>
-                  <ElectionCard
-                    election={election}
-                    title={`${dateToString(
-                      election.electronicVotingDate
-                    )} - ${dateToString(election.ballotVotingDate)}`}
-                  />
-                </Link>
+                <Grid2 size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={election.id}>
+                  <Link to={`/auth/user/vote`}>
+                    <ElectionCard
+                      election={election}
+                      title={`${dateToString(
+                        election.electronicVotingDate
+                      )} - ${dateToString(election.ballotVotingDate)}`}
+                    />
+                  </Link>
+                </Grid2>
               ))
             ) : (
               <TypographyInfo>

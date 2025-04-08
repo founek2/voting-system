@@ -103,7 +103,7 @@ function VoteListMobile({
           )}
         </CandidateVoteCard>
       ))}
-      <Grid2 size={12}>
+      <Grid2 size={12} display="flex" justifyContent="center">
         <Button type="submit" disabled={disabled}>
           Hlasovat
         </Button>
@@ -252,7 +252,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
             </React.Fragment>
           );
         })}
-        <Grid2 size={12}>
+        <Grid2 size={12} display="flex" justifyContent="end">
           <Button type="submit" disabled={disabled}>
             Hlasovat
           </Button>

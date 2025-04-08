@@ -83,6 +83,11 @@ export function Component() {
     if (!open && !isMobile) setOpen(true);
   }, [isMobile]);
 
+  // close menu on route change
+  useEffect(() => {
+    if (isMobile) setOpen(false);
+  }, [isMobile, location.pathname]);
+
   // Redirect regular user to non-admin part
   if (user?.roles) {
     if (
