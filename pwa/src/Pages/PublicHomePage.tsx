@@ -109,11 +109,7 @@ function CandidatesSection() {
 }
 
 function BasicInformationSection() {
-  return (
-    <Grid2>
-      <BasicInformation />
-    </Grid2>
-  );
+  return <BasicInformation />;
 }
 
 function FilesSection() {

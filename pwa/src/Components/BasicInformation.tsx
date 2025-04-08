@@ -17,6 +17,7 @@ export default function BasicInformation() {
       display="flex"
       flexDirection="column"
       alignItems="center"
+      size={12}
     >
       <Grid2>
         <Typography variant="h3" color="primary" textAlign="center">
