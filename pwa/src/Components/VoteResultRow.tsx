@@ -49,10 +49,10 @@ export function VoteResultRow<T extends FieldValues>({
 
   return (
     <>
-      <Grid2 size={{ xs: 12, md: 4, xl: 5 }}>
+      <Grid2 size={{ xs: 12, md: 4, xl: 4 }}>
         <Typography sx={opacity}>{fullName}</Typography>
       </Grid2>
-      <Grid2 size={{ xs: 3, md: 2, xl: 1 }} display="flex">
+      <Grid2 size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
         <Typography sx={opacity}>
           Pro {!edit ? result?.positiveVotes : null}
         </Typography>
@@ -88,7 +88,7 @@ export function VoteResultRow<T extends FieldValues>({
           />
         ) : null}
       </Grid2>
-      <Grid2 size={{ xs: 3, md: 2, xl: 1 }} display="flex">
+      <Grid2 size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
         <Typography sx={opacity}>
           Proti {!edit ? result?.negativeVotes : null}
         </Typography>

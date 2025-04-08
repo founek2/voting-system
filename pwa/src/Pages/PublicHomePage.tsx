@@ -99,7 +99,11 @@ function CandidatesSection() {
           </TypographyInfo>
         ) : null}
         {candidates?.member.map((candidate) => (
-          <Grid2 size={{ xs: 8, md: 3, lg: 2, xl: 1.7 }} key={candidate.id}>
+          <Grid2
+            size={{ xs: 8, md: 3, lg: 2, xl: 1.7 }}
+            key={candidate.id}
+            sx={{ maxWidth: 270 }}
+          >
             <CandidateFancyCard candidate={candidate} showResult={showResult} />
           </Grid2>
         ))}

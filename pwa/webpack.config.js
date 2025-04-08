@@ -5,7 +5,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
@@ -14,7 +13,7 @@ const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 
 const proxyTarget =
     process.env.PROXY === 'dev'
-        ? 'https://dev.volby.sh.cvut.cz'
+        ? 'https://volby.sh.home.iotdomu.cz'
         : process.env.PROXY === 'prod'
             ? 'https://volby.sh.cvut.cz'
             : 'https://localhost';
@@ -129,13 +128,6 @@ const config = {
             process: 'process/browser',
         }),
         !isEnvProduction && new webpack.HotModuleReplacementPlugin(),
-        // isEnvProduction &&
-        // new WorkboxPlugin.InjectManifest({
-        //     swSrc: './src/service-worker.ts',
-        //     swDest: 'service-worker.js',
-        //     maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
-        //     exclude: [/\.map$/, /^manifest.*\.js$/, /\/dist\//],
-        // }),
     ].filter(Boolean),
     devServer: {
         proxy: {

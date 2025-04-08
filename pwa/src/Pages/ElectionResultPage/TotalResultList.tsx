@@ -107,7 +107,7 @@ function Content({ candidates, results, election }: ContentProps) {
                 result={result}
                 candidate={candidate}
               />
-              <Grid2 size={{ xs: 12, md: 1 }} sx={opacity}>
+              <Grid2 size={{ xs: 12, md: 1.4, xl: 1 }} sx={opacity}>
                 {isEdit ? (
                   <FormControlLabel
                     control={
