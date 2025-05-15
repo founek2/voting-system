@@ -32,6 +32,7 @@ import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppDispatch, useAppSelector } from "../hooks/app";
 import { authorizationReducerActions } from "../store/slices/authorizationSlice";
 import { Role } from "../types";
+import LocalizationProvider from "./LocalizationProvider";
 
 const drawerWidth = 240;
 
@@ -249,7 +250,9 @@ export function Component() {
           </Box>
 
           <Box p={2}>
-            <Outlet />
+            <LocalizationProvider>
+              <Outlet />
+            </LocalizationProvider>
           </Box>
         </Box>
       </Box>
