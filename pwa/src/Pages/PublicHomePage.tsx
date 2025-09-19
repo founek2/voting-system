@@ -77,8 +77,8 @@ function CandidatesSection() {
           {ongoingElection.completedAt
             ? "Konečné výsledky"
             : ongoingElection.evaluatedAt
-            ? "Předběžné výsledky"
-            : "Přihlášení kandidáti"}
+              ? "Předběžné výsledky"
+              : "Přihlášení kandidáti"}
         </Typography>
       </Grid2>
 
@@ -134,8 +134,8 @@ function FilesSection() {
         <Paper
           sx={{ width: "100%", display: "flex", flexDirection: "column", p: 2 }}
         >
-          <FileButton href="http://www.siliconhill.cz/uploads/stanovy_klubu_siliconhill.pdf">
-            Stanovy klubu Silicon Hill (účinné od 1. 1. 2017)
+          <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/stanovy">
+            Stanovy klubu Silicon Hill (účinné od 1. září 2025)
           </FileButton>
           <FileButton href="https://zapisy.sh.cvut.cz/prilohy/20240515-Volebni-rad-klubu-Silicon-Hill.pdf">
             Volební řád klubu Silicon Hill (účinný od 15. 05. 2024)
