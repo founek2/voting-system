@@ -43,14 +43,10 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./api/docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
 
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
-
-###< doctrine/doctrine-bundle ###
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+  php-consumer:
+    image: ${IMAGES_PREFIX:-}app-php
+    restart: always
+    entrypoint: ["/app/docker/message-consumer.sh"]
+    depends_on:
+      - database

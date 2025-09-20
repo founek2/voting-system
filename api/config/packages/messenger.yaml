@@ -1,0 +1,39 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            async_emails:
+                dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                retry_strategy:
+                    max_retries: 3
+                    # milliseconds delay
+                    delay: 2000
+                    # causes the delay to be higher before each retry
+                    # e.g. 1 second delay, 2 seconds, 4 seconds
+                    multiplier: 2
+                failure_transport: async_emails_failed
+                serializer: messenger.transport.symfony_serializer
+                options:
+                    queue_name: "emails"
+                    use_notify: true
+                    table_name: "async_messages"
+                    redeliver_timeout: 300
+
+            async_emails_failed:
+                serializer: messenger.transport.symfony_serializer
+                dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                options:
+                    queue_name: "emails"
+                    use_notify: true
+                    table_name: "async_messages_failed"
+
+        routing:
+            App\Message\ElectionNotification: async_emails
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                async_emails: test://?catch_exceptions=false&support_delay_stamp=true

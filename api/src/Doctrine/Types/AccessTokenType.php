@@ -10,12 +10,12 @@ class AccessTokenType extends Type
 {
     const MYTYPE = 'accessToken'; // modify to match your type name
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'JSONB';
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         // This is executed when the value is read from the database. Make your conversions here, optionally using the $platform.
         // var_dump($value);
@@ -25,7 +25,7 @@ class AccessTokenType extends Type
         return new AccessTokenDto($json);
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         // This is executed when the value is written to the database. Make your conversions here, optionally using the $platform.
         return json_encode($value->jsonSerialize());
