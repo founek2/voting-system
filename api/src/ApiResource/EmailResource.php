@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             uriTemplate: 'emails/elections/{electionId}/notify-all',
             security: 'user.hasRole("ROLE_ADMIN")',
-            provider: NotifyAllProcessor::class,
+            processor: NotifyAllProcessor::class,
             read: false,
             denormalizationContext: ['groups' => ['_']],
         ),

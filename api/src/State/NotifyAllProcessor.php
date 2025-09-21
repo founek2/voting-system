@@ -5,7 +5,9 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\ApiResource\EmailResource;
+use App\Message\ElectionNotification;
 use App\Repository\ElectionRepository;
+use App\Services\IsApiService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -14,6 +16,7 @@ class NotifyAllProcessor implements ProcessorInterface
     public function __construct(
         private MessageBusInterface $bus,
         private ElectionRepository $electionRepository,
+        private IsApiService $isApiService,
     ) {}
 
     /**
@@ -30,7 +33,9 @@ class NotifyAllProcessor implements ProcessorInterface
             throw new NotFoundHttpException('Election not found');
         }
 
-        // TODO
-        // $this->bus->dispatch(new ElectionNotification($data->getEmail()));
+        $users = $this->isApiService->fetchUserList();
+        foreach ($users as $user) {
+            $this->bus->dispatch(new ElectionNotification($election->getId(), $user->email));
+        }
     }
 }

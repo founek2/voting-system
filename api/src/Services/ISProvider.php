@@ -15,16 +15,13 @@ use Psr\Http\Message\ResponseInterface;
 
 class ISProvider extends AbstractProvider
 {
-    private string $baseApiUri;
-
     public function __construct(
-        string $baseApiUri,
+        private string $baseApiUri,
         private UserRepository $userRepository,
         array $options = [],
         array $collaborators = [],
     ) {
         parent::__construct($options, $collaborators);
-        $this->baseApiUri = $baseApiUri;
     }
 
     /**

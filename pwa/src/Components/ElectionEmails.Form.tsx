@@ -47,10 +47,10 @@ export function ElectionEmailsForm({ onSendSingle, onSendAll, disabled }: Electi
         </Grid2>
         <Grid2>
             <Grid2 >
-                <Button disabled={disabled} onClick={() => setOpenDialog(true)} >Odeslat upozornění všem členům</Button>
+                <Button variant="contained" disabled={disabled} onClick={() => setOpenDialog(true)} >Odeslat upozornění všem členům SH</Button>
             </Grid2>
         </Grid2>
-    </Grid2>
+    </Grid2 >
         <AlertDialog
             open={openDialog}
             onClose={() => setOpenDialog(false)}
