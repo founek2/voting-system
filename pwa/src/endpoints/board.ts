@@ -1,13 +1,13 @@
 import { Hydra } from '../types';
 import { api } from './api';
-import { BoardMember_jsonld_member_public_read, BoardMember_jsonld_member_read, BoardMember_jsonld_member_write, Position_jsonld_position_read } from './types';
+import { BoardMember_jsonld_member_public_read, BoardMember_jsonld_member_read, BoardMember_jsonld_member_write, HydraItemBaseSchema, Position_jsonld_position_read } from './types';
 
 export const boardApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getPublicBoardMemebers: build.query<Hydra<BoardMember_jsonld_member_public_read>, void>({
+        getPublicBoardMemebers: build.query<Hydra<BoardMember_jsonld_member_public_read & HydraItemBaseSchema>, void>({
             query: () => `public/board_members`,
             providesTags: ['BoardMembers'],
-            transformResponse: (response: Hydra<BoardMember_jsonld_member_public_read>) => {
+            transformResponse: (response: Hydra<BoardMember_jsonld_member_public_read & HydraItemBaseSchema>) => {
                 response.member.sort((a, b) => {
                     if (a.appUser?.lastName && b.appUser?.lastName) {
                         return a.appUser?.lastName.localeCompare(b.appUser?.lastName)

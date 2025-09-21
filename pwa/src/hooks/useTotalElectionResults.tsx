@@ -15,6 +15,13 @@ export function useTotalElectionResults(election: Election) {
     isLoading: isLoadingBallot,
   } = useGetElectionBallotResultQuery(election?.id!);
 
+  if (!electronicResult) {
+    return {
+      isError: isErrorElectronic || isErrorBallot,
+      isLoading: isLoadingElectronic || isLoadingBallot,
+    };
+  }
+
   const result: ElectionResultResource_jsonld_candidate_read = {
     ...electronicResult,
     candidates: electronicResult?.candidates?.map((electronic) => {

@@ -13,12 +13,16 @@
 	</p>
 	<div style="border: solid #888 3px; padding: 10px;">
 		<p style="margin: 0 0 10px 0;">
-			Elektronické hlasování probíhá od 9. 4. 2025 do 13. 4. 2025.
+			Elektronické hlasování probíhá od
+			{{ startDate|date("d. m. Y") }}
+			do
+			{{ endDate|date("d. m. Y") }}
+			.
 		</p>
 		<p style="margin: 10px 0 0 0;">
 			Hlasování můžete provést na
 			<strong style="font-size: 110%">
-				<a href="https://election.sh.cvut.cz">https://election.sh.cvut.cz</a>
+				<a href="{{ votingUrl }}">{{ votingUrl }}</a>
 			</strong>
 			pomocí svého uživatelského účtu v systému IS. Hlasovat můžete z libovolného počítače, ale pouze jedenkrát.
 		</p>
@@ -30,7 +34,7 @@
 	<p>
 		S pozdravem<br>
 		Volební komise<br>
-		<a href="https://volby.sh.cvut.cz">https://volby.sh.cvut.cz</a>
+		<a href="{{ homepageUrl }}">{{homepageUrl}}</a>
 	</p>
 
 	<br>
@@ -43,20 +47,22 @@
 	</p>
 	<p>
 		General elections for positions of representatives are being held to the board of Silicon Hill club.
-						        It is time now for You, our members, to choose your representatives. Representatives, that will fight for Your rights. 
-						        The weightiness of their mandates is only up to You. The more of You will vote, the greater will be the influence of your representatives.
+																								        It is time now for You, our members, to choose your representatives. Representatives, that will fight for Your rights. 
+																								        The weightiness of their mandates is only up to You. The more of You will vote, the greater will be the influence of your representatives.
 	</p>
 	<p>
 		<strong>And now some informational stuff:</strong>
 	</p>
 	<div style="border: solid #888 3px; padding: 10px;">
 		<p style="margin: 0 0 10px 0;">
-			You can electronically vote from March 9, 2025, till March 13, 2025.
+			You can electronically vote from
+			{{ startDate|date("F d, Y") }}, till
+			{{ endDate|date("F d, Y") }}.
 		</p>
 		<p style="margin: 10px 0 0 0;">
 			Voting can be done on
 			<strong style="font-size: 110%">
-				<a href="http://election.sh.cvut.cz?lang=en">http://election.sh.cvut.cz</a>
+				<a href="{{ votingUrl }}">{{ votingUrl }}</a>
 			</strong>
 			using your user account in IS. You can vote from any computer, but only once.
 		</p>
@@ -69,6 +75,6 @@
 	<p>
 		With kind regards<br>
 		Electoral Committee<br>
-		<a href="https://volby.sh.cvut.cz">https://volby.sh.cvut.cz</a>
+		<a href="{{ homepageUrl }}">{{homepageUrl}}</a>
 	</p>
 </div>

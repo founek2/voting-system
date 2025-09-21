@@ -3,10 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CandidateResult_jsonld_candidate_read } from './CandidateResult_jsonld_candidate_read';
-export type ElectionResultResource_jsonld_candidate_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type ElectionResultResource_jsonld_candidate_read = (HydraItemBaseSchema & {
     candidates?: Array<CandidateResult_jsonld_candidate_read>;
-};
+});
 

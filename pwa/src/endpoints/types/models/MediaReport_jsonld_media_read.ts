@@ -2,14 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type MediaReport_jsonld_media_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type MediaReport_jsonld_media_read = (HydraItemBaseSchema & {
     readonly id?: number;
     readonly contentUrl?: string | null;
     name?: string;
     publishedAt?: string;
     election?: string | null;
-};
+});
 

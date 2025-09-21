@@ -18,6 +18,7 @@ import { head } from "../util/head";
 const allZone = {
   name: "Všichni",
   "@id": "all",
+  "@type": "zone",
 };
 
 interface PositionFormProps {
@@ -84,8 +85,8 @@ export default function PositionForm({
               value={
                 field.value && field.value.length > 0
                   ? (field.value
-                      ?.map((id) => zoneOptions.find((z) => z["@id"] == id))
-                      .filter(Boolean) as Zone_jsonld_zone_read[])
+                    ?.map((id) => zoneOptions.find((z) => z["@id"] == id))
+                    .filter(Boolean) as Zone_jsonld_zone_read[])
                   : [allZone]
               }
             />

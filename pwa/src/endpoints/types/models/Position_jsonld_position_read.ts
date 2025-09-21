@@ -2,14 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Position_jsonld_position_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type Position_jsonld_position_read = (HydraItemBaseSchema & {
     readonly id?: number;
     zoneRestrictions?: Array<string>;
     candidates?: Array<string>;
     name?: string;
     elections?: Array<string>;
-};
+});
 

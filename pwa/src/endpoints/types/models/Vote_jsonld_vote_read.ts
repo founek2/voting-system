@@ -2,14 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
 import type { User_jsonld_vote_read } from './User_jsonld_vote_read';
-export type Vote_jsonld_vote_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+export type Vote_jsonld_vote_read = (HydraItemBaseSchema & {
     readonly id?: number;
     candidate: string;
     appUser?: User_jsonld_vote_read;
     invalidatedAt?: string | null;
-};
+});
 

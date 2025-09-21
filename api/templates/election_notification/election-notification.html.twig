@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Dokončení registrace Expanzi
+{% endblock %}
+{% block body %}
+	{% include 'election_notification/body.html.twig' with {
+		votingUrl: "#{ votingUrl }",
+		homepageUrl: "#{ homepageUrl }",
+		startDate: "#{ startDate }",
+		endDate: "#{ endDate }",
+	} %}
+{% endblock %}

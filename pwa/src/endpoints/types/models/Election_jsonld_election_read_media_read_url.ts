@@ -2,12 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
 import type { MediaReport_jsonld_election_read_media_read_url } from './MediaReport_jsonld_election_read_media_read_url';
 import type { MediaResolution_jsonld_election_read_media_read_url } from './MediaResolution_jsonld_election_read_media_read_url';
-export type Election_jsonld_election_read_media_read_url = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+export type Election_jsonld_election_read_media_read_url = (HydraItemBaseSchema & {
     readonly id?: number;
     announcementDate?: string;
     registrationOfCandidatesDate?: string | null;
@@ -25,5 +23,5 @@ export type Election_jsonld_election_read_media_read_url = {
     evaluatedAt?: string | null;
     completedAt?: string | null;
     readonly stage?: 'announcement' | 'registration_of_candidates' | 'campaign' | 'electronic_voting' | 'ballot_voting' | 'preliminary_results' | 'complaints' | 'counting_votes' | 'final_results';
-};
+});
 

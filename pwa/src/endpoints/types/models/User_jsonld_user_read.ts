@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type User_jsonld_user_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type User_jsonld_user_read = (HydraItemBaseSchema & {
     id?: number;
     email?: string;
     firstName?: string;
@@ -15,5 +13,5 @@ export type User_jsonld_user_read = {
     zone?: string | null;
     doorNumber?: string | null;
     roles?: 'voter' | 'ROLE_ADMIN' | 'member';
-};
+});
 

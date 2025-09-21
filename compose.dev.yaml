@@ -54,7 +54,7 @@ services:
     image: schickling/mailcatcher
     ports:
       - "1026:1025"
-      - "1081:1080"
+      - "1080:1080"
 
 volumes:
   caddy_data:

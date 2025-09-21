@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
-export type User_jsonld_member_public_read = (HydraItemBaseSchema & {
-    firstName?: string;
-    lastName?: string;
+export type EmailResource_jsonld = (HydraItemBaseSchema & {
+    email?: string;
 });
 

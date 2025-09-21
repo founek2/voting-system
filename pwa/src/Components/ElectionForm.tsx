@@ -59,7 +59,7 @@ function getNumberOfDays(key: keyof typeof nextDateMapper, election: Election) {
 }
 function getEndDate(
   key: keyof typeof nextDateMapper,
-  election: Election
+  election: Omit<Election, '@context' | '@id' | '@type'>
 ): string {
   const nextKey = nextDateMapper[key];
   if (!nextKey) return "";
@@ -89,7 +89,7 @@ function ElectionForm({
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, },
   } = methods;
   const { data: positions } = useGetPositionsQuery();
 
@@ -104,9 +104,9 @@ function ElectionForm({
       onSubmit={handleOnSubmit}
       maxWidth={600}
     >
-      <Grid2 size={12}>
+      {Object.keys(errors).length > 0 ? <Grid2 size={12}>
         <FormStatus errors={errors} />
-      </Grid2>
+      </Grid2> : null}
 
       <Grid2 size={12}>
         <Typography variant="h4" color="textPrimary">
@@ -269,7 +269,6 @@ function ElectionForm({
           )}
         />
       </Grid2>
-
       <Grid2 size={12}>
         <Button type="submit" disabled={disabled}>
           Uložit

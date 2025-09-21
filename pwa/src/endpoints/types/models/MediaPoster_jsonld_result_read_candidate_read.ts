@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type MediaPoster_jsonld_result_read_candidate_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type MediaPoster_jsonld_result_read_candidate_read = (HydraItemBaseSchema & {
     readonly contentUrl?: string | null;
-};
+});
 

@@ -1,0 +1,7 @@
+{% for email in emails %}
+    <div>
+        <h3 style="font-weight:100">{{ email[0] }}</h3>
+        {{ email[1]|raw }}
+    </div>
+    <hr style="border-top:3px solid #bbb;">
+{% endfor %}

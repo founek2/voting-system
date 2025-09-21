@@ -178,7 +178,7 @@ function Content({ candidates, results, election }: ContentProps) {
 export function TotalResultList({ election }: { election: Election }) {
   const { data: candidates, isError: isErrorCandidates } =
     useGetCandidatesForElectionQuery(election.id!);
-  const { data: results, isError } = useTotalElectionResults(election);
+  const { data: results, isError, isLoading } = useTotalElectionResults(election);
 
   if (isError || isErrorCandidates)
     return <TypographyInfo>Nastala chyba při načítání dat.</TypographyInfo>;
@@ -186,9 +186,10 @@ export function TotalResultList({ election }: { election: Election }) {
   if (results?.candidates?.length === 0) {
     return <TypographyInfo>Nebyli přihlášení žádní kandidáti.</TypographyInfo>;
   }
+
   return (
     <Paper sx={{ width: "100%", p: 2 }}>
-      {candidates ? (
+      {candidates && results ? (
         <Content
           candidates={candidates}
           results={results}

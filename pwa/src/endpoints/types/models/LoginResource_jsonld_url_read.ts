@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type LoginResource_jsonld_url_read = {
-    readonly '@context'?: (string | Record<string, any>);
-    readonly '@id'?: string;
-    readonly '@type'?: string;
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type LoginResource_jsonld_url_read = (HydraItemBaseSchema & {
     authorizationUrl?: string;
-};
+});
 
