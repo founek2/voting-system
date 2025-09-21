@@ -1,4 +1,4 @@
-compose=docker compose -f compose.yaml -f compose.dev.yaml
+compose=docker compose -f compose.yaml -f compose.override.yaml
 
 up:
 	$(compose) up -d

@@ -5,9 +5,8 @@ namespace App\MessageHandler;
 use App\Mailing\SendElectionNotificationeEmail;
 use App\Message\ElectionNotification;
 use App\Repository\ElectionRepository;
+use App\Util\NullableUtil;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-
-use function PHPUnit\Framework\assertNotNull;
 
 #[AsMessageHandler]
 class ElectionNotificationHandler
@@ -20,7 +19,7 @@ class ElectionNotificationHandler
     public function __invoke(ElectionNotification $message)
     {
         $election = $this->electionRepository->find($message->getElectionId());
-        assertNotNull($election);
+        NullableUtil::notNullOrThrow($election);
 
         ($this->sender)($election, $message->getEmail());
     }
