@@ -44,7 +44,7 @@ export function Component() {
     const { error } = await sendSignle({ electionId: election.id, emailAddress })
     if (error) enqueueSnackbar({ variant: "error", message: "Nastala chyba" });
     else {
-      enqueueSnackbar("Odesláno");
+      enqueueSnackbar("Odeslání emailu naplánováno");
     }
   }
 
@@ -54,7 +54,7 @@ export function Component() {
     const { error } = await sendAll(election.id)
     if (error) enqueueSnackbar({ variant: "error", message: "Nastala chyba" });
     else {
-      enqueueSnackbar("Odesláno");
+      enqueueSnackbar("Emaily byli naplánovány k odeslány");
     }
   }
 
