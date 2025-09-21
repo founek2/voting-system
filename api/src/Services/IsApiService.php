@@ -30,6 +30,12 @@ class IsApiService
             throw new Exception(sprintf('IS Api returned status "%s"', $response->getStatusCode()));
         }
 
-        return $this->serializer->deserialize($response->getContent(), UserEmailDto::class, 'json');
+        return $this->parseData($response->getContent());
+    }
+
+    /** @return UserEmailDto[] */
+    public function parseData(string $content): array
+    {
+        return $this->serializer->deserialize($content, UserEmailDto::class . '[]', 'json');
     }
 }
