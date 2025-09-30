@@ -32,10 +32,6 @@ services:
                 clientSecret: "%env(string:OAUTH2_CLIENT_SECRET)%"
                 redirectUri: "%env(string:OAUTH2_REDIRECT_URI)%"
 
-    App\Doctrine\EventListener\FixPostgreSQLDefaultSchemaListener:
-        tags:
-            - { name: doctrine.event_listener, event: postGenerateSchema }
-
     App\Services\IsApiService:
         public: true
         arguments:
