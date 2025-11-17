@@ -42,6 +42,7 @@ import { FormStatus } from "../Components/FormStatus";
 import { useAddBallotVoteMutation } from "../endpoints/ballots";
 import { handleError } from "../util/handleError";
 import { getCandidateStyle } from "../util/candidateOpacity";
+import { useTranslation } from "react-i18next";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -50,6 +51,8 @@ function VoteListMobile({
   control,
   disabled,
 }: VoteListProps) {
+  const { t } = useTranslation()
+
   return (
     <Grid2 container spacing={2} display="flex" justifyContent="center">
       {candidates.map((candidate, i) => (
@@ -59,7 +62,7 @@ function VoteListMobile({
           sx={{ width: "100%" }}
         >
           {candidate.withdrewAt ? (
-            <Typography>Odstoupil z kandidatury</Typography>
+            <Typography>{t('vote.candidateWithdrew')}</Typography>
           ) : (
             <>
               <input
@@ -83,17 +86,17 @@ function VoteListMobile({
                       <FormControlLabel
                         value="1"
                         control={<Radio />}
-                        label="Pro"
+                        label={t('vote.agree')}
                       />
                       <FormControlLabel
                         value="0"
                         control={<Radio />}
-                        label="Zdržuji se"
+                        label={t('vote.abstain')}
                       />
                       <FormControlLabel
                         value="-1"
                         control={<Radio />}
-                        label="Proti"
+                        label={t('vote.against')}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -105,7 +108,7 @@ function VoteListMobile({
       ))}
       <Grid2 size={12} display="flex" justifyContent="center">
         <Button type="submit" disabled={disabled}>
-          Hlasovat
+          {t('common.actionVote')}
         </Button>
       </Grid2>
     </Grid2>
@@ -119,6 +122,7 @@ interface VoteListProps {
   control: Control<FormType, any>;
 }
 function VoteList({ candidates, disabled, register, control }: VoteListProps) {
+  const { t } = useTranslation()
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -128,7 +132,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
   const sizePosition = { sm: 3 };
 
   if (candidates.every((c) => Boolean(c.withdrewAt)))
-    return <Typography color="textPrimary">Již máte odhlasováno ✅</Typography>;
+    return <Typography color="textPrimary">{t('vote.done')} ✅</Typography>;
 
   if (isMobile)
     return (
@@ -144,7 +148,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
     <Paper sx={{ p: 2, width: "100%" }}>
       <Grid2 container>
         <Grid2 size={sizeName}>
-          <Typography variant="h6">Jméno</Typography>
+          <Typography variant="h6">{t('common.name')}</Typography>
         </Grid2>
         <Grid2 size={sizeUid}>
           <Typography variant="h6" textAlign="center">
@@ -153,17 +157,17 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
         </Grid2>
         <Grid2 size={sizePosition}>
           <Typography variant="h6" textAlign="center">
-            Pozice
+            {t('common.position')}
           </Typography>
         </Grid2>
         <Grid2 size={2}>
           <Typography variant="h6" textAlign="center">
-            Plakát
+            {t('common.poster')}
           </Typography>
         </Grid2>
         <Grid2 size={3}>
           <Typography variant="h6" textAlign="center">
-            Hlasování
+            {t('vote.voting')}
           </Typography>
         </Grid2>
 
@@ -179,7 +183,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
               <Grid2 size={sizeName} minHeight={42}>
                 <ConditionalTooltip
                   disabled={!withdrew}
-                  title="Odstoupil z kandidatury"
+                  title={t('vote.candidateWithdrew')}
                 >
                   <Typography component="span" sx={opacity}>
                     {candidate.appUser?.firstName} {candidate.appUser?.lastName}
@@ -194,7 +198,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
               <Grid2 size={sizePosition}>
                 <ConditionalTooltip
                   disabled={!withdrew}
-                  title="Odstoupil z kandidatury"
+                  title={t('vote.candidateWithdrew')}
                 >
                   <Typography textAlign="center" sx={opacity}>
                     {candidate.position?.name}
@@ -206,7 +210,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
               </Grid2>
               <Grid2 size={sizeVoting} justifyContent="center" display="flex">
                 {withdrew ? (
-                  <Typography sx={opacity}>Odstoupil z kandidatury</Typography>
+                  <Typography sx={opacity}>{t('vote.candidateWithdrew')}</Typography>
                 ) : (
                   <>
                     <input
@@ -230,17 +234,17 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                             <FormControlLabel
                               value="1"
                               control={<Radio />}
-                              label="Pro"
+                              label={t('vote.agree')}
                             />
                             <FormControlLabel
                               value="0"
                               control={<Radio />}
-                              label="Zdržuji se"
+                              label={t('vote.abstain')}
                             />
                             <FormControlLabel
                               value="-1"
                               control={<Radio />}
-                              label="Proti"
+                              label={t('vote.against')}
                             />
                           </RadioGroup>
                         </FormControl>
@@ -254,7 +258,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
         })}
         <Grid2 size={12} display="flex" justifyContent="end">
           <Button type="submit" disabled={disabled}>
-            Hlasovat
+            {t('common.actionVote')}
           </Button>
         </Grid2>
       </Grid2>
@@ -274,6 +278,7 @@ interface FormType {
   votes: (VoteValue | undefined)[];
 }
 export function Component() {
+  const { t } = useTranslation()
   const { data: elections, isLoading: isLoadingElections } =
     useGetPublicElectionsElectronicQuery();
   const election = elections ? elections.member[0] : undefined;
@@ -323,7 +328,7 @@ export function Component() {
     <Grid2 container spacing={2}>
       <Grid2 size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span">
-          Elektronické hlasování
+          {t('vote.title')}
         </Typography>
       </Grid2>
       <Grid2

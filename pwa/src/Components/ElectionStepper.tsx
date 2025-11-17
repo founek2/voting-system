@@ -14,16 +14,7 @@ import { SxProps } from "@mui/system";
 import { Tooltip } from "@mui/material";
 import { dateToString } from "../util/dateToString";
 import { Link } from "react-router-dom";
-
-// announcementDate?: string;
-// registrationOfCandidatesDate?: string | null;
-// campaignDate?: string | null;
-// electronicVotingDate?: string | null;
-// ballotVotingDate?: string | null;
-// preliminaryResultsDate?: string | null;
-// complaintsDeadlineDate?: string | null;
-// finalResultsDate?: string | null;
-// candidates?: Array<Candidate_jsonld_election_read>;
+import { RawText } from "./RawText";
 
 function hasPassed(date?: string | Date) {
   if (!date) return false;
@@ -51,17 +42,24 @@ function getStep(election: Election) {
   return 0;
 }
 
-const steps = [
+type StepType = {
+  label: (election: Election) => string | JSX.Element;
+  date: (election: Election) => string;
+  description: string | JSX.Element;
+  action?: (election: Election) => JSX.Element;
+};
+
+const steps: readonly StepType[] = [
   {
-    label: (election: Election) => "Vyhlášení voleb",
+    label: (election: Election) => <RawText key="step0.label" />,
     date: (election: Election) => `${dateToString(election.announcementDate)} - 
           ${dateToString(election.registrationOfCandidatesDate, {
-            subDays: 1,
-          })}`,
-    description: `Volby vyhlašuje předseda klubu Silicon Hill.`,
+      subDays: 1,
+    })}`,
+    description: <RawText key="step0.description" />,
   },
   {
-    label: (election: Election) => "Přihlašování kandidátů",
+    label: (election: Election) => <RawText key="step1.label" />,
     date: (election: Election) =>
       `${dateToString(election.registrationOfCandidatesDate)} - ${dateToString(
         election.campaignDate,
@@ -69,16 +67,15 @@ const steps = [
           subDays: 1,
         }
       )}`,
-    description: `Kandidovat do představenstva klubu může pouze člen SH, který není zároveň členem volební komise. Kandidovat lze současně pouze na jednu pozici.
-    Přihlašuje se elektronicky na e-mail volební komise volby@sh.cvut.cz z klubové e-mailové adresy. Tou se rozumí adresa v doméně siliconhill.cz nebo sh.cvut.cz.`,
+    description: <RawText key="step1.description" />,
     action: (election: Election) => (
       <Link to={`/auth/user/elections/${election.id}/candidates/create`}>
-        <Button color="primary">Chci kandidovat</Button>
+        <Button color="primary"><RawText key="common.actionCandidate" /></Button>
       </Link>
     ),
   },
   {
-    label: (election: Election) => "Volební kampaň",
+    label: (election: Election) => <RawText key="step2.label" />,
     date: (election: Election) =>
       `${dateToString(election.campaignDate)} - ${dateToString(
         election.electronicVotingDate,
@@ -86,11 +83,10 @@ const steps = [
           subDays: 1,
         }
       )}`,
-    description: `Volební kampaní se rozumí jakákoliv propagace kandidáta nebo volební agitace ve
-prospěch kandidáta.`,
+    description: <RawText key="step2.description" />,
   },
   {
-    label: (election: Election) => "Elektronické hlasování",
+    label: (election: Election) => <RawText key="step3.label" />,
     date: (election: Election) =>
       `${dateToString(election.electronicVotingDate)} - ${dateToString(
         election.ballotVotingDate,
@@ -98,16 +94,15 @@ prospěch kandidáta.`,
           subDays: 1,
         }
       )}`,
-    description:
-      "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill a má aktivní základní členství.",
+    description: <RawText key="step3.description" />,
     action: (election: Election) => (
       <Link to={`/auth/user/vote`}>
-        <Button color="primary">Hlasovat</Button>
+        <Button color="primary"><RawText key="common.actionVote" /></Button>
       </Link>
     ),
   },
   {
-    label: (election: Election) => "Urnové hlasování",
+    label: (election: Election) => <RawText key="step4.label" />,
     date: (election: Election) =>
       `${dateToString(election.ballotVotingDate)} - ${dateToString(
         election.preliminaryResultsDate,
@@ -115,8 +110,7 @@ prospěch kandidáta.`,
           subDays: 1,
         }
       )}`,
-    description:
-      "Hlasovat fyzicky je možné pouze ve stanovenou dobu. Bližší informace o urnovém hlasování najdete v usnesení.",
+    description: <RawText key="step4.description" />,
     action: (election: Election) => (
       <>
         {election.mediaResolutions?.map((resolution) => (
@@ -126,33 +120,33 @@ prospěch kandidáta.`,
             href={`${resolution.contentUrl}`}
             key={resolution["@id"]}
           >
-            <Button>Usnesení</Button>
+            <Button><RawText key="common.actionResolution" /></Button>
           </MuiLink>
         ))}
       </>
     ),
   },
   {
-    label: (election: Election) => "Vyhlášení předběžných výsledků",
+    label: (election: Election) => <RawText key="step5.label" />,
     date: (election: Election) =>
       `${dateToString(election.preliminaryResultsDate)}`,
-    description:
-      "Stížnosti na průběh voleb je možné zaslat na email volby@sh.cvut.cz.",
+    description: <RawText key="step5.description" />,
   },
   {
-    label: (election: Election) => "Uzávěrka podávání stížností",
+    label: (election: Election) => <RawText key="step6.label" />,
     date: (election: Election) =>
       `${dateToString(election.complaintsDeadlineDate)}`,
-    description: "Nyní již není možno podávat stížnosti.",
+    description: <RawText key="step6.description" />,
   },
   {
-    label: (election: Election) => "Vyhodnocení výsledků",
+    label: (election: Election) => <RawText key="step7.label" />,
     date: (election: Election) => `${dateToString(election.countingVotesDate)}`,
-    description: "Komise provede vyhodnocení výsledků.",
+    description: <RawText key="step7.description" />,
   },
   {
-    label: (election: Election) => "Vyhlášení konečných výsledků",
+    label: (election: Election) => <RawText key="step8.label" />,
     date: (election: Election) => `${dateToString(election.finalResultsDate)}`,
+    description: <RawText key="step8.description" />,
     action: (election: Election) => (
       <>
         {election.mediaReports?.map((report) => (
@@ -162,13 +156,13 @@ prospěch kandidáta.`,
             href={`${report.contentUrl}`}
             key={report["@id"]}
           >
-            <Button>Závěrečná zpráva</Button>
+            <Button><RawText key="common.actionFinalReport" /></Button>
           </MuiLink>
         ))}
       </>
     ),
   },
-];
+]
 
 function AddTooltip({
   step,
@@ -179,7 +173,7 @@ function AddTooltip({
   step: number;
   currentStep: number;
   children: JSX.Element;
-  title?: string;
+  title?: string | JSX.Element;
 }) {
   if (step === currentStep) return children;
 
@@ -199,7 +193,7 @@ export default function ElectionStepper({
   return (
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
       {steps.map((step, index) => (
-        <Step key={step.label(election)}>
+        <Step key={index}>
           <AddTooltip
             title={step.description}
             step={index}

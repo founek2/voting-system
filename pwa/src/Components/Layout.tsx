@@ -14,6 +14,8 @@ import { useAppSelector } from "../hooks/app";
 import { Role } from "../types";
 import { grey } from "@mui/material/colors";
 import { Footer } from "./Footer";
+import { use } from "i18next";
+import { useTranslation } from "react-i18next";
 
 // function VoteButton() {
 //   return (
@@ -42,6 +44,7 @@ import { Footer } from "./Footer";
 // }
 
 function LoginButton({ admin }: { admin?: boolean }) {
+  const { t } = useTranslation();
   return (
     <Link to={admin ? "/auth/admin" : "/auth/user"}>
       <Button
@@ -49,13 +52,14 @@ function LoginButton({ admin }: { admin?: boolean }) {
         aria-label="enter candidate"
         startIcon={<LoginIcon />}
       >
-        Přihlásit
+        {t('common.actionLogin')}
       </Button>
     </Link>
   );
 }
 
 function AdminButton({ admin }: { admin?: boolean }) {
+  const { t } = useTranslation();
   return (
     <Link to={admin ? "/auth/admin" : "/auth/user"}>
       <Button
@@ -64,7 +68,7 @@ function AdminButton({ admin }: { admin?: boolean }) {
         // sx={}
         startIcon={<LoginIcon />}
       >
-        {admin ? "Administrace" : "Vstoupit"}
+        {admin ? t('common.actionAdmin') : t('common.actionEnter')}
       </Button>
     </Link>
   );

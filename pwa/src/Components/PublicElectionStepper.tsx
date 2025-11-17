@@ -5,8 +5,10 @@ import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
 import ElectionStepper from "./ElectionStepper";
 import Loader from "./Loader";
+import { useTranslation } from "react-i18next";
 
 export default function PublicElectionStepper() {
+  const { t } = useTranslation()
   const { data: elections, isLoading } = useGetPublicElectionsQuery(undefined, {
     refetchOnFocus: true,
   });
@@ -20,7 +22,7 @@ export default function PublicElectionStepper() {
     <ElectionStepper election={ongoingElection} />
   ) : (
     <Typography color="textSecondary">
-      Momentálně neprobíhají žádné volby
+      {t('election.noElections')}
     </Typography>
   );
 }

@@ -1,0 +1,113 @@
+{
+    "homepage": {
+        "title": "Volby do představenstva klubu Silicon Hill"
+    },
+    "stepper": {
+        "step0": {
+            "label": "Vyhlášení voleb",
+            "description": "Volby vyhlašuje předseda klubu Silicon Hill."
+        },
+        "step1": {
+            "label": "Přihlašování kandidátů",
+            "description": "Kandidovat do představenstva klubu může pouze člen SH, který není zároveň členem volební komise. Kandidovat lze současně pouze na jednu pozici. Přihlašuje se elektronicky na e-mail volební komise volby@sh.cvut.cz z klubové e-mailové adresy. Tou se rozumí adresa v doméně siliconhill.cz nebo sh.cvut.cz."
+        },
+        "step2": {
+            "label": "Volební kampaň",
+            "description": "Volební kampaní se rozumí jakákoliv propagace kandidáta nebo volební agitace ve prospěch kandidáta."
+        },
+        "step3": {
+            "label": "Elektronické hlasování",
+            "description": "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill a má aktivní základní členství."
+        },
+        "step4": {
+            "label": "Urnové hlasování",
+            "description": "Hlasovat fyzicky je možné pouze ve stanovenou dobu. Bližší informace o urnovém hlasování najdete v usnesení."
+        },
+        "step5": {
+            "label": "Vyhlášení předběžných výsledků",
+            "description": "Stížnosti na průběh voleb je možné zaslat na email volby@sh.cvut.cz."
+        },
+        "step6": {
+            "label": "Uzávěrka podávání stížností",
+            "description": "Nyní již není možno podávat stížnosti."
+        },
+        "step7": {
+            "label": "Vyhodnocení výsledků",
+            "description": "Komise provede vyhodnocení výsledků."
+        },
+        "step8": {
+            "label": "Vyhlášení konečných výsledků",
+            "description": "Volby jsou ukončeny a jsou známé konečné výsledky."
+        }
+    },
+    "election": {
+        "preliminaryResults": "Předběžné výsledky",
+        "finalResults": "Zobrazit detaily kandidáta",
+        "candidatesSigned": "Přihlášení kandidáti",
+        "noCandidates": "Žádní kandidáti ještě nebyli přihlášeni.",
+        "failCandidates": "Nepodařilo se načíst kandidáty.",
+        "noElections": "Momentálně neprobíhají žádné volby"
+    },
+    "files": {
+        "title": "Dokumenty",
+        "resolutions": "Usnesení volební komise",
+        "reports": "Závěrečné zprávy",
+        "clubStatus": "Stanovy klubu Silicon Hill (účinné od {{since}})",
+        "clubElectionRules": "Volební řád klubu Silicon Hill (účinný od {{since}})"
+    },
+    "information": {
+        "title": "Základní informace",
+        "wantCandidate": "Chceš kandidovat?",
+        "signIn": "Přihlášení",
+        "signInText1": "Kandidovat do představenstva klubu může pouze člen SH, který není zároveň členem volební komise. Kandidovat lze současně pouze na jednu pozici.",
+        "signInText2": "Přihlašuje se elektronicky na e-mail volební komise volby@sh.cvut.cz z klubové e-mailové adresy. Tou se rozumí adresa v doméně siliconhill.cz nebo sh.cvut.cz.",
+        "validadCandidateApplication": "Platná přihláška kandidáta musí obsahovat:",
+        "uidNumber": "Číslo člena klubu (UID)",
+        "fullName": "Celé jméno",
+        "position": "Pozici, na kterou kandiduje",
+        "skenedConsent": "Naskenovaný nebo vyfocený podepsaný souhlas s kandidaturou",
+        "poster": "Volební plakát",
+        "posterText1": "Každý kandidát má možnost zaslat informační plakát, který bude vystaven na těchto stránkách. Zveřejněn bude pouze plakát, nikoli video či audio.",
+        "posterText2": "Doporučovaný a preferovaný je formát PDF a doporučenými prvky plakátu jsou – formát A4, osobní údaje, fotografie, kontaktní e-mail, důvod kandidatury, volební program, osobní zásluhy v klubu Silicon Hill apod.",
+        "posterText3": "Informační plakát by neměl napadat či osočovat jiné osoby.",
+        "posterText4": "V případě, že informační plakát nebude vyhovovat popsaným požadavkům, volební komise ho nemusí přijmout a vrátí ho kandidátovi k opravení.",
+        "board": "Představenstvo",
+        "boardMembers": "Představenstvo klubu Silicon Hill má nejvýše 15 členů:",
+        "boardMembersSubtitle1": "10 zástupců bloků",
+        "boardMembersText2": "Voleni všemi obyvateli daného bloku, členové klubu mohou využít elektronické verze hlasování.",
+        "boardMembersText3": "Řeší kromě celoklubových záležitostí také problémy bloku. Jedná se o udržení chodu služeb (síť, zájmové místnosti) a také o zajištění důstojné prezentace názorů ubytovaných/zastupovaných studentů (nespokojenost s úklidem, potížisté, rozvoj bloku). Předpokládá se úzká spolupráce s hospodářkou bloku a s technicko-síťovým manažerem.",
+        "boardMembersSubtitle2": "4 celokluboví zástupci",
+        "boardMembersText4": "Voleni pouze členy klubu v elektronickém hlasování.",
+        "boardMembersText5": "Nemají blokovou příslušnost, nejsou tedy zatíženi starostmi o konkrétní blok a mohou se plně věnovat dalšímu rozvoji studentských aktivit na kolejích.",
+        "chairman": "Předseda",
+        "chairmanText": "Volen představenstvem klubu.",
+        "chairmanDescription": "Zastupuje klub navenek, každopádně neměl by být jedinou akční složkou."
+    },
+    "vote": {
+        "title": "Elektronické hlasování",
+        "against": "Proti",
+        "agree": "Pro",
+        "abstain": "Zdržuji se",
+        "candidateWithdrew": "Kandidátka byla stažena",
+        "done": "Již máte odhlasováno ✅",
+        "voting": "Hlasování"
+    },
+    "common": {
+        "eg": "např.",
+        "actionVote": "Hlasovat",
+        "actionCandidate": "Chci kandidovat",
+        "actionResolution": "Zobrazit usnesení",
+        "actionFinalReport": "Zobrazit závěrečnou zprávu",
+        "actionLogin": "Přihlásit se",
+        "actionAdmin": "Administrace",
+        "actionEnter": "Vstoupit",
+        "position": "Pozice",
+        "name": "Jméno",
+        "poster": "Plakát"
+    },
+    "footer": {
+        "reportIssues": "Chyby systému hlašte na",
+        "language": "English",
+        "electionComiteeMembers": "Členové volební komise:"
+    }
+}

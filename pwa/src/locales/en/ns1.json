@@ -1,0 +1,113 @@
+{
+    "homepage": {
+        "title": "Elections to the Silicon Hill Club Board"
+    },
+    "stepper": {
+        "step0": {
+            "label": "Election announcement",
+            "description": "Elections are announced by the chairman of Silicon Hill club."
+        },
+        "step1": {
+            "label": "Candidate registration",
+            "description": "Only a SH member who is not simultaneously a member of the election committee can run for the club board. It is possible to run for only one position at a time. Registration is done electronically via email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain."
+        },
+        "step2": {
+            "label": "Election campaign",
+            "description": "Election campaign means any promotion of a candidate or electoral agitation in favor of a candidate."
+        },
+        "step3": {
+            "label": "Electronic voting",
+            "description": "Electronic voting is in progress. Anyone who is a member of Silicon Hill club and has active basic membership can vote."
+        },
+        "step4": {
+            "label": "Ballot box voting",
+            "description": "Physical voting is only possible during the designated time. More information about ballot box voting can be found in the resolution."
+        },
+        "step5": {
+            "label": "Preliminary results announcement",
+            "description": "Complaints about the course of elections can be sent to volby@sh.cvut.cz."
+        },
+        "step6": {
+            "label": "Complaint submission deadline",
+            "description": "It is no longer possible to submit complaints."
+        },
+        "step7": {
+            "label": "Results evaluation",
+            "description": "The committee performs results evaluation."
+        },
+        "step8": {
+            "label": "Final results announcement",
+            "description": "Elections are concluded and final results are known."
+        }
+    },
+    "election": {
+        "preliminaryResults": "Preliminary results",
+        "finalResults": "Show candidate details",
+        "candidatesSigned": "Registered candidates",
+        "noCandidates": "No candidates have been registered yet.",
+        "failCandidates": "Failed to load candidates.",
+        "noElections": "No elections are currently in progress"
+    },
+    "files": {
+        "title": "Documents",
+        "resolutions": "Election committee resolutions",
+        "reports": "Final reports",
+        "clubStatus": "Silicon Hill Club Statutes (effective from {{since}})",
+        "clubElectionRules": "Silicon Hill Club Election Rules (effective from {{since}})"
+    },
+    "information": {
+        "title": "Basic information",
+        "wantCandidate": "Want to run for office?",
+        "signIn": "Registration",
+        "signInText1": "Only a SH member who is not simultaneously a member of the election committee can run for the club board. It is possible to run for only one position at a time.",
+        "signInText2": "Registration is done electronically via email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain.",
+        "validadCandidateApplication": "A valid candidate application must contain:",
+        "uidNumber": "Club member number (UID)",
+        "fullName": "Full name",
+        "position": "Position they are running for",
+        "skenedConsent": "Scanned or photographed signed consent to candidacy",
+        "poster": "Election poster",
+        "posterText1": "Each candidate has the opportunity to send an information poster that will be displayed on these pages. Only the poster will be published, not video or audio.",
+        "posterText2": "PDF format is recommended and preferred, and the recommended poster elements are – A4 format, personal data, photograph, contact email, reason for candidacy, election program, personal merits in Silicon Hill club, etc.",
+        "posterText3": "The information poster should not attack or accuse other persons.",
+        "posterText4": "In case the information poster does not meet the described requirements, the election committee may not accept it and will return it to the candidate for correction.",
+        "board": "Board",
+        "boardMembers": "Silicon Hill Club board has up to 15 members:",
+        "boardMembersSubtitle1": "10 block representatives",
+        "boardMembersText2": "Elected by all residents of the given block, club members can use the electronic version of voting.",
+        "boardMembersText3": "They deal with club-wide matters as well as block problems. This involves maintaining the operation of services (network, interest rooms) and also ensuring dignified presentation of the opinions of accommodated/represented students (dissatisfaction with cleaning, troublemakers, block development). Close cooperation with the block housekeeper and technical-network manager is expected.",
+        "boardMembersSubtitle2": "4 club-wide representatives",
+        "boardMembersText4": "Elected only by club members in electronic voting.",
+        "boardMembersText5": "They have no block affiliation, so they are not burdened with concerns about a specific block and can fully dedicate themselves to further development of student activities in the dormitories.",
+        "chairman": "Chairman",
+        "chairmanText": "Elected by the club board.",
+        "chairmanDescription": "Represents the club externally, but should not be the only active component."
+    },
+    "vote": {
+        "title": "Electronic voting",
+        "against": "Against",
+        "agree": "For",
+        "abstain": "Abstain",
+        "candidateWithdrew": "Candidacy was withdrawn",
+        "done": "You have already voted ✅",
+        "voting": "Voting"
+    },
+    "common": {
+        "eg": "e.g.",
+        "actionVote": "Vote",
+        "actionCandidate": "I want to run",
+        "actionResolution": "Show resolution",
+        "actionFinalReport": "Show final report",
+        "actionLogin": "Log in",
+        "actionAdmin": "Administration",
+        "actionEnter": "Enter",
+        "position": "Position",
+        "name": "Name",
+        "poster": "Poster"
+    },
+    "footer": {
+        "reportIssues": "Report system bugs to",
+        "language": "Čeština",
+        "electionComiteeMembers": "Election committee members:"
+    }
+}

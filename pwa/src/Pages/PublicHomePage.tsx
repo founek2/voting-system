@@ -11,8 +11,12 @@ import { useGetPublicElectionsQuery } from "../endpoints/elections";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
 import { TypographyInfo } from "../Components/TypographyInfo";
+import { useTranslation } from "react-i18next";
+import { dateToString } from "../util/dateToString";
 
 function StepperSection() {
+  const { t } = useTranslation()
+
   return (
     <Grid2 container justifyContent="center" spacing={4} size={12}>
       <Grid2
@@ -31,7 +35,7 @@ function StepperSection() {
               top: { lg: 100 },
               maxWidth: { xs: 250, md: 300 },
             }}
-            alt="The house from the offer."
+            alt="Logo of Silicon Hill club."
             src="/assets/SH-logo.png"
             position={{ lg: "absolute" }}
           />
@@ -43,7 +47,7 @@ function StepperSection() {
           component="span"
           textAlign="center"
         >
-          Volby do představenstva klubu Silicon Hill
+          {t('homepage.title')}
         </Typography>
       </Grid2>
       <Grid2 size={{ xs: 12, md: 6, lg: 3 }}>
@@ -54,6 +58,7 @@ function StepperSection() {
 }
 
 function CandidatesSection() {
+  const { t } = useTranslation()
   const { data: elections, isLoading, isError } = useGetPublicElectionsQuery();
   const electionData = splitElections(elections?.member || []);
   const ongoingElection = head(electionData.current);
@@ -75,10 +80,10 @@ function CandidatesSection() {
       <Grid2 size={12} justifyContent="center" display="flex">
         <Typography variant="h3" color="primary" textAlign="center">
           {ongoingElection.completedAt
-            ? "Konečné výsledky"
+            ? t('election.finalResults')
             : ongoingElection.evaluatedAt
-              ? "Předběžné výsledky"
-              : "Přihlášení kandidáti"}
+              ? t('election.preliminaryResults')
+              : t('election.candidatesSigned')}
         </Typography>
       </Grid2>
 
@@ -91,11 +96,11 @@ function CandidatesSection() {
       >
         {isLoading || loadingCandidates ? <Loader /> : null}
         {isError || errorCandidates ? (
-          <TypographyInfo>Nelze načíst kandidáty</TypographyInfo>
+          <TypographyInfo>{t('election.failCandidates')}</TypographyInfo>
         ) : null}
         {candidates?.member.length === 0 ? (
           <TypographyInfo>
-            Zatím nebyli přihlášení žádní kandidáti
+            {t('election.noCandidates')}
           </TypographyInfo>
         ) : null}
         {candidates?.member.map((candidate) => (
@@ -117,6 +122,7 @@ function BasicInformationSection() {
 }
 
 function FilesSection() {
+  const { t } = useTranslation()
   return (
     <Grid2
       container
@@ -127,7 +133,7 @@ function FilesSection() {
     >
       <Grid2 size={12}>
         <Typography variant="h3" color="primary" textAlign="center">
-          Dokumenty
+          {t('files.title')}
         </Typography>
       </Grid2>
       <Grid2>
@@ -135,16 +141,16 @@ function FilesSection() {
           sx={{ width: "100%", display: "flex", flexDirection: "column", p: 2 }}
         >
           <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/stanovy">
-            Stanovy klubu Silicon Hill (účinné od 1. září 2025)
+            {t('files.clubStatus', { since: dateToString(new Date("2025-09-01")), interpolation: { escapeValue: false } })}
           </FileButton>
           <FileButton href="https://zapisy.sh.cvut.cz/prilohy/20240515-Volebni-rad-klubu-Silicon-Hill.pdf">
-            Volební řád klubu Silicon Hill (účinný od 15. 05. 2024)
+            {t('files.clubElectionRules', { since: dateToString(new Date("2024-05-15")), interpolation: { escapeValue: false } })}
           </FileButton>
           <Link to="/resolutions">
-            <Button color="secondary">Usnesení volební komise</Button>
+            <Button color="secondary">{t('files.resolutions')}</Button>
           </Link>
           <Link to="/reports">
-            <Button color="secondary">Závěrečné zprávy</Button>
+            <Button color="secondary">{t('files.reports')}</Button>
           </Link>
         </Paper>
       </Grid2>

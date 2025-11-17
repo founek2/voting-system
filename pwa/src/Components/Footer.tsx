@@ -1,9 +1,10 @@
 import { Grid2, Link as MuiLink, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/system";
-import React from "react";
+import React, { useTransition } from "react";
 import { useGetPublicBoardMemebersQuery } from "../endpoints/board";
 import { BoardMember_jsonld_member_public_read } from "../endpoints/types";
+import { useTranslation } from "react-i18next";
 
 const TypographyStyled = styled(Typography)({
   variant: "body2",
@@ -25,6 +26,7 @@ function MemberRow({
 }
 
 export function Footer() {
+  const { t, i18n } = useTranslation()
   const { data: membersData } = useGetPublicBoardMemebersQuery();
   const members = membersData?.member || [];
 
@@ -32,13 +34,15 @@ export function Footer() {
     <MemberRow key={member["@id"]} member={member} />
   ));
 
+  const changeLanguageTo = i18n.language === 'cs' ? 'en' : 'cs';
+
   return (
     <Paper component="footer" sx={{ py: 2, mt: 8 }}>
       <Grid2 container justifyContent="space-around" spacing={2}>
         <Grid2 size={{ xs: 12, md: 5 }} display="flex">
           <Grid2 container>
             <Grid2 px={2} size={{}}>
-              <Typography color={grey[300]}>Členové volební komise:</Typography>
+              <Typography color={grey[300]}>{t('footer.electionComiteeMembers')}</Typography>
               {...membersRows.slice(0, 3)}
             </Grid2>
             <Grid2 px={2}>
@@ -48,9 +52,17 @@ export function Footer() {
           </Grid2>
         </Grid2>
 
-        <Grid2 size={{ xs: 12, md: 3 }} display="flex" alignItems="center">
+        <Grid2 size={{ xs: 12, md: 3 }} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+          <TypographyStyled>
+            <MuiLink href={`/?lng=${changeLanguageTo}`} onClick={e => {
+              e.preventDefault();
+              i18n.changeLanguage(changeLanguageTo);
+            }}>
+              {t('footer.language')}
+            </MuiLink>
+          </TypographyStyled>
           <TypographyStyled px={2}>
-            Chyby systému hlašte na{" "}
+            {t('footer.reportIssues')}{" "}
             <MuiLink
               href="https://github.com/founek2/voting-system/issues"
               underline="none"

@@ -1,4 +1,5 @@
 import { SnackbarProvider } from "notistack";
+import "./locales/i18n";
 import React from "react";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";

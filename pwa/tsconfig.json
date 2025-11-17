@@ -24,14 +24,14 @@
         "forceConsistentCasingInFileNames": true,
         "incremental": true,
         "module": "ESNext",
-        "jsx": "react"
-        // "allowSyntheticDefaultImports": true,
-        // "noFallthroughCasesInSwitch": true,
-        // "strict": true
+        "jsx": "react",
+        "resolveJsonModule": true
     },
     "include": [
         "src",
-        "custom.d.ts"
+        "custom.d.ts",
+        "src/locales/**/*.json",
+        "src/@types/**/*.d.ts"
     ],
     "exclude": [
         "node_modules"
