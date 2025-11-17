@@ -18,6 +18,7 @@ import {
   Candidate_jsonld_candidate_read,
   MediaPoster_jsonld_candidate_read,
 } from "../endpoints/types";
+import { useTranslation } from "react-i18next";
 
 interface ElectionCardProps {
   candidate: Candidate_jsonld_candidate_read | null | undefined;
@@ -25,6 +26,7 @@ interface ElectionCardProps {
   children?: JSX.Element | JSX.Element[] | null;
 }
 export function PosterButton({ candidate, disabled }: ElectionCardProps) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false);
   const poster = candidate?.poster;
 
@@ -37,7 +39,7 @@ export function PosterButton({ candidate, disabled }: ElectionCardProps) {
         disabled={disabled || !Boolean(poster?.contentUrl)}
         onClick={() => setOpen(true)}
       >
-        {poster?.contentUrl ? "Plakát" : "Plakát neuveden"}
+        {poster?.contentUrl ? t("common.actionPoster") : t("common.posterNotProvided")}
       </Button>
       <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
         <DialogTitle>

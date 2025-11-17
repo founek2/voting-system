@@ -1,19 +1,45 @@
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
-  Typography,
   Link,
+  Typography
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { DARK_BACKGROUND, DARK_ERROR, WINNER_COLOR } from "../Containers/ThemeProvider";
 import { Candidate } from "../types";
-import { DARK_BACKGROUND, WINNER_COLOR } from "../Containers/ThemeProvider";
 import { PosterButton } from "./PosterButton";
-import CrownIcon from "./assets/crown.svg";
-import { Box } from "@mui/system";
+
+function Ribbon({ candidate, isWinner, showResult }: { candidate: Candidate, isWinner: boolean, showResult?: boolean }) {
+  const { t } = useTranslation()
+
+  return <Typography
+    sx={{
+      position: "absolute",
+      backgroundColor:
+        isWinner ? WINNER_COLOR : candidate.rejectedAt ? DARK_ERROR : DARK_BACKGROUND,
+      transform: "rotate(50deg) translate(50%, 0%)",
+      top: "8%",
+      right: "8%",
+      transformOrigin: "100% 0",
+      textAlign: "center",
+    }}
+    width="100%"
+  >
+    {candidate.rejectedAt
+      ? t("candidates.state.rejected")
+      : candidate.withdrewAt
+        ? t("candidates.state.withdraw")
+        : showResult && isWinner
+          ? t("candidates.state.elected")
+          : showResult
+            ? t("candidates.state.notElected")
+            : null}
+  </Typography>
+}
 
 interface ElectionCardProps {
   candidate: Candidate;
@@ -25,6 +51,7 @@ export function CandidateFancyCard({
   children,
   showResult,
 }: ElectionCardProps) {
+  const { t } = useTranslation()
   const fullName = `${candidate.appUser?.firstName} ${candidate.appUser?.lastName}`;
   const disabled = candidate.withdrewAt || candidate.rejectedAt;
   const isWinner = Boolean(candidate.winnerMarkedAt);
@@ -39,31 +66,9 @@ export function CandidateFancyCard({
       }}
     >
       {disabled || showResult ? (
-        <Typography
-          sx={{
-            position: "absolute",
-            backgroundColor:
-              showResult && isWinner ? WINNER_COLOR : DARK_BACKGROUND,
-            transform: "rotate(50deg) translate(50%, 0%)",
-            top: "8.5%",
-            right: "8%",
-            transformOrigin: "100% 0",
-            textAlign: "center",
-          }}
-          width="100%"
-        >
-          {candidate.rejectedAt
-            ? "Zamítnut"
-            : candidate.withdrewAt
-            ? "Odstoupil"
-            : showResult && isWinner
-            ? "Zvolen"
-            : showResult
-            ? "Nezvolen"
-            : null}
-        </Typography>
+        <Ribbon candidate={candidate} isWinner={isWinner} showResult={showResult} />
       ) : null}
-      <CardHeader title={candidate.position.name} />
+      <CardHeader title={candidate.position.name} sx={{ mr: 2 }} />
       <CardMedia
         sx={{ height: 140 }}
         image={candidate.appUser?.photoSmallUrl || undefined}

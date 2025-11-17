@@ -92,6 +92,14 @@
         "done": "Již máte odhlasováno ✅",
         "voting": "Hlasování"
     },
+    "candidates": {
+        "state": {
+            "rejected": "Zamítnut",
+            "withdraw": "Odstoupil",
+            "elected": "Zvolen",
+            "notElected": "Nezvolen"
+        }
+    },
     "common": {
         "eg": "např.",
         "actionVote": "Hlasovat",
@@ -101,13 +109,15 @@
         "actionLogin": "Přihlásit se",
         "actionAdmin": "Administrace",
         "actionEnter": "Vstoupit",
+        "actionPoster": "Zobrazit plakát",
         "position": "Pozice",
         "name": "Jméno",
-        "poster": "Plakát"
+        "poster": "Plakát",
+        "posterNotProvided": "Plakát neuveden"
     },
     "footer": {
         "reportIssues": "Chyby systému hlašte na",
-        "language": "English",
+        "language": "Angličtina",
         "electionComiteeMembers": "Členové volební komise:"
     }
 }

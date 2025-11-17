@@ -92,6 +92,14 @@
         "done": "You have already voted ✅",
         "voting": "Voting"
     },
+    "candidates": {
+        "state": {
+            "rejected": "Rejected",
+            "withdraw": "Withdrew",
+            "elected": "Elected",
+            "notElected": "Not elected"
+        }
+    },
     "common": {
         "eg": "e.g.",
         "actionVote": "Vote",
@@ -101,13 +109,15 @@
         "actionLogin": "Log in",
         "actionAdmin": "Administration",
         "actionEnter": "Enter",
+        "actionPoster": "Show poster",
         "position": "Position",
         "name": "Name",
-        "poster": "Poster"
+        "poster": "Poster",
+        "posterNotProvided": "Poster not provided"
     },
     "footer": {
         "reportIssues": "Report system bugs to",
-        "language": "Čeština",
+        "language": "Czech",
         "electionComiteeMembers": "Election committee members:"
     }
 }

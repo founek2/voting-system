@@ -7,6 +7,7 @@ import { PaletteMode } from "@mui/material";
 
 export const LIGHT_BACKGROUND = "#fafafa";
 export const DARK_BACKGROUND = "#4c4c4c";
+export const DARK_ERROR = "#931414ff";
 export const WINNER_COLOR = "#c88d2e";
 
 declare module "@mui/material/styles" {

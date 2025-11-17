@@ -15,6 +15,9 @@ import { Tooltip } from "@mui/material";
 import { dateToString } from "../util/dateToString";
 import { Link } from "react-router-dom";
 import { RawText } from "./RawText";
+import { useTranslation, } from "react-i18next";
+import { TFunction, TFunctionStrict } from "i18next";
+import { DefaultNS, LocalizedLabelKey } from "../locales/i18n";
 
 function hasPassed(date?: string | Date) {
   if (!date) return false;
@@ -43,23 +46,26 @@ function getStep(election: Election) {
 }
 
 type StepType = {
-  label: (election: Election) => string | JSX.Element;
+  label: (election: Election) => LocalizedLabelKey;
   date: (election: Election) => string;
-  description: string | JSX.Element;
+  description: LocalizedLabelKey;
   action?: (election: Election) => JSX.Element;
 };
 
+// type G = Parameters<TFunctionStrict<DefaultNS>>
+// const a: G[0]  =  'step0'
+
 const steps: readonly StepType[] = [
   {
-    label: (election: Election) => <RawText key="step0.label" />,
+    label: (election: Election) => 'stepper.step0.label',
     date: (election: Election) => `${dateToString(election.announcementDate)} - 
           ${dateToString(election.registrationOfCandidatesDate, {
       subDays: 1,
     })}`,
-    description: <RawText key="step0.description" />,
+    description: 'stepper.step0.description',
   },
   {
-    label: (election: Election) => <RawText key="step1.label" />,
+    label: (election: Election) => 'stepper.step1.label',
     date: (election: Election) =>
       `${dateToString(election.registrationOfCandidatesDate)} - ${dateToString(
         election.campaignDate,
@@ -67,15 +73,15 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: <RawText key="step1.description" />,
+    description: 'stepper.step1.description',
     action: (election: Election) => (
       <Link to={`/auth/user/elections/${election.id}/candidates/create`}>
-        <Button color="primary"><RawText key="common.actionCandidate" /></Button>
+        <Button color="primary"><RawText textKey="common.actionCandidate" /></Button>
       </Link>
     ),
   },
   {
-    label: (election: Election) => <RawText key="step2.label" />,
+    label: (election: Election) => 'stepper.step2.label',
     date: (election: Election) =>
       `${dateToString(election.campaignDate)} - ${dateToString(
         election.electronicVotingDate,
@@ -83,10 +89,10 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: <RawText key="step2.description" />,
+    description: 'stepper.step2.description',
   },
   {
-    label: (election: Election) => <RawText key="step3.label" />,
+    label: (election: Election) => 'stepper.step3.label',
     date: (election: Election) =>
       `${dateToString(election.electronicVotingDate)} - ${dateToString(
         election.ballotVotingDate,
@@ -94,15 +100,15 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: <RawText key="step3.description" />,
+    description: 'stepper.step3.description',
     action: (election: Election) => (
       <Link to={`/auth/user/vote`}>
-        <Button color="primary"><RawText key="common.actionVote" /></Button>
+        <Button color="primary"><RawText textKey="common.actionVote" /></Button>
       </Link>
     ),
   },
   {
-    label: (election: Election) => <RawText key="step4.label" />,
+    label: (election: Election) => 'stepper.step4.label',
     date: (election: Election) =>
       `${dateToString(election.ballotVotingDate)} - ${dateToString(
         election.preliminaryResultsDate,
@@ -110,7 +116,7 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: <RawText key="step4.description" />,
+    description: 'stepper.step4.description',
     action: (election: Election) => (
       <>
         {election.mediaResolutions?.map((resolution) => (
@@ -120,33 +126,33 @@ const steps: readonly StepType[] = [
             href={`${resolution.contentUrl}`}
             key={resolution["@id"]}
           >
-            <Button><RawText key="common.actionResolution" /></Button>
+            <Button><RawText textKey="common.actionResolution" /></Button>
           </MuiLink>
         ))}
       </>
     ),
   },
   {
-    label: (election: Election) => <RawText key="step5.label" />,
+    label: (election: Election) => 'stepper.step5.label',
     date: (election: Election) =>
       `${dateToString(election.preliminaryResultsDate)}`,
-    description: <RawText key="step5.description" />,
+    description: 'stepper.step5.description',
   },
   {
-    label: (election: Election) => <RawText key="step6.label" />,
+    label: (election: Election) => 'stepper.step6.label',
     date: (election: Election) =>
       `${dateToString(election.complaintsDeadlineDate)}`,
-    description: <RawText key="step6.description" />,
+    description: 'stepper.step6.description',
   },
   {
-    label: (election: Election) => <RawText key="step7.label" />,
+    label: (election: Election) => 'stepper.step7.label',
     date: (election: Election) => `${dateToString(election.countingVotesDate)}`,
-    description: <RawText key="step7.description" />,
+    description: 'stepper.step7.description',
   },
   {
-    label: (election: Election) => <RawText key="step8.label" />,
+    label: (election: Election) => 'stepper.step8.label',
     date: (election: Election) => `${dateToString(election.finalResultsDate)}`,
-    description: <RawText key="step8.description" />,
+    description: 'stepper.step8.description',
     action: (election: Election) => (
       <>
         {election.mediaReports?.map((report) => (
@@ -156,7 +162,7 @@ const steps: readonly StepType[] = [
             href={`${report.contentUrl}`}
             key={report["@id"]}
           >
-            <Button><RawText key="common.actionFinalReport" /></Button>
+            <Button><RawText textKey="common.actionFinalReport" /></Button>
           </MuiLink>
         ))}
       </>
@@ -189,13 +195,14 @@ export default function ElectionStepper({
   sx,
 }: ElectionStepperProps) {
   const activeStep = getStep(election);
+  const { t } = useTranslation()
 
   return (
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
       {steps.map((step, index) => (
         <Step key={index}>
           <AddTooltip
-            title={step.description}
+            title={t(step.description)}
             step={index}
             currentStep={activeStep}
           >
@@ -209,7 +216,7 @@ export default function ElectionStepper({
               }
             >
               <Typography variant="h6" pr={2}>
-                {step.label(election)}
+                {t(step.label(election))}
               </Typography>
               <Typography component="span" color="textSecondary">
                 {step.date ? step.date(election) : null}
@@ -217,7 +224,7 @@ export default function ElectionStepper({
             </StepLabel>
           </AddTooltip>
           <StepContent>
-            <Typography color="textSecondary">{step.description}</Typography>
+            <Typography color="textSecondary">{t(step.description)}</Typography>
             {step.action ? <Box pt={2}>{step.action(election)}</Box> : null}
           </StepContent>
         </Step>

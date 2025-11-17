@@ -36,6 +36,7 @@ export function Footer() {
 
   const changeLanguageTo = i18n.language === 'cs' ? 'en' : 'cs';
 
+  const half = Math.ceil(membersRows.length / 2);
   return (
     <Paper component="footer" sx={{ py: 2, mt: 8 }}>
       <Grid2 container justifyContent="space-around" spacing={2}>
@@ -43,11 +44,11 @@ export function Footer() {
           <Grid2 container>
             <Grid2 px={2} size={{}}>
               <Typography color={grey[300]}>{t('footer.electionComiteeMembers')}</Typography>
-              {...membersRows.slice(0, 3)}
+              {...membersRows.slice(0, half)}
             </Grid2>
             <Grid2 px={2}>
               <TypographyStyled>&nbsp;</TypographyStyled>
-              {...membersRows.slice(3)}
+              {...membersRows.slice(half)}
             </Grid2>
           </Grid2>
         </Grid2>

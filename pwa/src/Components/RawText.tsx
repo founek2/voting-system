@@ -1,11 +1,12 @@
 import { TFunction } from "i18next";
 import React from "react"
 import { useTranslation } from "react-i18next";
+import { LocalizedLabelKey } from "../locales/i18n";
 
-export function RawText({ key }: { key: Parameters<TFunction<"ns1", undefined>>[0] }) {
+export function RawText({ textKey }: { textKey: LocalizedLabelKey }) {
     const { t } = useTranslation();
 
-    if (!key) return null;
+    if (!textKey) return null;
 
-    return <>{t(key as any)}</>;
+    return <>{t(textKey)}</>;
 }
