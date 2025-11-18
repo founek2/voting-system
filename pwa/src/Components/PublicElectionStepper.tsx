@@ -1,4 +1,4 @@
-import { Grid2, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
 import { head } from "../util/head";

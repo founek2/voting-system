@@ -1,6 +1,6 @@
 import {
   Button,
-  Grid2,
+  Grid,
   IconButton,
   Paper,
   Typography,
@@ -54,7 +54,7 @@ function VoteListMobile({
   const { t } = useTranslation()
 
   return (
-    <Grid2 container spacing={2} display="flex" justifyContent="center">
+    <Grid container spacing={2} display="flex" justifyContent="center">
       {candidates.map((candidate, i) => (
         <CandidateVoteCard
           candidate={candidate}
@@ -106,12 +106,12 @@ function VoteListMobile({
           )}
         </CandidateVoteCard>
       ))}
-      <Grid2 size={12} display="flex" justifyContent="center">
+      <Grid size={12} display="flex" justifyContent="center">
         <Button type="submit" disabled={disabled}>
           {t('common.actionVote')}
         </Button>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -146,41 +146,41 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
 
   return (
     <Paper sx={{ p: 2, width: "100%" }}>
-      <Grid2 container>
-        <Grid2 size={sizeName}>
+      <Grid container>
+        <Grid size={sizeName}>
           <Typography variant="h6">{t('common.name')}</Typography>
-        </Grid2>
-        <Grid2 size={sizeUid}>
+        </Grid>
+        <Grid size={sizeUid}>
           <Typography variant="h6" textAlign="center">
             UID
           </Typography>
-        </Grid2>
-        <Grid2 size={sizePosition}>
+        </Grid>
+        <Grid size={sizePosition}>
           <Typography variant="h6" textAlign="center">
             {t('common.position')}
           </Typography>
-        </Grid2>
-        <Grid2 size={2}>
+        </Grid>
+        <Grid size={2}>
           <Typography variant="h6" textAlign="center">
             {t('common.poster')}
           </Typography>
-        </Grid2>
-        <Grid2 size={3}>
+        </Grid>
+        <Grid size={3}>
           <Typography variant="h6" textAlign="center">
             {t('vote.voting')}
           </Typography>
-        </Grid2>
+        </Grid>
 
-        <Grid2 size={12}>
+        <Grid size={12}>
           <Divider sx={{ mb: 2 }} />
-        </Grid2>
+        </Grid>
         {candidates.map((candidate, i) => {
           const withdrew = Boolean(candidate.withdrewAt);
           const opacity = getCandidateStyle(candidate);
 
           return (
             <React.Fragment key={candidate.id}>
-              <Grid2 size={sizeName} minHeight={42}>
+              <Grid size={sizeName} minHeight={42}>
                 <ConditionalTooltip
                   disabled={!withdrew}
                   title={t('vote.candidateWithdrew')}
@@ -189,13 +189,13 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                     {candidate.appUser?.firstName} {candidate.appUser?.lastName}
                   </Typography>
                 </ConditionalTooltip>
-              </Grid2>
-              <Grid2 size={sizeUid}>
+              </Grid>
+              <Grid size={sizeUid}>
                 <Typography textAlign="center" sx={opacity}>
                   {candidate.appUser?.id}
                 </Typography>
-              </Grid2>
-              <Grid2 size={sizePosition}>
+              </Grid>
+              <Grid size={sizePosition}>
                 <ConditionalTooltip
                   disabled={!withdrew}
                   title={t('vote.candidateWithdrew')}
@@ -204,11 +204,11 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                     {candidate.position?.name}
                   </Typography>
                 </ConditionalTooltip>
-              </Grid2>
-              <Grid2 size={2} justifyContent="center" display="flex">
+              </Grid>
+              <Grid size={2} justifyContent="center" display="flex">
                 <PosterButton candidate={candidate} disabled={withdrew} />
-              </Grid2>
-              <Grid2 size={sizeVoting} justifyContent="center" display="flex">
+              </Grid>
+              <Grid size={sizeVoting} justifyContent="center" display="flex">
                 {withdrew ? (
                   <Typography sx={opacity}>{t('vote.candidateWithdrew')}</Typography>
                 ) : (
@@ -252,16 +252,16 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
                     />
                   </>
                 )}
-              </Grid2>
+              </Grid>
             </React.Fragment>
           );
         })}
-        <Grid2 size={12} display="flex" justifyContent="end">
+        <Grid size={12} display="flex" justifyContent="end">
           <Button type="submit" disabled={disabled}>
             {t('common.actionVote')}
           </Button>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Paper>
   );
 }
@@ -325,13 +325,13 @@ export function Component() {
   const isLoading = isLoadingElections || isLoadingCandidates;
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span">
           {t('vote.title')}
         </Typography>
-      </Grid2>
-      <Grid2
+      </Grid>
+      <Grid
         container
         size={12}
         spacing={2}
@@ -349,8 +349,8 @@ export function Component() {
             disabled={isMutating}
           />
         )}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

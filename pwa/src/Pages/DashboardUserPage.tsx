@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Grid2, IconButton, Tooltip, Typography } from "@mui/material";
+import { Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import { CandidateFancyCard } from "../Components/CandidateFancyCard";
@@ -63,18 +63,18 @@ export function Component() {
   const ongoingElection = head(electionsData.current);
 
   return (
-    <Grid2 container spacing={10}>
-      <Grid2 container spacing={2} size={12}>
-        <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={10}>
+      <Grid container spacing={2} size={12}>
+        <Grid size={12} display="flex" alignItems="center">
           <Typography variant="h3" color="textPrimary" pr={1}>
             Probíhající hlasování
           </Typography>
-        </Grid2>
-        <Grid2 container size={12} spacing={2}>
+        </Grid>
+        <Grid container size={12} spacing={2}>
           {!isLoading ? (
             electronicVotingElections.length > 0 ? (
               electronicVotingElections.map((election) => (
-                <Grid2 size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={election.id}>
+                <Grid size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={election.id}>
                   <Link to={`/auth/user/vote`}>
                     <ElectionCard
                       election={election}
@@ -83,7 +83,7 @@ export function Component() {
                       )} - ${dateToString(election.ballotVotingDate)}`}
                     />
                   </Link>
-                </Grid2>
+                </Grid>
               ))
             ) : (
               <TypographyInfo>
@@ -93,11 +93,11 @@ export function Component() {
           ) : (
             <Loader />
           )}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
 
-      <Grid2 container spacing={2} size={12}>
-        <Grid2 size={12} display="flex" alignItems="center">
+      <Grid container spacing={2} size={12}>
+        <Grid size={12} display="flex" alignItems="center">
           <Typography variant="h3" color="textPrimary" component="span" pr={1}>
             Podané kandidátky
           </Typography>
@@ -105,9 +105,9 @@ export function Component() {
             disabled={registrationElections.length === 0}
             election={ongoingElection}
           />
-        </Grid2>
+        </Grid>
 
-        <Grid2 container size={12} spacing={2}>
+        <Grid container size={12} spacing={2}>
           {!loadingCandidates ? (
             candidates?.member && candidates.member.length > 0 ? (
               candidates.member.map((candidate) => (
@@ -124,9 +124,9 @@ export function Component() {
           ) : (
             <Loader />
           )}
-        </Grid2>
-      </Grid2>
-    </Grid2>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 

@@ -1,4 +1,4 @@
-import { Grid2, Link as MuiLink, Paper, Typography } from "@mui/material";
+import { Grid, Link as MuiLink, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/system";
 import React, { useTransition } from "react";
@@ -39,21 +39,21 @@ export function Footer() {
   const half = Math.ceil(membersRows.length / 2);
   return (
     <Paper component="footer" sx={{ py: 2, mt: 8 }}>
-      <Grid2 container justifyContent="space-around" spacing={2}>
-        <Grid2 size={{ xs: 12, md: 5 }} display="flex">
-          <Grid2 container>
-            <Grid2 px={2} size={{}}>
+      <Grid container justifyContent="space-around" spacing={2}>
+        <Grid size={{ xs: 12, md: 5 }} display="flex">
+          <Grid container>
+            <Grid px={2} size={{}}>
               <Typography color={grey[300]}>{t('footer.electionComiteeMembers')}</Typography>
               {...membersRows.slice(0, half)}
-            </Grid2>
-            <Grid2 px={2}>
+            </Grid>
+            <Grid px={2}>
               <TypographyStyled>&nbsp;</TypographyStyled>
               {...membersRows.slice(half)}
-            </Grid2>
-          </Grid2>
-        </Grid2>
+            </Grid>
+          </Grid>
+        </Grid>
 
-        <Grid2 size={{ xs: 12, md: 3 }} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+        <Grid size={{ xs: 12, md: 3 }} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
           <TypographyStyled>
             <MuiLink href={`/?lng=${changeLanguageTo}`} onClick={e => {
               e.preventDefault();
@@ -71,8 +71,8 @@ export function Footer() {
               Issue tracker
             </MuiLink>
           </TypographyStyled>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Paper>
   );
 }

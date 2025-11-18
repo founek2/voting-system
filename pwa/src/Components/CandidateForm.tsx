@@ -3,7 +3,7 @@ import {
   Button,
   Card,
   CardContent,
-  Grid2,
+  Grid,
   Input,
   TextField,
   Typography,
@@ -65,8 +65,8 @@ export default function CandidateForm({
 
   return (
     <>
-      <Grid2 container spacing={4} alignItems="flex-start">
-        <Grid2
+      <Grid container spacing={4} alignItems="flex-start">
+        <Grid
           container
           spacing={2}
           size={{ xs: 12, md: 12, lg: 6 }}
@@ -78,17 +78,17 @@ export default function CandidateForm({
             sx={{ display: "none" }}
             {...register("election")}
           />
-          <Grid2 size={12}>
+          <Grid size={12}>
             <FormStatus errors={errors} />
-          </Grid2>
+          </Grid>
 
-          <Grid2 size={12}>
+          <Grid size={12}>
             <Typography variant="h4" color="textPrimary">
               Kandidátka:
             </Typography>
-          </Grid2>
+          </Grid>
 
-          <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Controller
               control={methods.control}
               name="position"
@@ -113,9 +113,9 @@ export default function CandidateForm({
                 />
               )}
             />
-          </Grid2>
+          </Grid>
 
-          <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Controller
               control={methods.control}
               name="poster"
@@ -126,26 +126,26 @@ export default function CandidateForm({
                 />
               )}
             />
-          </Grid2>
+          </Grid>
 
           {defaultValues?.withdrewAt ? (
-            <Grid2 size={12}>
+            <Grid size={12}>
               <TextField
                 value={new Date(defaultValues.withdrewAt).toLocaleString()}
                 label="Odstoupeno"
                 disabled
                 fullWidth
               />
-            </Grid2>
+            </Grid>
           ) : null}
 
-          <Grid2 size={{ xs: 12, md: 3 }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Button type="submit" disabled={disabled}>
               Uložit
             </Button>
-          </Grid2>
+          </Grid>
           {onWithdraw ? (
-            <Grid2 size={{ xs: 12, md: 3 }}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <ConditionalTooltip
                 disabled={defaultValues?.withdrawAllowed}
                 title="Odstroupit lze pouze před zveřejněním výsledků"
@@ -158,10 +158,10 @@ export default function CandidateForm({
                   Odstoupit
                 </Button>
               </ConditionalTooltip>
-            </Grid2>
+            </Grid>
           ) : null}
           {onReject ? (
-            <Grid2 size={{ xs: 12, md: 3 }}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <Button
                 disabled={!defaultValues?.withdrawAllowed || disabled}
                 color="error"
@@ -169,10 +169,10 @@ export default function CandidateForm({
               >
                 Zamítnout
               </Button>
-            </Grid2>
+            </Grid>
           ) : null}
-        </Grid2>
-        <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12, lg: 6 }}>
           {posterMedia?.contentUrl ? (
             <Card>
               <CardContent>
@@ -187,8 +187,8 @@ export default function CandidateForm({
               ></iframe>
             </Card>
           ) : null}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       {onWithdraw ? (
         <AlertDialog
           open={openDialog}

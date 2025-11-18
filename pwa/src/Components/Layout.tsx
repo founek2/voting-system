@@ -2,7 +2,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import {
   Box,
   Button,
-  Grid2,
+  Grid,
   Paper,
   Typography,
   Link as MuiLink,

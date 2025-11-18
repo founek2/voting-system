@@ -1,4 +1,4 @@
-import { Breadcrumbs, Grid2, Typography } from "@mui/material";
+import { Breadcrumbs, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -57,12 +57,12 @@ export function Component() {
     );
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Výsledek volby {electionTitle(election)}
         </Typography>
-      </Grid2>
+      </Grid>
       <Box display="flex" justifyContent="center" width="100%">
         <Breadcrumbs aria-label="breadcrumb">
           {breadcrumbs.map((breadcrumb) => (
@@ -74,7 +74,7 @@ export function Component() {
           ))}
         </Breadcrumbs>
       </Box>
-      <Grid2 size={{ xs: 12, md: 8, xl: 6 }}>
+      <Grid size={{ xs: 12, md: 8, xl: 6 }}>
         {location.hash === "#electronic" ? (
           <ElectronicResultList election={election} />
         ) : null}
@@ -82,8 +82,8 @@ export function Component() {
           <BallotResultList election={election} />
         ) : null}
         {location.hash === "" ? <TotalResultList election={election} /> : null}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

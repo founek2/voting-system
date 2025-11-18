@@ -1,7 +1,7 @@
 import {
   Autocomplete,
   Button,
-  Grid2,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
@@ -45,26 +45,26 @@ export default function PositionForm({
     ...(zones?.member || []),
   ];
   return (
-    <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>
-      <Grid2 size={12}>
+    <Grid component="form" container spacing={2} onSubmit={handleOnSubmit}>
+      <Grid size={12}>
         <FormStatus errors={errors} />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={12}>
+      <Grid size={12}>
         <Typography variant="h4" color="textPrimary">
           Pozice
         </Typography>
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={{ xs: 12, md: 4, lg: 3 }}>
+      <Grid size={{ xs: 12, md: 4, lg: 3 }}>
         <TextField
           label="Název"
           {...register("name", { required: true })}
           fullWidth
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={{ xs: 12, md: 4, lg: 3 }}>
+      <Grid size={{ xs: 12, md: 4, lg: 3 }}>
         <Controller
           control={methods.control}
           name="zoneRestrictions"
@@ -92,12 +92,12 @@ export default function PositionForm({
             />
           )}
         />
-      </Grid2>
-      <Grid2 size={12}>
+      </Grid>
+      <Grid size={12}>
         <Button type="submit" disabled={disabled}>
           Uložit
         </Button>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }

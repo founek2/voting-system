@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid2, TextField, Typography } from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import { Candidate_jsonld_candidate_read } from "../endpoints/types";
 import { styled } from "@mui/system";
 import { Control, FieldValues, UseFormRegister } from "react-hook-form";
@@ -28,15 +28,15 @@ interface VoteResultRowBase {
 
 type VoteResultRowProps<T extends FieldValues> =
   | (VoteResultRowBase & {
-      edit?: false | undefined;
-      register?: any;
-      index?: any;
-    })
+    edit?: false | undefined;
+    register?: any;
+    index?: any;
+  })
   | (VoteResultRowBase & {
-      edit: true;
-      register: UseFormRegister<FormType>;
-      index: number;
-    });
+    edit: true;
+    register: UseFormRegister<FormType>;
+    index: number;
+  });
 export function VoteResultRow<T extends FieldValues>({
   result,
   candidate,
@@ -49,12 +49,12 @@ export function VoteResultRow<T extends FieldValues>({
 
   return (
     <>
-      <Grid2 size={{ xs: 12, md: 4, xl: 4 }}>
+      <Grid size={{ xs: 12, md: 4, xl: 4 }}>
         <Typography sx={opacity}>
           {fullName} ({candidate.position.name})
         </Typography>
-      </Grid2>
-      <Grid2 size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
+      </Grid>
+      <Grid size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
         <Typography sx={opacity}>
           Pro {!edit ? result?.positiveVotes : null}
         </Typography>
@@ -71,8 +71,8 @@ export function VoteResultRow<T extends FieldValues>({
             })}
           />
         ) : null}
-      </Grid2>
-      <Grid2 size={{ xs: 6, md: 3, xl: 2 }} display="flex">
+      </Grid>
+      <Grid size={{ xs: 6, md: 3, xl: 2 }} display="flex">
         <Typography sx={opacity}>
           Zdrželo se {!edit ? result?.neutralVotes : null}
         </Typography>
@@ -89,8 +89,8 @@ export function VoteResultRow<T extends FieldValues>({
             })}
           />
         ) : null}
-      </Grid2>
-      <Grid2 size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
+      </Grid>
+      <Grid size={{ xs: 3, md: 1.8, xl: 1.5 }} display="flex">
         <Typography sx={opacity}>
           Proti {!edit ? result?.negativeVotes : null}
         </Typography>
@@ -107,7 +107,7 @@ export function VoteResultRow<T extends FieldValues>({
             })}
           />
         ) : null}
-      </Grid2>
+      </Grid>
     </>
   );
 }

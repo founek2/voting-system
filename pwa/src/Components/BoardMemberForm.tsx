@@ -1,7 +1,7 @@
 import {
   Autocomplete,
   Button,
-  Grid2,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
@@ -35,18 +35,18 @@ export default function BoardMemberForm({
   // const autocompleteField = register("zoneRestrictions", { required: true });
 
   return (
-    <Grid2 component="form" container spacing={2} onSubmit={handleOnSubmit}>
-      <Grid2 size={12}>
+    <Grid component="form" container spacing={2} onSubmit={handleOnSubmit}>
+      <Grid size={12}>
         <FormStatus errors={errors} />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={12}>
+      <Grid size={12}>
         <Typography variant="h4" color="textPrimary">
           Člen komise
         </Typography>
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={5}>
+      <Grid size={5}>
         <Controller
           control={methods.control}
           name="appUser"
@@ -71,8 +71,8 @@ export default function BoardMemberForm({
             />
           )}
         />
-      </Grid2>
-      <Grid2 size={5}>
+      </Grid>
+      <Grid size={5}>
         <Controller
           control={methods.control}
           name="position"
@@ -96,15 +96,15 @@ export default function BoardMemberForm({
             />
           )}
         />
-      </Grid2>
-      <Grid2 size={12}>
+      </Grid>
+      <Grid size={12}>
         <Button type="submit" disabled={disabled}>
           Uložit
         </Button>
         <Button disabled={disabled} color="error" onClick={onDelete}>
           Smazat
         </Button>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }

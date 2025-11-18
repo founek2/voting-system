@@ -1,4 +1,4 @@
-import { Grid2, Link, Paper, Typography, withStyles } from "@mui/material";
+import { Grid, Link, Paper, Typography, withStyles } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ export default function BasicInformation() {
   const { t } = useTranslation()
 
   return (
-    <Grid2
+    <Grid
       container
       spacing={5}
       display="flex"
@@ -22,12 +22,12 @@ export default function BasicInformation() {
       alignItems="center"
       size={12}
     >
-      <Grid2>
+      <Grid>
         <Typography variant="h3" color="primary" textAlign="center">
           {t('information.title')}
         </Typography>
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
+      </Grid>
+      <Grid size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
         <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
           <Typography variant="h3">{t('information.wantCandidate')}</Typography>
           <Typography variant="h5" pt={2}>
@@ -73,8 +73,8 @@ export default function BasicInformation() {
             {t('information.posterText4')}
           </Typography>
         </Paper>
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
+      </Grid>
+      <Grid size={{ xs: 12, md: 10, lg: 8, xl: 6 }}>
         <Paper sx={{ p: 2, "& p:not(:first-of-type)": { pt: 1 } }}>
           <Typography variant="h3">{t('information.board')}</Typography>
           <Typography>
@@ -109,7 +109,7 @@ export default function BasicInformation() {
             {t('information.chairmanDescription')}
           </Typography>
         </Paper>
-      </Grid2>
-    </Grid2 >
+      </Grid>
+    </Grid >
   );
 }

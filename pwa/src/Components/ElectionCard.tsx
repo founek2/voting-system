@@ -6,7 +6,7 @@ import {
   CardContent,
   CardHeader,
   CardProps,
-  Grid2,
+  Grid,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -54,33 +54,33 @@ export function ElectionCard({
           </Box>
         ) : null}
         {isAdmin ? (
-          <Grid2
+          <Grid
             container
             spacing={2}
             justifyContent={{ xs: "center", md: "flex-end" }}
           >
-            <Grid2>
+            <Grid>
               {onViewCandidates ? (
                 <Button onClick={(e) => onViewCandidates(e, election)}>
                   Zobrazit kandidáty
                 </Button>
               ) : null}
-            </Grid2>
-            <Grid2>
+            </Grid>
+            <Grid>
               {onViewResult ? (
                 <Button onClick={(e) => onViewResult(e, election)}>
                   Výsledky hlasování
                 </Button>
               ) : null}
-            </Grid2>
+            </Grid>
             {onViewVotes ? (
-              <Grid2>
+              <Grid>
                 <Button onClick={(e) => onViewVotes(e, election)}>
                   Zobrazit hlasy
                 </Button>
-              </Grid2>
+              </Grid>
             ) : null}
-          </Grid2>
+          </Grid>
         ) : null}
       </CardContent>
     </Card>

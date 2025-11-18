@@ -1,4 +1,4 @@
-import { Button, Grid2, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -78,7 +78,7 @@ function Content({
   });
 
   return (
-    <Grid2
+    <Grid
       container
       size={12}
       spacing={2}
@@ -86,12 +86,12 @@ function Content({
       onSubmit={handleSubmit(onSubmit)}
     >
       {!isEmpty(errors) ? (
-        <Grid2 size={12}>
+        <Grid size={12}>
           <FormStatus errors={errors} />
-        </Grid2>
+        </Grid>
       ) : null}
       {rows}
-      <Grid2 size={12} display="flex" justifyContent="end">
+      <Grid size={12} display="flex" justifyContent="end">
         {isEdit ? (
           <Button type="submit" id="save" disabled={isMutating}>
             Uložit
@@ -108,8 +108,8 @@ function Content({
             Editace
           </Button>
         )}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

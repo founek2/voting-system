@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Grid2, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loader from "../Components/Loader";
@@ -20,11 +20,11 @@ function Content() {
     <>
       {reports ? (
         reports.member?.map((report) => (
-          <Grid2 size={{ xs: 12, lg: 6, xl: 4 }} key={report["@id"]}>
+          <Grid size={{ xs: 12, lg: 6, xl: 4 }} key={report["@id"]}>
             <Link to={`${report.id}`}>
               <SimpleCard title={report.name} />
             </Link>
-          </Grid2>
+          </Grid>
         ))
       ) : (
         <Loader />
@@ -35,8 +35,8 @@ function Content() {
 
 export function Component() {
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Závěrečné zprávy
         </Typography>
@@ -45,11 +45,11 @@ export function Component() {
             <AddIcon fontSize="large" />
           </IconButton>
         </Link>
-      </Grid2>
-      <Grid2 container size={12} spacing={4}>
+      </Grid>
+      <Grid container size={12} spacing={4}>
         <Content />
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

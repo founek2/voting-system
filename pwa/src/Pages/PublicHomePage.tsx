@@ -1,4 +1,4 @@
-import { Box, Button, Grid2, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import BasicInformation from "../Components/BasicInformation";
@@ -18,8 +18,8 @@ function StepperSection() {
   const { t } = useTranslation()
 
   return (
-    <Grid2 container justifyContent="center" spacing={4} size={12}>
-      <Grid2
+    <Grid container justifyContent="center" spacing={4} size={12}>
+      <Grid
         size={12}
         position="relative"
         display="flex"
@@ -49,11 +49,11 @@ function StepperSection() {
         >
           {t('homepage.title')}
         </Typography>
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 6, lg: 3 }}>
+      </Grid>
+      <Grid size={{ xs: 12, md: 6, lg: 3 }}>
         <PublicElectionStepper />
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -76,8 +76,8 @@ function CandidatesSection() {
   if (!ongoingElection) return null;
 
   return (
-    <Grid2 container spacing={4} size={12}>
-      <Grid2 size={12} justifyContent="center" display="flex">
+    <Grid container spacing={4} size={12}>
+      <Grid size={12} justifyContent="center" display="flex">
         <Typography variant="h3" color="primary" textAlign="center">
           {ongoingElection.completedAt
             ? t('election.finalResults')
@@ -85,9 +85,9 @@ function CandidatesSection() {
               ? t('election.preliminaryResults')
               : t('election.candidatesSigned')}
         </Typography>
-      </Grid2>
+      </Grid>
 
-      <Grid2
+      <Grid
         size={12}
         display="flex"
         justifyContent="center"
@@ -104,16 +104,16 @@ function CandidatesSection() {
           </TypographyInfo>
         ) : null}
         {candidates?.member.map((candidate) => (
-          <Grid2
+          <Grid
             size={{ xs: 8, md: 4, lg: 3, xl: 1.7 }}
             key={candidate.id}
             sx={{ maxWidth: 270 }}
           >
             <CandidateFancyCard candidate={candidate} showResult={showResult} />
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -124,19 +124,19 @@ function BasicInformationSection() {
 function FilesSection() {
   const { t } = useTranslation()
   return (
-    <Grid2
+    <Grid
       container
       spacing={4}
       size={12}
       justifyContent="center"
       display="flex"
     >
-      <Grid2 size={12}>
+      <Grid size={12}>
         <Typography variant="h3" color="primary" textAlign="center">
           {t('files.title')}
         </Typography>
-      </Grid2>
-      <Grid2>
+      </Grid>
+      <Grid>
         <Paper
           sx={{ width: "100%", display: "flex", flexDirection: "column", p: 2 }}
         >
@@ -153,18 +153,18 @@ function FilesSection() {
             <Button color="secondary">{t('files.reports')}</Button>
           </Link>
         </Paper>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
 export default function HomePage() {
   return (
-    <Grid2 container spacing={15}>
+    <Grid container spacing={15}>
       <StepperSection />
       <CandidatesSection />
       <BasicInformationSection />
       <FilesSection />
-    </Grid2>
+    </Grid>
   );
 }

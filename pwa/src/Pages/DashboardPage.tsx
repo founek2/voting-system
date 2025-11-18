@@ -1,4 +1,4 @@
-import { Divider, Grid2, Paper, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Typography } from "@mui/material";
 import { differenceInDays, subDays } from "date-fns";
 import React from "react";
 import Loader from "../Components/Loader";
@@ -44,15 +44,15 @@ function DateRow({
 
   return (
     <>
-      <Grid2 size={{ xs: 12, md: 5 }}>{toDate(from, to)}</Grid2>
-      <Grid2 size={{ xs: 9, md: 5 }}>
+      <Grid size={{ xs: 12, md: 5 }}>{toDate(from, to)}</Grid>
+      <Grid size={{ xs: 9, md: 5 }}>
         <Typography color="textPrimary">{children}</Typography>
-      </Grid2>
-      <Grid2 size={{ xs: 3, md: 2 }}>
+      </Grid>
+      <Grid size={{ xs: 3, md: 2 }}>
         <Typography color="textPrimary">
           {numberOfDays} {dayText(numberOfDays)}
         </Typography>
-      </Grid2>
+      </Grid>
     </>
   );
 }
@@ -60,7 +60,7 @@ function DateRow({
 function DateList({ election }: { election: Election }) {
   return (
     <Paper sx={{ p: 2 }}>
-      <Grid2 container spacing={2}>
+      <Grid container spacing={2}>
         <DateRow
           from={election.announcementDate}
           to={election.registrationOfCandidatesDate}
@@ -112,7 +112,7 @@ function DateList({ election }: { election: Election }) {
         <DateRow from={election.finalResultsDate}>
           Vyhlášení konečných výsledků
         </DateRow>
-      </Grid2>
+      </Grid>
     </Paper>
   );
 }
@@ -124,13 +124,13 @@ export function Component() {
   const ongoingElection = head(electionsData.current);
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" pr={1}>
           Přehled voleb {ongoingElection ? electionTitle(ongoingElection) : ""}
         </Typography>
-      </Grid2>
-      <Grid2 container size={{ xs: 12, sm: 9, md: 8, xl: 5 }} spacing={2}>
+      </Grid>
+      <Grid container size={{ xs: 12, sm: 9, md: 8, xl: 5 }} spacing={2}>
         {!isLoading ? (
           ongoingElection ? (
             <DateList election={ongoingElection} />
@@ -140,8 +140,8 @@ export function Component() {
         ) : (
           <Loader />
         )}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

@@ -5,7 +5,7 @@ import {
   Button,
   Card,
   CardContent,
-  Grid2,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
@@ -66,47 +66,47 @@ export default function ReportForm({
 
   return (
     <>
-      <Grid2 container spacing={4}>
-        <Grid2
+      <Grid container spacing={4}>
+        <Grid
           container
           spacing={4}
           alignItems="flex-start"
           size={{ xs: 12, md: 12, lg: 6 }}
         >
-          <Grid2
+          <Grid
             container
             spacing={2}
             component="form"
             onSubmit={handleOnSubmit}
           >
-            <Grid2 size={12}>
+            <Grid size={12}>
               <FormStatus errors={errors} />
-            </Grid2>
+            </Grid>
 
-            <Grid2 size={12}>
+            <Grid size={12}>
               <Typography variant="h4" color="textPrimary">
                 {title}:
               </Typography>
-            </Grid2>
+            </Grid>
 
-            <Grid2 size={{ xs: 12 }}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 label="Název"
                 fullWidth
                 {...register("name", { required: true })}
               />
-            </Grid2>
+            </Grid>
 
-            <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+            <Grid size={{ xs: 12, md: 6, lg: 6 }}>
               <MyDatePicker
                 label="Datum zvěřejnění"
                 {...register("publishedAt", { required: true })}
                 defaultValue={defaultValues?.publishedAt}
               />
-            </Grid2>
+            </Grid>
 
             {edit ? null : (
-              <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+              <Grid size={{ xs: 12, md: 6, lg: 6 }}>
                 <Controller
                   control={methods.control}
                   name="file"
@@ -132,10 +132,10 @@ export default function ReportForm({
                     />
                   )}
                 />
-              </Grid2>
+              </Grid>
             )}
 
-            <Grid2 size={{ xs: 12, md: 6, lg: 6 }}>
+            <Grid size={{ xs: 12, md: 6, lg: 6 }}>
               <Controller
                 control={methods.control}
                 name="election"
@@ -158,17 +158,17 @@ export default function ReportForm({
                   />
                 )}
               />
-            </Grid2>
+            </Grid>
 
-            <Grid2 size={{ xs: 12 }}>
-              <Grid2 container>
-                <Grid2 size={{ xs: 12, md: 3 }}>
+            <Grid size={{ xs: 12 }}>
+              <Grid container>
+                <Grid size={{ xs: 12, md: 3 }}>
                   <Button type="submit" disabled={disabled}>
                     Uložit
                   </Button>
-                </Grid2>
+                </Grid>
                 {edit && onDelete ? (
-                  <Grid2 size={{ xs: 12, md: 3 }}>
+                  <Grid size={{ xs: 12, md: 3 }}>
                     <Button
                       disabled={disabled}
                       color="error"
@@ -176,13 +176,13 @@ export default function ReportForm({
                     >
                       Smazat
                     </Button>
-                  </Grid2>
+                  </Grid>
                 ) : null}
-              </Grid2>
-            </Grid2>
-          </Grid2>
-        </Grid2>
-        <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12, lg: 6 }}>
           {fileUrl ? (
             <Card>
               <CardContent>
@@ -197,8 +197,8 @@ export default function ReportForm({
               ></iframe>
             </Card>
           ) : null}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       {onDelete ? (
         <AlertDialog
           open={openDialog}

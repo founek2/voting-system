@@ -1,24 +1,15 @@
-import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import {
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
+  CardMedia,
   Dialog,
   DialogContent,
-  DialogTitle,
-  Link,
-  Typography,
+  DialogTitle
 } from "@mui/material";
 import React, { useState } from "react";
-import { Candidate } from "../types";
-import { candidateTitle } from "../util/candidateTitle";
-import {
-  Candidate_jsonld_candidate_read,
-  MediaPoster_jsonld_candidate_read,
-} from "../endpoints/types";
 import { useTranslation } from "react-i18next";
+import {
+  Candidate_jsonld_candidate_read
+} from "../endpoints/types";
 
 interface ElectionCardProps {
   candidate: Candidate_jsonld_candidate_read | null | undefined;
@@ -31,8 +22,6 @@ export function PosterButton({ candidate, disabled }: ElectionCardProps) {
   const poster = candidate?.poster;
 
   return (
-    // <Link href={window.origin + poster?.contentUrl} target="_blank">
-    // </Link>
     <>
       <Button
         size="small"
@@ -41,17 +30,22 @@ export function PosterButton({ candidate, disabled }: ElectionCardProps) {
       >
         {poster?.contentUrl ? t("common.actionPoster") : t("common.posterNotProvided")}
       </Button>
-      <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
+      <Dialog open={open} fullWidth maxWidth="md" onClose={() => setOpen(false)}>
         <DialogTitle>
           {candidate?.appUser?.firstName} {candidate?.appUser?.lastName} -{" "}
           {candidate?.position.name}
         </DialogTitle>
         <DialogContent>
-          <iframe
+          {poster?.contentUrl?.endsWith('.pdf') ? <iframe
             src={window.origin + poster?.contentUrl}
             width="100%"
-            style={{ border: 0, height: "auto", aspectRatio: 8.5 / 8 }}
-          ></iframe>
+            style={{ border: 0, height: "auto", aspectRatio: 7 / 8 }}
+          ></iframe> : <CardMedia
+            component="img"
+            // height="194"
+            image={window.origin + poster?.contentUrl}
+            alt="Poster of candidate"
+          />}
         </DialogContent>
       </Dialog>
     </>

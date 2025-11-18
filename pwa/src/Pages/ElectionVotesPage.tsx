@@ -3,7 +3,7 @@ import {
   Button,
   Divider,
   FormControl,
-  Grid2,
+  Grid,
   InputLabel,
   MenuItem,
   Link as MuiLink,
@@ -48,7 +48,7 @@ function VoteListMobile({
   zones,
 }: VoteListProps) {
   return (
-    <Grid2 container spacing={2} display="flex" justifyContent="center">
+    <Grid container spacing={2} display="flex" justifyContent="center">
       {users.map((user, i) => {
         const zone = zones.find((z) => z["@id"] === user.zone);
         const invalidated = false;
@@ -69,7 +69,7 @@ function VoteListMobile({
           </VoteCard>
         );
       })}
-    </Grid2>
+    </Grid>
   );
 }
 
@@ -107,29 +107,29 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
 
   return (
     <Paper sx={{ p: 2 }}>
-      <Grid2 container>
-        <Grid2 size={sizeName}>
+      <Grid container>
+        <Grid size={sizeName}>
           <Typography variant="h6">Jméno</Typography>
-        </Grid2>
-        <Grid2 size={sizeUid}>
+        </Grid>
+        <Grid size={sizeUid}>
           <Typography variant="h6" textAlign="center">
             UID
           </Typography>
-        </Grid2>
-        <Grid2 size={sizePosition}>
+        </Grid>
+        <Grid size={sizePosition}>
           <Typography variant="h6" textAlign="center">
             Umístění
           </Typography>
-        </Grid2>
-        <Grid2 size={3}>
+        </Grid>
+        <Grid size={3}>
           <Typography variant="h6" textAlign="center">
             Hlasování
           </Typography>
-        </Grid2>
+        </Grid>
 
-        <Grid2 size={12}>
+        <Grid size={12}>
           <Divider sx={{ mb: 2 }} />
-        </Grid2>
+        </Grid>
         {users.map((user, i) => {
           const zone = zones.find((z) => z["@id"] === user.zone);
           // invalidated votes are not being displayed
@@ -140,12 +140,12 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
 
           return (
             <React.Fragment key={user.id}>
-              <Grid2 size={sizeName} minHeight={42} sx={opacity}>
+              <Grid size={sizeName} minHeight={42} sx={opacity}>
                 <Typography component="span">
                   {user.firstName} {user.lastName}
                 </Typography>
-              </Grid2>
-              <Grid2 size={sizeUid} sx={opacity}>
+              </Grid>
+              <Grid size={sizeUid} sx={opacity}>
                 <MuiLink
                   href={`https://is.sh.cvut.cz/users/${user.id}`}
                   target="_blank"
@@ -153,13 +153,13 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
                 >
                   <Typography textAlign="center">{user.id}</Typography>
                 </MuiLink>
-              </Grid2>
-              <Grid2 size={sizePosition} sx={opacity}>
+              </Grid>
+              <Grid size={sizePosition} sx={opacity}>
                 <Typography textAlign="center">
                   {zone?.name}/{user.doorNumber}
                 </Typography>
-              </Grid2>
-              <Grid2 size={sizeVoting} justifyContent="center" display="flex">
+              </Grid>
+              <Grid size={sizeVoting} justifyContent="center" display="flex">
                 <Button
                   type="submit"
                   disabled={invalidated || disabled}
@@ -167,11 +167,11 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
                 >
                   {invalidated ? "Hlas byl zneplatněn" : "Zneplatnit hlas"}
                 </Button>
-              </Grid2>
+              </Grid>
             </React.Fragment>
           );
         })}
-      </Grid2>
+      </Grid>
     </Paper>
   );
 }
@@ -249,22 +249,22 @@ export function Component() {
 
   return (
     <>
-      <Grid2 container spacing={2}>
-        <Grid2 size={12} display="flex" alignItems="center">
+      <Grid container spacing={2}>
+        <Grid size={12} display="flex" alignItems="center">
           <Typography variant="h3" color="textPrimary" component="span" pr={1}>
             Hlasování pro volby {electionTitle(election)}{" "}
             {users?.totalItems !== undefined ? `(${users?.totalItems})` : ""}
           </Typography>
-        </Grid2>
-        <Grid2 size={{ xs: 12, md: 6, lg: 3 }}>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6, lg: 3 }}>
           <TextField
             fullWidth
             label="Vyhledávání"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-        </Grid2>
-        <Grid2 size={{ xs: 12, md: 4, lg: 2 }}>
+        </Grid>
+        <Grid size={{ xs: 12, md: 4, lg: 2 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Oblast</InputLabel>
             <Select
@@ -281,8 +281,8 @@ export function Component() {
               ))}
             </Select>
           </FormControl>
-        </Grid2>
-        <Grid2 container size={{ xs: 12, xl: 8 }} spacing={2}>
+        </Grid>
+        <Grid container size={{ xs: 12, xl: 8 }} spacing={2}>
           {!isLoadingUsers ? (
             <VoteList
               users={filteredUsers}
@@ -293,8 +293,8 @@ export function Component() {
           ) : (
             <Loader />
           )}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
 
       <AlertDialog
         open={Boolean(selectedUser)}

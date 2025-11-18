@@ -1,4 +1,4 @@
-import { Grid2, Paper } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import React from "react";
 import Loader from "../../Components/Loader";
 import { TypographyInfo } from "../../Components/TypographyInfo";
@@ -22,7 +22,7 @@ export function ElectronicResultList({ election }: { election: Election }) {
   }
   return (
     <Paper sx={{ width: "100%", p: 2 }}>
-      <Grid2 container size={12} spacing={2}>
+      <Grid container size={12} spacing={2}>
         {candidates ? (
           candidates.member.map((candidate) => {
             const result = results?.candidates?.find(
@@ -39,7 +39,7 @@ export function ElectronicResultList({ election }: { election: Election }) {
         ) : (
           <Loader />
         )}
-      </Grid2>
+      </Grid>
     </Paper>
   );
 }

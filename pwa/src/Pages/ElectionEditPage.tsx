@@ -1,4 +1,4 @@
-import { Grid2 } from "@mui/material";
+import { Grid } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -65,22 +65,22 @@ export function Component() {
     );
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={{ xs: 12, md: 6 }}>
+    <Grid container spacing={2}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ElectionForm
           defaultValues={election}
           onSubmit={onSubmit}
           disabled={isMutation}
         />
-      </Grid2>
-      <Grid2 size={{ xs: 12, md: 6 }}>
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
         <ElectionEmailsForm
           onSendAll={onSendAll}
           onSendSingle={onSingle}
           disabled={isLoadingSingle || isLoadingAll}
         />
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

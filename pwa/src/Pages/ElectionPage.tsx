@@ -1,4 +1,4 @@
-import { Grid2, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGetElectionsQuery } from "../endpoints/elections";
@@ -43,8 +43,8 @@ export function Component() {
   }
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Probíhající volby
         </Typography>
@@ -53,11 +53,11 @@ export function Component() {
             <AddIcon fontSize="large" />
           </IconButton>
         </Link>
-      </Grid2>
-      <Grid2 container size={12} spacing={2}>
+      </Grid>
+      <Grid container size={12} spacing={2}>
         {elections ? (
           electionsData.current?.map((e) => (
-            <Grid2 size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={e.id}>
+            <Grid size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={e.id}>
               <Link to={`${e.id}`}>
                 <ElectionCard
                   election={e}
@@ -67,31 +67,31 @@ export function Component() {
                   onViewCandidates={onViewCandidates}
                 />
               </Link>
-            </Grid2>
+            </Grid>
           ))
         ) : (
           <Loader />
         )}
-      </Grid2>
-      <Grid2 size={12} display="flex" alignItems="center" pt={10}>
+      </Grid>
+      <Grid size={12} display="flex" alignItems="center" pt={10}>
         <Typography variant="h3" color="textSecondary" component="span" pr={1}>
           Minulé volby
         </Typography>
-      </Grid2>
-      <Grid2 container size={12} spacing={2}>
+      </Grid>
+      <Grid container size={12} spacing={2}>
         {elections ? (
           electionsData.passed?.map((e: Election) => (
-            <Grid2 size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={e.id}>
+            <Grid size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={e.id}>
               <Link to={`${e.id}`}>
                 <ElectionCard election={e} isAdmin />
               </Link>
-            </Grid2>
+            </Grid>
           ))
         ) : (
           <Loader />
         )}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

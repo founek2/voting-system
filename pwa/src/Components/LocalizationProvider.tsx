@@ -1,5 +1,5 @@
 import React from "react";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { cs } from "date-fns/locale/cs";
 import { LocalizationProvider as MuiLocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 

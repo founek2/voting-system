@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Grid2, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loader from "../Components/Loader";
@@ -11,8 +11,8 @@ export function Component() {
   const { data: members } = useGetPublicBoardMemebersQuery();
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12} display="flex" alignItems="center">
+    <Grid container spacing={2}>
+      <Grid size={12} display="flex" alignItems="center">
         <Typography variant="h3" color="textPrimary" component="span" pr={1}>
           Členové komise
         </Typography>
@@ -21,21 +21,21 @@ export function Component() {
             <AddIcon fontSize="large" />
           </IconButton>
         </Link>
-      </Grid2>
-      <Grid2 container size={12} spacing={2}>
+      </Grid>
+      <Grid container size={12} spacing={2}>
         {members ? (
           members.member?.map((member) => (
-            <Grid2 size={4} key={member["@id"]}>
+            <Grid size={4} key={member["@id"]}>
               <Link to={`${parseId(member["@id"])}`}>
                 <MemberBoardCard member={member} />
               </Link>
-            </Grid2>
+            </Grid>
           ))
         ) : (
           <Loader />
         )}
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 

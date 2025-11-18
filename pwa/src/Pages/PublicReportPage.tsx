@@ -1,4 +1,4 @@
-import { Grid2, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import FileList from "../Components/FileList";
 import Loader from "../Components/Loader";
@@ -13,15 +13,15 @@ export default function PublicReportPage() {
     return <TypographyInfo>Nelze načíst závěrečné zprávy.</TypographyInfo>;
 
   return (
-    <Grid2 container spacing={4}>
-      <Grid2 container justifyContent="center" spacing={4} size={12}>
-        <Grid2 size={12}>
+    <Grid container spacing={4}>
+      <Grid container justifyContent="center" spacing={4} size={12}>
+        <Grid size={12}>
           <Typography variant="h3" color="primary" textAlign="center">
             Závěrečné zprávy
           </Typography>
-        </Grid2>
+        </Grid>
         <FileList data={data} />
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }

@@ -7,10 +7,9 @@ import React from "react";
 import { ChangeHandler } from "react-hook-form";
 
 type CustomDatePickerProps<
-  TDate extends PickerValidDate,
   TEnableAccessibleFieldDOMStructure extends boolean = false
 > = Omit<
-  DatePickerProps<TDate, TEnableAccessibleFieldDOMStructure>,
+  DatePickerProps<TEnableAccessibleFieldDOMStructure> & React.RefAttributes<HTMLDivElement>,
   "onChange" | "defaultValue"
 > & {
   onChange: ChangeHandler;
@@ -26,7 +25,7 @@ export const MyDatePicker = React.forwardRef(function <
     defaultValue,
     value,
     ...props
-  }: CustomDatePickerProps<TDate, TEnableAccessibleFieldDOMStructure>,
+  }: CustomDatePickerProps<TEnableAccessibleFieldDOMStructure>,
   ref: React.Ref<HTMLInputElement>
 ) {
   return (

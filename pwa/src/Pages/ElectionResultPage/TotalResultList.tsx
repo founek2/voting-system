@@ -10,7 +10,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Grid2,
+  Grid,
   Paper,
   Typography,
 } from "@mui/material";
@@ -88,7 +88,7 @@ function Content({ candidates, results, election }: ContentProps) {
 
   return (
     <>
-      <Grid2
+      <Grid
         container
         size={12}
         spacing={2}
@@ -107,7 +107,7 @@ function Content({ candidates, results, election }: ContentProps) {
                 result={result}
                 candidate={candidate}
               />
-              <Grid2 size={{ xs: 12, md: 1.4, xl: 1 }} sx={opacity}>
+              <Grid size={{ xs: 12, md: 1.4, xl: 1 }} sx={opacity}>
                 {isEdit ? (
                   <FormControlLabel
                     control={
@@ -132,11 +132,11 @@ function Content({ candidates, results, election }: ContentProps) {
                 ) : (
                   "Nezvolen"
                 )}
-              </Grid2>
+              </Grid>
             </>
           );
         })}
-        <Grid2 size={12} display="flex" justifyContent="end">
+        <Grid size={12} display="flex" justifyContent="end">
           <Button
             color="error"
             sx={{ mr: 6 }}
@@ -161,8 +161,8 @@ function Content({ candidates, results, election }: ContentProps) {
               Editace
             </Button>
           )}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
 
       <AlertDialog
         open={isOpenComplete}

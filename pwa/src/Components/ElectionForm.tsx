@@ -1,7 +1,7 @@
 import {
   Autocomplete,
   Button,
-  Grid2,
+  Grid,
   GridSize,
   TextField,
   Typography,
@@ -97,152 +97,152 @@ function ElectionForm({
   const formData = watch();
 
   return (
-    <Grid2
+    <Grid
       component="form"
       container
       spacing={2}
       onSubmit={handleOnSubmit}
       maxWidth={600}
     >
-      {Object.keys(errors).length > 0 ? <Grid2 size={12}>
+      {Object.keys(errors).length > 0 ? <Grid size={12}>
         <FormStatus errors={errors} />
-      </Grid2> : null}
+      </Grid> : null}
 
-      <Grid2 size={12}>
+      <Grid size={12}>
         <Typography variant="h4" color="textPrimary">
           Volby:
         </Typography>
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Vyhlášení voleb"
           {...register("announcementDate", { required: true })}
           defaultValue={defaultValues?.announcementDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("announcementDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Přihlašování kandidátů"
           {...register("registrationOfCandidatesDate", { required: true })}
           defaultValue={defaultValues?.registrationOfCandidatesDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("registrationOfCandidatesDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Volební kampaň"
           {...register("campaignDate", { required: true })}
           defaultValue={defaultValues?.campaignDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("campaignDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Elektronické hlasování"
           {...register("electronicVotingDate", { required: true })}
           defaultValue={defaultValues?.electronicVotingDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("electronicVotingDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Urnové hlasování"
           {...register("ballotVotingDate", { required: true })}
           defaultValue={defaultValues?.ballotVotingDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("ballotVotingDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Vyhlášení předběžných výsledků"
           {...register("preliminaryResultsDate", { required: true })}
           defaultValue={defaultValues?.preliminaryResultsDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("preliminaryResultsDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Uzávěr podávání stížností"
           {...register("complaintsDeadlineDate", { required: true })}
           defaultValue={defaultValues?.complaintsDeadlineDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("complaintsDeadlineDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Vyhodnocení výsledků"
           {...register("countingVotesDate", { required: true })}
           defaultValue={defaultValues?.countingVotesDate}
         />
-      </Grid2>
-      <Grid2 size={dateSize}>
+      </Grid>
+      <Grid size={dateSize}>
         <TextField
           fullWidth
           value={getEndDate("countingVotesDate", formData)}
           disabled
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={dateSize}>
+      <Grid size={dateSize}>
         <MyDatePicker
           label="Vyhlášení konečných výsledků"
           {...register("finalResultsDate", { required: true })}
           defaultValue={defaultValues?.finalResultsDate}
         />
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={{ xs: 12 }}>
+      <Grid size={{ xs: 12 }}>
         <Controller
           control={methods.control}
           name="positions"
@@ -268,13 +268,13 @@ function ElectionForm({
             />
           )}
         />
-      </Grid2>
-      <Grid2 size={12}>
+      </Grid>
+      <Grid size={12}>
         <Button type="submit" disabled={disabled}>
           Uložit
         </Button>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
