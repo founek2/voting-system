@@ -9,7 +9,7 @@
         },
         "step1": {
             "label": "Candidate registration",
-            "description": "Only a SH member who is not simultaneously a member of the election committee can run for the club board. It is possible to run for only one position at a time. Registration is done electronically via email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain."
+            "description": "Only a SH member who is not simultaneously a member of the election committee can run for the club board. It is possible to run for only one position at a time. Registration is done electronically by sending an email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain."
         },
         "step2": {
             "label": "Election campaign",
@@ -17,11 +17,11 @@
         },
         "step3": {
             "label": "Electronic voting",
-            "description": "Electronic voting is in progress. Anyone who is a member of Silicon Hill club and has active basic membership can vote."
+            "description": "Electronic voting is in progress. Anyone who is a member of Silicon Hill club and has an active basic membership can vote."
         },
         "step4": {
             "label": "Ballot box voting",
-            "description": "Physical voting is only possible during the designated time. More information about ballot box voting can be found in the resolution."
+            "description": "Physical voting is only possible during the designated time. More information regarding ballot box voting can be found in the resolution of the electoral commitee."
         },
         "step5": {
             "label": "Preliminary results announcement",
@@ -60,16 +60,16 @@
         "wantCandidate": "Want to run for office?",
         "signIn": "Registration",
         "signInText1": "Only a SH member who is not simultaneously a member of the election committee can run for the club board. It is possible to run for only one position at a time.",
-        "signInText2": "Registration is done electronically via email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain.",
+        "signInText2": "Registration is done electronically by sending email to the election committee at volby@sh.cvut.cz from a club email address. This means an address in the siliconhill.cz or sh.cvut.cz domain.",
         "validadCandidateApplication": "A valid candidate application must contain:",
         "uidNumber": "Club member number (UID)",
         "fullName": "Full name",
         "position": "Position they are running for",
         "skenedConsent": "Scanned or photographed signed consent to candidacy",
         "poster": "Election poster",
-        "posterText1": "Each candidate has the opportunity to send an information poster that will be displayed on these pages. Only the poster will be published, not video or audio.",
+        "posterText1": "Each candidate has the opportunity to send an information poster that will be displayed on this website. Only a poster will be published, not video or audio.",
         "posterText2": "PDF format is recommended and preferred, and the recommended poster elements are – A4 format, personal data, photograph, contact email, reason for candidacy, election program, personal merits in Silicon Hill club, etc.",
-        "posterText3": "The information poster should not attack or accuse other persons.",
+        "posterText3": "The information poster should not attack or accuse other people.",
         "posterText4": "In case the information poster does not meet the described requirements, the election committee may not accept it and will return it to the candidate for correction.",
         "board": "Board",
         "boardMembers": "Silicon Hill Club board has up to 15 members:",
