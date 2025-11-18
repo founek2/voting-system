@@ -21,9 +21,9 @@ function Ribbon({ candidate, isWinner, showResult }: { candidate: Candidate, isW
       position: "absolute",
       backgroundColor:
         isWinner ? WINNER_COLOR : candidate.rejectedAt ? DARK_ERROR : DARK_BACKGROUND,
-      transform: "rotate(50deg) translate(50%, 0%)",
-      top: "8%",
-      right: "8%",
+      transform: "rotate(-45deg) translate(50%, 0%)",
+      bottom: "6%",
+      right: "17%",
       transformOrigin: "100% 0",
       textAlign: "center",
     }}
@@ -68,7 +68,7 @@ export function CandidateFancyCard({
       {disabled || showResult ? (
         <Ribbon candidate={candidate} isWinner={isWinner} showResult={showResult} />
       ) : null}
-      <CardHeader title={candidate.position.name} sx={{ mr: 2 }} />
+      <CardHeader title={candidate.position.name} />
       <CardMedia
         sx={{ height: 140 }}
         image={candidate.appUser?.photoSmallUrl || undefined}
