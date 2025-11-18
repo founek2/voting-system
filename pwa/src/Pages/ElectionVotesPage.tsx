@@ -91,7 +91,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
   if (users.length == 0)
     return (
       <Typography color="textPrimary">
-        Žádné platné hlasy nebyli zaznamenány ☨
+        Žádné platné hlasy nebyly zaznamenány ☨
       </Typography>
     );
 
