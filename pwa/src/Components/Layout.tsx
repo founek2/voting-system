@@ -1,47 +1,16 @@
 import LoginIcon from "@mui/icons-material/Login";
 import {
   Box,
-  Button,
-  Grid,
-  Paper,
-  Typography,
-  Link as MuiLink,
+  Button
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link, Outlet } from "react-router-dom";
 import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppSelector } from "../hooks/app";
 import { Role } from "../types";
-import { grey } from "@mui/material/colors";
+import { ColorModeButton } from './ColorModeButton';
 import { Footer } from "./Footer";
-import { use } from "i18next";
-import { useTranslation } from "react-i18next";
-
-// function VoteButton() {
-//   return (
-//     <Button
-//       color="primary"
-//       aria-label="enter administration"
-//       // sx={}
-//       startIcon={<ThumbUpIcon />}
-//     >
-//       Hlasovat
-//     </Button>
-//   );
-// }
-
-// function CandidateButton() {
-//   return (
-//     <Button
-//       color="primary"
-//       aria-label="enter candidate"
-//       // sx={}
-//       startIcon={<AssistWalkerIcon />}
-//     >
-//       Kandidovat
-//     </Button>
-//   );
-// }
 
 function LoginButton({ admin }: { admin?: boolean }) {
   const { t } = useTranslation();
@@ -82,7 +51,8 @@ export default function Layout() {
   return (
     <Box>
       <Box p={2}>
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="flex-end" alignItems="center" sx={{ gap: 1 }}>
+          <ColorModeButton />
           {loggedId ? (
             <AdminButton admin={user?.roles?.includes(Role.ROLE_ADMIN)} />
           ) : (

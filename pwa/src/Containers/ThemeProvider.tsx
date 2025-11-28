@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { orange } from "@mui/material/colors";
 import { PaletteMode } from "@mui/material";
+import { ColorModeContext } from "../context/colorMode";
 
 export const LIGHT_BACKGROUND = "#fafafa";
 export const DARK_BACKGROUND = "#4c4c4c";
@@ -24,8 +25,7 @@ declare module "@mui/material/styles" {
 }
 
 export function MyThemeProvider({ children }: { children: React.ReactNode }) {
-  //   const colorMode = useAppSelector(getColorMode);
-  const colorMode = "dark" as PaletteMode;
+  const [colorMode] = useContext(ColorModeContext)
   const theme = useMemo(
     () =>
       createTheme({

@@ -26,12 +26,14 @@ import {
   useTheme,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ColorModeContext } from "../context/colorMode";
 import { useGetUserMeQuery } from "../endpoints/users";
 import { useAppDispatch, useAppSelector } from "../hooks/app";
 import { authorizationReducerActions } from "../store/slices/authorizationSlice";
 import { Role } from "../types";
+import { ColorModeButton } from "./ColorModeButton";
 import LocalizationProvider from "./LocalizationProvider";
 
 const drawerWidth = 240;
@@ -126,7 +128,6 @@ export function Component() {
               width: drawerWidth,
               boxSizing: "border-box",
             },
-            // height: "100%",
           }}
           variant={isMobile ? "temporary" : "persistent"}
           anchor="left"
@@ -159,7 +160,7 @@ export function Component() {
                     maxWidth: 130,
                   }}
                   alt="The house from the offer."
-                  src="/assets/SH-logo.png"
+                  src={theme.palette.mode === "light" ? "/assets/SH-logo-color.png" : "/assets/SH-logo.png"}
                   position={{ lg: "absolute" }}
                 />
               </Link>
@@ -236,17 +237,21 @@ export function Component() {
             >
               <MenuIcon />
             </IconButton>
-            <Paper
-              sx={{ display: "flex", alignItems: "center", p: 1 }}
-              onClick={handleEaesterEgg}
-            >
-              <Avatar
-                alt="Remy Sharp"
-                src={user?.photoSmallUrl || undefined}
-                sx={{ mr: 1 }}
-              />
-              <Typography>{user?.username}</Typography>
-            </Paper>
+
+            <Box display="flex" flexDirection="row" gap={2}>
+              <ColorModeButton />
+              <Paper
+                sx={{ display: "flex", alignItems: "center", p: 1 }}
+                onClick={handleEaesterEgg}
+              >
+                <Avatar
+                  alt="Remy Sharp"
+                  src={user?.photoSmallUrl || undefined}
+                  sx={{ mr: 1 }}
+                />
+                <Typography>{user?.username}</Typography>
+              </Paper>
+            </Box>
           </Box>
 
           <Box p={2}>

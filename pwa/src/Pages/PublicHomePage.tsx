@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import BasicInformation from "../Components/BasicInformation";
@@ -16,6 +16,7 @@ import { dateToString } from "../util/dateToString";
 
 function StepperSection() {
   const { t } = useTranslation()
+  const theme = useTheme()
 
   return (
     <Grid container justifyContent="center" spacing={4} size={12}>
@@ -36,7 +37,7 @@ function StepperSection() {
               maxWidth: { xs: 250, md: 300 },
             }}
             alt="Logo of Silicon Hill club."
-            src="/assets/SH-logo.png"
+            src={theme.palette.mode === "light" ? "/assets/SH-logo-color.png" : "/assets/SH-logo.png"}
             position={{ lg: "absolute" }}
           />
         </Link>
