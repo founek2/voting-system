@@ -74,7 +74,7 @@ export function VoteResultRow<T extends FieldValues>({
       </Grid>
       <Grid size={{ xs: 6, md: 3, xl: 2 }} display="flex">
         <Typography sx={opacity}>
-          Zdrželo se {!edit ? result?.neutralVotes : null}
+          Zdrželo&nbsp;se {!edit ? result?.neutralVotes : null}
         </Typography>
         {edit ? (
           <TextFieldStyled

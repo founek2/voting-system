@@ -74,7 +74,7 @@ export function Component() {
           ))}
         </Breadcrumbs>
       </Box>
-      <Grid size={{ xs: 12, md: 8, xl: 6 }}>
+      <Grid size={{ xs: 12, lg: 10, xl: 8 }}>
         {location.hash === "#electronic" ? (
           <ElectronicResultList election={election} />
         ) : null}

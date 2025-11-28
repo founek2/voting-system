@@ -9,6 +9,7 @@ import {
 import {
   Button,
   Checkbox,
+  Divider,
   FormControlLabel,
   Grid,
   Paper,
@@ -91,7 +92,8 @@ function Content({ candidates, results, election }: ContentProps) {
       <Grid
         container
         size={12}
-        spacing={2}
+        columnSpacing={2}
+        rowSpacing={1}
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -102,6 +104,7 @@ function Content({ candidates, results, election }: ContentProps) {
           const opacity = getCandidateStyle(candidate);
           return (
             <>
+              {idx !== 0 ? <Grid size={12}><Divider /></Grid> : null}
               <VoteResultRow
                 key={candidate["@id"]}
                 result={result}

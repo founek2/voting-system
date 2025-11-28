@@ -72,6 +72,15 @@ export const signInApi = api.injectEndpoints({
         getCandidatesUnvoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=unvoted`,
             providesTags: ['Candidates', 'Votes'],
+            transformResponse: (data: Hydra<Candidate>) => {
+                data.member.sort((a, b) => {
+                    if (a.position && b.position) {
+                        return b.position.name!.localeCompare(a.position.name!);
+                    }
+                    return a.id! - b.id!;
+                })
+                return data;
+            }
         }),
         addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_jsonld_candidate_write }>({
             query({ userId, body }) {

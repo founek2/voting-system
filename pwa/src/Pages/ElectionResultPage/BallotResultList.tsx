@@ -1,4 +1,4 @@
-import { Button, Grid, Paper } from "@mui/material";
+import { Button, Divider, Grid, Paper } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -65,7 +65,8 @@ function Content({
     const result = results?.member.find(
       (r) => r?.candidate?.["@id"] === candidate["@id"]
     );
-    return (
+    return (<>
+      {idx !== 0 ? <Grid size={12}><Divider /></Grid> : null}
       <VoteResultRow
         index={idx}
         key={candidate["@id"]}
@@ -74,6 +75,7 @@ function Content({
         edit={isEdit}
         register={register}
       />
+    </>
     );
   });
 
@@ -81,7 +83,8 @@ function Content({
     <Grid
       container
       size={12}
-      spacing={2}
+      columnSpacing={2}
+      rowSpacing={1}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
