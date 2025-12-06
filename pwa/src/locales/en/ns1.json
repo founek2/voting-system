@@ -120,5 +120,15 @@
         "reportIssues": "Report system bugs to",
         "language": "Czech",
         "electionComiteeMembers": "Election committee members:"
+    },
+    "menu": {
+        "overview": "Overview",
+        "elections": "Elections",
+        "resolutions": "Resolutions",
+        "reports": "Final reports",
+        "positions": "Positions",
+        "electionComiteeMembers": "Committee",
+        "userDashboard": "Current elections",
+        "signOut": "Sign out"
     }
 }

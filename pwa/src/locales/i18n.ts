@@ -27,4 +27,4 @@ i18n
 export type NS = ['ns1']
 export type DefaultNS = 'ns1';
 
-export type LocalizedLabelKey = Parameters<TFunctionStrict<DefaultNS>>[0]
+export type LocalizedLabelKey = Exclude<Parameters<TFunctionStrict<DefaultNS>>[0], null | undefined>;

@@ -35,6 +35,9 @@ import { authorizationReducerActions } from "../store/slices/authorizationSlice"
 import { Role } from "../types";
 import { ColorModeButton } from "./ColorModeButton";
 import LocalizationProvider from "./LocalizationProvider";
+import { LanguageButton } from "./LanguageButton";
+import { LocalizedLabelKey } from "../locales/i18n";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = 240;
 
@@ -47,23 +50,24 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const adminMenuItems = [
-  { path: "/auth/admin", text: "Přehled", Icon: <TimelineIcon /> },
-  { path: "/auth/admin/elections", text: "Volby", Icon: <MailIcon /> },
-  { path: "/auth/admin/resolutions", text: "Usnesení", Icon: <InboxIcon /> },
+type MenuItem = { path: string, text: LocalizedLabelKey, Icon: React.ReactNode }
+const adminMenuItems: MenuItem[] = [
+  { path: "/auth/admin", text: "menu.overview", Icon: <TimelineIcon /> },
+  { path: "/auth/admin/elections", text: "menu.elections", Icon: <MailIcon /> },
+  { path: "/auth/admin/resolutions", text: "menu.resolutions", Icon: <InboxIcon /> },
   {
     path: "/auth/admin/reports",
-    text: "Závěřečné zprávy",
+    text: "menu.reports",
     Icon: <InboxIcon />,
   },
-  { path: "/auth/admin/positions", text: "Pozice", Icon: <BoyIcon /> },
-  { path: "/auth/admin/board", text: "Komise", Icon: <SnowboardingIcon /> },
+  { path: "/auth/admin/positions", text: "menu.positions", Icon: <BoyIcon /> },
+  { path: "/auth/admin/board", text: "menu.electionComiteeMembers", Icon: <SnowboardingIcon /> },
 ];
 
-const userMenuItems = [
+const userMenuItems: MenuItem[] = [
   {
     path: "/auth/user",
-    text: "Aktuální volby",
+    text: "menu.userDashboard",
     Icon: <AppsIcon />,
   },
 ];
@@ -73,6 +77,7 @@ export function Component() {
   const user = useAppSelector((state) => state.authorization.currentUser);
   useGetUserMeQuery(undefined, { skip: !loggedId });
   const location = useLocation();
+  const { t } = useTranslation()
 
   const [open, setOpen] = useState(true);
   const theme = useTheme();
@@ -177,11 +182,11 @@ export function Component() {
           {user?.roles?.includes(Role.ROLE_ADMIN) ? (
             <List>
               {adminMenuItems.map((item) => (
-                <Link to={item.path} key={item.text}>
+                <Link to={item.path} key={t(item.text)}>
                   <ListItem disablePadding>
                     <ListItemButton selected={location.pathname === item.path}>
                       <ListItemIcon>{item.Icon}</ListItemIcon>
-                      <ListItemText primary={item.text} />
+                      <ListItemText primary={t(item.text)} />
                     </ListItemButton>
                   </ListItem>
                 </Link>
@@ -191,11 +196,11 @@ export function Component() {
           {user?.roles?.includes(Role.ROLE_ADMIN) ? <Divider /> : null}
           <List>
             {userMenuItems.map((item) => (
-              <Link to={item.path} key={item.text}>
+              <Link to={item.path} key={t(item.text)}>
                 <ListItem disablePadding>
                   <ListItemButton selected={location.pathname === item.path}>
                     <ListItemIcon>{item.Icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
+                    <ListItemText primary={t(item.text)} />
                   </ListItemButton>
                 </ListItem>
               </Link>
@@ -214,10 +219,14 @@ export function Component() {
                 <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Odhlásit"} />
+                <ListItemText primary={t('menu.signOut')} />
               </ListItemButton>
             </ListItem>
           </List>
+
+          <Box textAlign={"center"}>
+            <ColorModeButton />
+          </Box>
         </Drawer>
 
         <Box display="flex" flexDirection="column" flexGrow={1}>
@@ -239,7 +248,7 @@ export function Component() {
             </IconButton>
 
             <Box display="flex" flexDirection="row" gap={2}>
-              <ColorModeButton />
+              <LanguageButton />
               <Paper
                 sx={{ display: "flex", alignItems: "center", p: 1 }}
                 onClick={handleEaesterEgg}

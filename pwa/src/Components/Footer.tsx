@@ -3,6 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPublicBoardMemebersQuery } from "../endpoints/board";
 import { BoardMember_jsonld_member_public_read } from "../endpoints/types";
+import { LanguageButton } from "./LanguageButton";
 
 function TypographyStyled({ children }: { children: React.ReactNode }) {
   return (
@@ -58,14 +59,9 @@ export function Footer() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 3 }} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-          <TypographyStyled>
-            <MuiLink href={`/?lng=${changeLanguageTo}`} onClick={e => {
-              e.preventDefault();
-              i18n.changeLanguage(changeLanguageTo);
-            }} underline="none">
-              {t('footer.language')}
-            </MuiLink>
-          </TypographyStyled>
+          <LanguageButton
+            variant="body1"
+            color="textSecondary" />
           <TypographyStyled>
             {t('footer.reportIssues')}{" "}
             <MuiLink

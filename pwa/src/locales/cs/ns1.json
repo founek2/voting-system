@@ -120,5 +120,15 @@
         "reportIssues": "Chyby systému hlašte na",
         "language": "Angličtina",
         "electionComiteeMembers": "Členové volební komise:"
+    },
+    "menu": {
+        "overview": "Přehled",
+        "elections": "Volby",
+        "resolutions": "Usnesení",
+        "reports": "Závěrečné zprávy",
+        "positions": "Pozice",
+        "electionComiteeMembers": "Komise",
+        "userDashboard": "Aktuální volby",
+        "signOut": "Odhlásit"
     }
 }
