@@ -17,7 +17,8 @@
         },
         "step3": {
             "label": "Electronic voting",
-            "description": "Electronic voting is in progress. Anyone who is a member of Silicon Hill club and has an active basic membership can vote."
+            "description": "Electronic voting is in progress. Anyone who is a member of Silicon Hill club and has an active basic membership can vote.",
+            "positionListTitle": "Ongoing election for following positions:"
         },
         "step4": {
             "label": "Ballot box voting",

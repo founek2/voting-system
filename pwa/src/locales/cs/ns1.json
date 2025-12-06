@@ -17,7 +17,8 @@
         },
         "step3": {
             "label": "Elektronické hlasování",
-            "description": "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill a má aktivní základní členství."
+            "description": "Probíhá elektronické hlasování. Hlasovat může každý, kdo je členem klubu Silicon Hill a má aktivní základní členství.",
+            "positionListTitle": "Probíhají volby na tyto pozice:"
         },
         "step4": {
             "label": "Urnové hlasování",

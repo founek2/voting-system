@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 import { ElectionCard } from "../Components/ElectionCard";
 import Loader from "../Components/Loader";
-import { useGetUserCandidatesQuery } from "../endpoints/candidates";
+import { useGetCandidatesUnvotedQuery, useGetUserCandidatesQuery } from "../endpoints/candidates";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
 import { useAppSelector } from "../hooks/app";
 import { Election } from "../types";
@@ -13,6 +13,8 @@ import { dateToString } from "../util/dateToString";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
 import { TypographyInfo } from "../Components/TypographyInfo";
+import { PositionElectionList } from "../Components/PositionElectionList";
+import { useTranslation } from "react-i18next";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -40,10 +42,10 @@ function AddCandidate({ disabled, election }: AddCandidateProps) {
 }
 
 export function Component() {
+  const { t } = useTranslation();
   const user = useAppSelector((state) => state.authorization.currentUser);
   const { data: elections, isLoading } = useGetPublicElectionsQuery();
   const electionsData = splitElections(elections?.member || []);
-
   const { data: candidates, isLoading: loadingCandidates } =
     useGetUserCandidatesQuery(
       {
@@ -59,8 +61,12 @@ export function Component() {
   const registrationElections = (elections?.member || []).filter(
     (e) => e.stage === "registration_of_candidates"
   );
-
   const ongoingElection = head(electionsData.current);
+
+  const { data: candidatesUnvoted, isLoading: isLoadingUnvotedCandidates } =
+    useGetCandidatesUnvotedQuery(Number(ongoingElection?.id), {
+      skip: !ongoingElection?.id,
+    });
 
   return (
     <Grid container spacing={10}>
@@ -81,7 +87,10 @@ export function Component() {
                       title={`${dateToString(
                         election.electronicVotingDate
                       )} - ${dateToString(election.ballotVotingDate)}`}
-                    />
+                    >
+                      <PositionElectionList candidates={candidatesUnvoted?.member || []} />
+                      {candidatesUnvoted?.member.length === 0 ? <Typography>{t('vote.done')}</Typography> : null}
+                    </ElectionCard>
                   </Link>
                 </Grid>
               ))

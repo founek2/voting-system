@@ -132,7 +132,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
   const sizePosition = { sm: 3 };
 
   if (candidates.every((c) => Boolean(c.withdrewAt)))
-    return <Typography color="textPrimary">{t('vote.done')} ✅</Typography>;
+    return <Typography color="textPrimary">{t('vote.done')}</Typography>;
 
   if (isMobile)
     return (

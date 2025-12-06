@@ -31,6 +31,7 @@ interface ElectionCardProps {
     election: Election
   ) => any;
   sx?: CardProps["sx"];
+  children?: React.ReactNode;
 }
 export function ElectionCard({
   election,
@@ -40,6 +41,7 @@ export function ElectionCard({
   onViewResult,
   onViewCandidates,
   sx,
+  children,
 }: ElectionCardProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -53,6 +55,7 @@ export function ElectionCard({
             <HowToVoteIcon fontSize="large" />
           </Box>
         ) : null}
+        {children}
         {isAdmin ? (
           <Grid
             container

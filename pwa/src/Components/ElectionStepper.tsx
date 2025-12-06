@@ -1,23 +1,24 @@
-import * as React from "react";
+import { Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import MuiLink from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
+import Step from "@mui/material/Step";
+import StepContent from "@mui/material/StepContent";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
-import { Election } from "../types";
-import { isAfter, isBefore, subDays } from "date-fns";
 import { SxProps } from "@mui/system";
-import { Tooltip } from "@mui/material";
-import { dateToString } from "../util/dateToString";
-import { Link } from "react-router-dom";
-import { RawText } from "./RawText";
+import { isAfter, isBefore } from "date-fns";
+import { TFunction } from "i18next";
+import * as React from "react";
 import { useTranslation, } from "react-i18next";
-import { TFunction, TFunctionStrict } from "i18next";
-import { DefaultNS, LocalizedLabelKey } from "../locales/i18n";
+import { Link } from "react-router-dom";
+import { Candidate_jsonld_candidate_read } from "../endpoints/types";
+import { LocalizedLabelKey } from "../locales/i18n";
+import { Election } from "../types";
+import { dateToString } from "../util/dateToString";
+import { PositionElectionList } from "./PositionElectionList";
+import { RawText } from "./RawText";
 
 function hasPassed(date?: string | Date) {
   if (!date) return false;
@@ -48,7 +49,7 @@ function getStep(election: Election) {
 type StepType = {
   label: (election: Election) => LocalizedLabelKey;
   date: (election: Election) => string;
-  description: LocalizedLabelKey;
+  description: LocalizedLabelKey | ((election: Election, candidates: Candidate_jsonld_candidate_read[], t: TFunction<"ns1", undefined>) => JSX.Element);
   action?: (election: Election) => JSX.Element;
 };
 
@@ -100,7 +101,15 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: 'stepper.step3.description',
+    description: (election: Election, candidates: Candidate_jsonld_candidate_read[], t: TFunction<"ns1", undefined>) => (
+      <>
+        <Typography color="textSecondary" gutterBottom>
+          {t('stepper.step3.description')}
+        </Typography>
+        <Typography color="textSecondary" > {t('stepper.step3.positionListTitle')}</Typography>
+        <PositionElectionList candidates={candidates} />
+      </>
+    ),
     action: (election: Election) => (
       <Link to={`/auth/user/vote`}>
         <Button color="primary"><RawText textKey="common.actionVote" /></Button>
@@ -188,10 +197,12 @@ function AddTooltip({
 
 interface ElectionStepperProps {
   election: Election;
+  candidates: Candidate_jsonld_candidate_read[] | undefined
   sx?: SxProps;
 }
 export default function ElectionStepper({
   election,
+  candidates,
   sx,
 }: ElectionStepperProps) {
   const activeStep = getStep(election);
@@ -199,36 +210,42 @@ export default function ElectionStepper({
 
   return (
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
-      {steps.map((step, index) => (
-        <Step key={index}>
-          <AddTooltip
-            title={t(step.description)}
-            step={index}
-            currentStep={activeStep}
-          >
-            <StepLabel
-              optional={
-                index === steps.length - 1 ? (
-                  <Typography variant="caption">
-                    Volby byly ukončeny.
-                  </Typography>
-                ) : null
-              }
+      {steps.map((step, index) => {
+        const description = typeof step.description === 'function'
+          ? step.description(election, candidates || [], t)
+          : t(step.description) as string;
+
+        return (
+          <Step key={index}>
+            <AddTooltip
+              title={description}
+              step={index}
+              currentStep={activeStep}
             >
-              <Typography variant="h6" pr={2}>
-                {t(step.label(election))}
-              </Typography>
-              <Typography component="span" color="textSecondary">
-                {step.date ? step.date(election) : null}
-              </Typography>
-            </StepLabel>
-          </AddTooltip>
-          <StepContent>
-            <Typography color="textSecondary">{t(step.description)}</Typography>
-            {step.action ? <Box pt={2}>{step.action(election)}</Box> : null}
-          </StepContent>
-        </Step>
-      ))}
+              <StepLabel
+                optional={
+                  index === steps.length - 1 ? (
+                    <Typography variant="caption">
+                      Volby byly ukončeny.
+                    </Typography>
+                  ) : null
+                }
+              >
+                <Typography variant="h6" pr={2}>
+                  {t(step.label(election))}
+                </Typography>
+                <Typography component="span" color="textSecondary">
+                  {step.date ? step.date(election) : null}
+                </Typography>
+              </StepLabel>
+            </AddTooltip>
+            <StepContent>
+              {typeof description === 'string' ? <Typography color="textSecondary">{description}</Typography> : description}
+              {step.action ? <Box pt={2}>{step.action(election)}</Box> : null}
+            </StepContent>
+          </Step>
+        )
+      })}
     </Stepper>
   );
 }
