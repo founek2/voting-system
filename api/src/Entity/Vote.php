@@ -32,6 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 'userId' => new Link(fromClass: User::class, fromProperty: 'votes')
             ],
             security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
+            paginationMaximumItemsPerPage: 2000
         ),
         new Get(security: 'user.hasRole("ROLE_ADMIN")'),
         new Post(
