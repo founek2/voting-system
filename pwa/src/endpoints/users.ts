@@ -14,7 +14,7 @@ export const usersApi = api.injectEndpoints({
                 params: {
                     'votes.candidate.election': electionId,
                     'exists[votes.invalidatedAt]': false,
-                    'perPage': 2000,
+                    'itemsPerPage': 2000,
                     'zone': zoneId
 
                 }
