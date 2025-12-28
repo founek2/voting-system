@@ -40,7 +40,8 @@ build:
       --file $SERVICE_DIR/Dockerfile
       --target prod
       ./$SERVICE_DIR
-    - buildah push $IMAGE_TAG $IMAGE_TAG_BRANCH
+    - buildah push $IMAGE_TAG
+    - buildah push $IMAGE_TAG_BRANCH
   rules:
     - if: "$CI_COMMIT_BRANCH == 'main'"
       changes:
