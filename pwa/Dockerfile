@@ -10,10 +10,7 @@ RUN yarn --immutable
 FROM docker.io/node:22-alpine AS builder
 WORKDIR /app
 RUN corepack enable
-COPY --from=dependencies /app/.pnp.cjs ./
-COPY --from=dependencies /app/.pnp.loader.mjs ./
-COPY --from=dependencies /app/.yarn ./.yarn
-COPY --from=dependencies /app/.yarn ./.yarn
+COPY --from=dependencies /app/.pnp.cjs /app/.pnp.loader.mjs /app/.yarn ./
 COPY --from=dependencies /root/.yarn /root/.yarn
 
 COPY . .
