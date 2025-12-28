@@ -71,7 +71,7 @@ export function CandidateFancyCard({
       <CardHeader title={candidate.position.name} />
       <CardMedia
         sx={{ height: 140 }}
-        image={candidate.appUser?.photoSmallUrl || undefined}
+        image={candidate.appUser?.photoSmallUrl && !candidate.appUser.photoSmallUrl.startsWith('https://static.is.sh.cvut.cz') ? candidate.appUser?.photoSmallUrl : '/assets/bag_on_head_white.jpg'}
         title={fullName}
       />
       <CardContent>
