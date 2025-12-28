@@ -9,6 +9,11 @@ use Exception;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+function userAccountFilter(UserEmailDto $item): bool
+{
+    return $item->uid >= 1000;
+}
+
 class IsApiService
 {
     public function __construct(
@@ -36,6 +41,9 @@ class IsApiService
     /** @return UserEmailDto[] */
     public function parseData(string $content): array
     {
-        return $this->serializer->deserialize($content, UserEmailDto::class . '[]', 'json');
+        $data = $this->serializer->deserialize($content, UserEmailDto::class . '[]', 'json');
+        return array_filter($data, function (UserEmailDto $item) {
+            return userAccountFilter($item);
+        });
     }
 }
