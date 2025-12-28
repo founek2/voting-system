@@ -82,7 +82,7 @@ function Content({ candidates, results, election }: ContentProps) {
     const { error } = await completeElection(election.id!);
     if (error) return handleError(error);
     else {
-      enqueueSnackbar("Volby byli uzavřeny");
+      enqueueSnackbar("Volby byly uzavřeny");
       setIsOpenComplete(false);
     }
   }
@@ -187,7 +187,7 @@ export function TotalResultList({ election }: { election: Election }) {
     return <TypographyInfo>Nastala chyba při načítání dat.</TypographyInfo>;
 
   if (results?.candidates?.length === 0) {
-    return <TypographyInfo>Nebyli přihlášení žádní kandidáti.</TypographyInfo>;
+    return <TypographyInfo>Nebyli přihlášeni žádní kandidáti.</TypographyInfo>;
   }
 
   return (
