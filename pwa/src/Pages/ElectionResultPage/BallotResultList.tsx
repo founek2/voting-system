@@ -124,7 +124,7 @@ export function BallotResultList({ election }: { election: Election }) {
     return <TypographyInfo>Nastala chyba při načítání dat.</TypographyInfo>;
 
   if (candidates?.totalItems === 0) {
-    return <TypographyInfo>Nebyli přihlášení žádní kandidáti.</TypographyInfo>;
+    return <TypographyInfo>Nebyli přihlášeni žádní kandidáti.</TypographyInfo>;
   }
 
   return (
