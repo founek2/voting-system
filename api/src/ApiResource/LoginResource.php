@@ -24,8 +24,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ],
     uriTemplate: 'public/login'
-    // normalizationContext: ['groups' => []],
-    // denormalizationContext: ['groups' => []],
 )]
 class LoginResource
 {

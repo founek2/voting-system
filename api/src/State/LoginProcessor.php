@@ -8,23 +8,18 @@ use ApiPlatform\Validator\ValidatorInterface;
 use App\ApiResource\LoginResource;
 use App\Dto\LoginResponseDto;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Services\ISProvider;
 use App\Services\UserService;
+use App\Validator\UserLivesInStrahov;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class LoginProcessor implements ProcessorInterface
 {
     public function __construct(
-        private Security $security,
-        private UserRepository $userRepository,
-        private AuthorizationCheckerInterface $authorizationCheckerInterface,
         private ISProvider $iSProvider,
-        private ValidatorInterface $validator,
         private UserService $userService,
         private JWTTokenManagerInterface $jwt,
+        private ValidatorInterface $validator,
     ) {}
 
     /**
@@ -41,6 +36,8 @@ class LoginProcessor implements ProcessorInterface
         /** @var User */
         $user = $this->iSProvider->getResourceOwner($token);
         $this->userService->refresh($user, $token);
+
+        $this->validator->validate($user, [new UserLivesInStrahov()]);
 
         return new LoginResponseDto($this->jwt->create($user),  $user->getAccessToken()->getExpires());
     }
