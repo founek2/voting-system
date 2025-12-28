@@ -52,8 +52,8 @@
         "title": "Dokumenty",
         "resolutions": "Usnesení volební komise",
         "reports": "Závěrečné zprávy",
-        "clubStatus": "Stanovy klubu Silicon Hill (účinné od {{since}})",
-        "clubElectionRules": "Volební řád klubu Silicon Hill (účinný od {{since}})"
+        "clubStatus": "Stanovy klubu Silicon Hill",
+        "clubElectionRules": "Volební řád klubu Silicon Hill"
     },
     "information": {
         "title": "Základní informace",
