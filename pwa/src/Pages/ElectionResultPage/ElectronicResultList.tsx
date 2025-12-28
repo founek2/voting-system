@@ -18,7 +18,7 @@ export function ElectronicResultList({ election }: { election: Election }) {
     return <TypographyInfo>Nastala chyba při načítání dat.</TypographyInfo>;
 
   if (results?.candidates?.length === 0) {
-    return <TypographyInfo>Nebyli přihlášení žádní kandidáti.</TypographyInfo>;
+    return <TypographyInfo>Nebyli přihlášeni žádní kandidáti.</TypographyInfo>;
   }
   return (
     <Paper sx={{ width: "100%", p: 2 }}>
