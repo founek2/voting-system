@@ -5,6 +5,8 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\ApiResource\EmailResource;
+use App\Entity\Election;
+use App\Entity\Zone;
 use App\Message\ElectionNotification;
 use App\Repository\ElectionRepository;
 use App\Services\IsApiService;
@@ -28,14 +30,27 @@ class NotifyAllProcessor implements ProcessorInterface
             throw new \InvalidArgumentException('Data must be an instance of ' . EmailResource::class);
         }
         $electionId = $uriVariables['electionId'];
+        /** @var Election $election */
         $election = $this->electionRepository->find($electionId);
         if (!$election) {
             throw new NotFoundHttpException('Election not found');
         }
 
+        $positions = $election->getPositions();
+        $zoneRestrictions = [];
+        $positionWithoutRestrictions = false;
+        foreach ($positions as $position) {
+            $zoneRestrictions = array_merge($zoneRestrictions, $position->getZoneRestrictions()->toArray());
+            if ($position->getZoneRestrictions()->isEmpty()) {
+                $positionWithoutRestrictions = true;
+            }
+        }
+
         $users = $this->isApiService->fetchUserList();
         foreach ($users as $user) {
-            $this->bus->dispatch(new ElectionNotification($election->getId(), $user->email));
+            if ($positionWithoutRestrictions || array_find($zoneRestrictions, fn(Zone $zone) => $zone->getName() === $user->zone)) {
+                $this->bus->dispatch(new ElectionNotification($election->getId(), $user->email));
+            }
         }
     }
 }
