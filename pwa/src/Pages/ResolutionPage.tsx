@@ -12,7 +12,7 @@ function Content() {
 
   if (isError) return <TypographyInfo>Nelze načíst data</TypographyInfo>;
   if (resolutions?.totalItems === 0)
-    return <TypographyInfo>Nebyli nalezeny žádné usnesení.</TypographyInfo>;
+    return <TypographyInfo>Nebyla nalezena žádné usnesení.</TypographyInfo>;
 
   return (
     <>
