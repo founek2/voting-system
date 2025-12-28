@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Dto\RoleDto;
 use App\Entity\User;
+use App\Exception\ValidationError;
 use App\Repository\UserRepository;
 use App\Repository\ZoneRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,7 +45,12 @@ class UserService
     {
         $this->refreshLocation($user, $accessToken);
         $this->refreshRoles($user, $accessToken);
-
         $this->em->flush();
+
+        $activeServices = $this->iSProvider->getUserActiveServices($accessToken);
+        $activeBasicMembership = array_find($activeServices, fn($service) => $service->service->name === 'Základní členství' && ($service->to === null || $service->to > new \DateTimeImmutable()));
+        if (!$activeBasicMembership) {
+            throw ValidationError::newConstraintViolation('User must have active basic membership');
+        }
     }
 }

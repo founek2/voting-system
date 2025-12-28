@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use DateTimeImmutable;
 
-class ActiveServiceDto
+class UserServiceDto
 {
     public function __construct(
         /** pokud je null, tak počátek platnosti není omezen */

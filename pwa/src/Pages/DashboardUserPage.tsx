@@ -52,7 +52,7 @@ export function Component() {
         userId: user?.id!,
         electionIds: electionsData.current?.map((e) => e["@id"]!) || [],
       },
-      { skip: !user?.id || !electionsData }
+      { skip: !user?.id || !electionsData.current }
     );
 
   const electronicVotingElections = (elections?.member || []).filter(

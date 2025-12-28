@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Dto\LocationDto;
 use App\Dto\RoleDto;
+use App\Dto\UserServiceDto;
 use App\Dto\ZoneDto;
 use App\Repository\UserRepository;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -37,17 +38,27 @@ class ISProvider extends AbstractProvider
 
     public function getBaseAuthorizationUrl()
     {
-        return 'https://is.sh.cvut.cz/oauth/authorize';
+        return $this->baseApiUri . '/oauth/authorize';
     }
 
     public function getBaseAccessTokenUrl(array $params)
     {
-        return 'https://is.sh.cvut.cz/oauth/token';
+        return $this->baseApiUri . '/oauth/token';
     }
 
     public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
         return $this->baseApiUri . '/v1/users/me';
+    }
+
+    public function getLocationUrl(): string
+    {
+        return $this->baseApiUri . '/v1/rooms/mine';
+    }
+
+    public function getActiveServicesUrl(): string
+    {
+        return $this->baseApiUri . '/v1/services/mine';
     }
 
     protected function getDefaultScopes()
@@ -85,11 +96,6 @@ class ISProvider extends AbstractProvider
         return $user;
     }
 
-    public function getLocationUrl(): string
-    {
-        return $this->baseApiUri . '/v1/rooms/mine';
-    }
-
     public function getLocation(AccessToken $accessToken): LocationDto
     {
         $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getLocationUrl(), $accessToken);
@@ -117,5 +123,14 @@ class ISProvider extends AbstractProvider
         $response = $this->getParsedResponse($request);
 
         return array_map(fn($data) => new RoleDto($data['role'], $data['name'], $data['note'] ?? '', $data['name']), $response);
+    }
+
+    /** @return UserServiceDto[] */
+    public function getUserActiveServices(AccessToken $accessToken): array
+    {
+        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getActiveServicesUrl(), $accessToken);
+        $response = $this->getParsedResponse($request);
+
+        return array_map(fn($data) => new UserServiceDto($data['from'], $data['to'], $data['usetype'], $data['note'], $data['service']), $response);
     }
 }
