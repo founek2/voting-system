@@ -13,7 +13,7 @@ function Content() {
   if (isError) return <TypographyInfo>Nelze načíst data</TypographyInfo>;
   if (reports?.totalItems === 0)
     return (
-      <TypographyInfo>Nebyli nalezeny žádné závěrečné zprávy.</TypographyInfo>
+      <TypographyInfo>Nebyly nalezeny žádné závěrečné zprávy.</TypographyInfo>
     );
 
   return (
