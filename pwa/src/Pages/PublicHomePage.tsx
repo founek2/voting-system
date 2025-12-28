@@ -143,7 +143,7 @@ function FilesSection() {
           <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/stanovy">
             {t('files.clubStatus', { since: dateToString(new Date("2025-09-01")), interpolation: { escapeValue: false } })}
           </FileButton>
-          <FileButton href="https://zapisy.sh.cvut.cz/prilohy/20240515-Volebni-rad-klubu-Silicon-Hill.pdf">
+          <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/volebni_rad">
             {t('files.clubElectionRules', { since: dateToString(new Date("2024-05-15")), interpolation: { escapeValue: false } })}
           </FileButton>
           <Link to="/resolutions">
