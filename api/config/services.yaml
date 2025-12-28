@@ -26,7 +26,8 @@ services:
     App\Services\ISProvider:
         public: true
         arguments:
-            $baseApiUri: "%env(string:IS_USER_API_URL)%"
+            $oauthApiUri: "%env(string:IS_OAUTH_API_URL)%"
+            $oauthUri: "%env(string:IS_OAUTH_URL)%"
             $options:
                 clientId: "%env(string:OAUTH2_CLIENT_ID)%"
                 clientSecret: "%env(string:OAUTH2_CLIENT_SECRET)%"

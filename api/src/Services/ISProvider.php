@@ -17,7 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 class ISProvider extends AbstractProvider
 {
     public function __construct(
-        private string $baseApiUri,
+        private string $oauthApiUri,
+        private string $oauthUri,
         private UserRepository $userRepository,
         array $options = [],
         array $collaborators = [],
@@ -38,27 +39,27 @@ class ISProvider extends AbstractProvider
 
     public function getBaseAuthorizationUrl()
     {
-        return $this->baseApiUri . '/oauth/authorize';
+        return $this->oauthUri . '/oauth/authorize';
     }
 
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->baseApiUri . '/oauth/token';
+        return $this->oauthUri . '/oauth/token';
     }
 
     public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
-        return $this->baseApiUri . '/v1/users/me';
+        return $this->oauthApiUri . '/v1/users/me';
     }
 
     public function getLocationUrl(): string
     {
-        return $this->baseApiUri . '/v1/rooms/mine';
+        return $this->oauthApiUri . '/v1/rooms/mine';
     }
 
     public function getActiveServicesUrl(): string
     {
-        return $this->baseApiUri . '/v1/services/mine';
+        return $this->oauthApiUri . '/v1/services/mine';
     }
 
     protected function getDefaultScopes()
@@ -113,7 +114,7 @@ class ISProvider extends AbstractProvider
 
     public function getUserRolesUrl(): string
     {
-        return $this->baseApiUri . '/v1/user_roles/mine';
+        return $this->oauthApiUri . '/v1/user_roles/mine';
     }
 
     /** @return RoleDto[] */
