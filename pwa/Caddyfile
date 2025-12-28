@@ -18,11 +18,25 @@
 		}
 	}
 
+    @index {
+        path /
+        path /index.html
+    }
+
+    header @index {
+        Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Pragma "no-cache"
+        Expires 0
+    }
+
     # Set this path to your site's directory.
     root * /usr/share/caddy
 
     # Enable the static file server.
     file_server
+
+    $ Enable compression
+    encode zstd gzip
 
     # Redirect all missmatched paths to index.html -> this is the way how PWA works
     try_files {path} /index.html
