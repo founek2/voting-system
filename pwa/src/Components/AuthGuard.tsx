@@ -11,6 +11,7 @@ export default function AuthGuard() {
   const loggedId = useAppSelector((state) => state.authorization.loggedIn);
   const location = useLocation();
 
+  console.log("authGuard", location.search, location.pathname)
   if (!loggedId && data?.authorizationUrl) {
     internalStorage.setOriginalUrl(location.pathname);
     window.location.assign(data.authorizationUrl);

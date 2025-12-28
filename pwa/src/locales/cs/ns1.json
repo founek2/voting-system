@@ -130,5 +130,11 @@
         "electionComiteeMembers": "Komise",
         "userDashboard": "Aktuální volby",
         "signOut": "Odhlásit"
+    },
+    "userDashboard": {
+        "ongoingVoting": "Probíhající hlasování",
+        "noOngoingVoting": "Neprobíhá žádné elektronické hlasování",
+        "yourCandidatures": "Podané kandidátky",
+        "noCandidatures": "Nemáte žádné podané kandidátky"
     }
 }

@@ -6,6 +6,7 @@ import OAuthCallback from "../Pages/OAuthCallback";
 import PublicHomePage from "../Pages/PublicHomePage";
 import PublicReportPage from "../Pages/PublicReportPage";
 import PublicResolutionPage from "../Pages/PublicResolutionPage";
+import { SignOutPage } from "../Pages/SignOutPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
         path: "resolutions",
         element: <PublicResolutionPage />,
       },
+      {
+        path: "signOut",
+        element: <SignOutPage />
+      }
     ],
   },
   {

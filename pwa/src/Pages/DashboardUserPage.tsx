@@ -73,7 +73,7 @@ export function Component() {
       <Grid container spacing={2} size={12}>
         <Grid size={12} display="flex" alignItems="center">
           <Typography variant="h3" color="textPrimary" pr={1}>
-            Probíhající hlasování
+            {t("userDashboard.ongoingVoting")}
           </Typography>
         </Grid>
         <Grid container size={12} spacing={2}>
@@ -96,7 +96,7 @@ export function Component() {
               ))
             ) : (
               <TypographyInfo>
-                Neprobíhá žádné elektronické hlasování
+                {t("userDashboard.noOngoingVoting")}
               </TypographyInfo>
             )
           ) : (
@@ -108,7 +108,7 @@ export function Component() {
       <Grid container spacing={2} size={12}>
         <Grid size={12} display="flex" alignItems="center">
           <Typography variant="h3" color="textPrimary" component="span" pr={1}>
-            Podané kandidátky
+            {t("userDashboard.yourCandidatures")}
           </Typography>
           <AddCandidate
             disabled={registrationElections.length === 0}
@@ -128,7 +128,7 @@ export function Component() {
                 </Link>
               ))
             ) : (
-              <TypographyInfo>Nemáte žádné podané kandidátky</TypographyInfo>
+              <TypographyInfo>{t("userDashboard.noCandidatures")}</TypographyInfo>
             )
           ) : (
             <Loader />

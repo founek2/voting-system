@@ -130,5 +130,11 @@
         "electionComiteeMembers": "Committee",
         "userDashboard": "Current elections",
         "signOut": "Sign out"
+    },
+    "userDashboard": {
+        "ongoingVoting": "Ongoing voting",
+        "noOngoingVoting": "No ongoing electronic voting",
+        "yourCandidatures": "Your candidatures",
+        "noCandidatures": "You have no candidatures"
     }
 }

@@ -82,7 +82,6 @@ export function Component() {
   const [open, setOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [counter, setCount] = useState(0);
 
@@ -211,9 +210,7 @@ export function Component() {
             <ListItem key="logout" disablePadding>
               <ListItemButton
                 onClick={() => {
-                  dispatch(authorizationReducerActions.signOut());
-                  enqueueSnackbar("Byl jste odhlášen");
-                  navigate("/");
+                  navigate("/signOut");
                 }}
               >
                 <ListItemIcon>
