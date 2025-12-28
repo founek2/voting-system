@@ -10,7 +10,6 @@ use App\Dto\LoginResponseDto;
 use App\Entity\User;
 use App\Services\ISProvider;
 use App\Services\UserService;
-use App\Validator\UserLivesInStrahov;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class LoginProcessor implements ProcessorInterface
@@ -36,8 +35,6 @@ class LoginProcessor implements ProcessorInterface
         /** @var User */
         $user = $this->iSProvider->getResourceOwner($token);
         $this->userService->refresh($user, $token);
-
-        $this->validator->validate($user, [new UserLivesInStrahov()]);
 
         return new LoginResponseDto($this->jwt->create($user),  $user->getAccessToken()->getExpires());
     }

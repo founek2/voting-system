@@ -69,11 +69,13 @@ final class VoteCandidateFilter extends AbstractFilter
             ->andWhere(sprintf('IDENTITY(v.appUser) = :%s', $userParam));
 
         $zoneParam = $queryNameGenerator->generateParameterName('zone');
+        $doorNumberParam = $queryNameGenerator->generateParameterName('doorNumber');
         $qb = $queryBuilder->getEntityManager()->createQueryBuilder();
         $allowedPositionsSubQuery = $qb->select('p.id')
             ->from(Position::class, 'p')
             ->leftJoin('p.zoneRestrictions', 'zone')
-            ->andWhere(sprintf('zone = :%s OR zone IS NULL', $zoneParam));
+            // Only door number with numbers are legitimite for zone restrictions
+            ->andWhere(sprintf("(zone = :%s AND :%s LIKE '%[0-9]%') OR zone IS NULL", $zoneParam, $doorNumberParam));
 
         $queryBuilder
             ->andWhere($queryBuilder->expr()->in(sprintf('IDENTITY(%s.position)', $alias), $allowedPositionsSubQuery->getDQL()));
@@ -88,6 +90,7 @@ final class VoteCandidateFilter extends AbstractFilter
 
         $queryBuilder->setParameter($userParam, $user->getId());
         $queryBuilder->setParameter($zoneParam, $user->getZone());
+        $queryBuilder->setParameter($doorNumberParam, $user->getDoorNumber());
     }
     /*
      * This function is only used to hook in documentation generators (supported by Swagger and Hydra).

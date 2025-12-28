@@ -38,7 +38,7 @@ class BallotResourceAllowedValidator extends ConstraintValidator
 
         foreach ($ballot->getVotes() as $vote) {
             $zones = $vote->getCandidate()->getPosition()->getZoneRestrictions();
-            $zoneWhitelisted = $zones->findFirst(fn($_, Zone $zone) => $user->getZone()->getId() == $zone->getId());
+            $zoneWhitelisted = $zones->findFirst(fn($_, Zone $zone) => $user->getZone()->getId() == $zone->getId() && $user->livesAtStrahov());
 
             if (!$zoneWhitelisted && $zones->count() > 0) {
                 $this->context

@@ -334,4 +334,9 @@ class User implements ResourceOwnerInterface, UserInterface
 
         return $this;
     }
+
+    public function livesAtStrahov(): bool
+    {
+        return preg_match('/[0-9]/', $this->getDoorNumber()) == 1;
+    }
 }
