@@ -7,6 +7,7 @@ import { enqueueSnackbar } from "notistack";
 import Loader from "../Components/Loader";
 import internalStorage from "../storage/internalStorage";
 import { Link } from "react-router-dom";
+import { handleError } from "../util/handleError";
 
 let firsRender = true;
 
@@ -23,10 +24,7 @@ export default function OAuthCallback() {
 
     const result = await signIn({ code });
     if (result.error) {
-      enqueueSnackbar({
-        message: "Nastala chyba při přihlašování. Zkuste to znovu",
-        variant: "error",
-      });
+      handleError(result.error, 'Nastala chyba při přihlašování. Zkuste to znovu');
     } else {
       const originalUrl = internalStorage.popOriginalUrl();
       if (originalUrl) navigate(originalUrl);
