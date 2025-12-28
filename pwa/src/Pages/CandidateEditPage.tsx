@@ -60,7 +60,7 @@ export function Component() {
     if (result.error) {
       handleError(result.error);
     } else {
-      enqueueSnackbar("Kandidátka zrušena");
+      enqueueSnackbar("Kandidátka stažena");
       navigate("/auth/user");
     }
   }
