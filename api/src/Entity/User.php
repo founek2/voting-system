@@ -42,7 +42,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['votes.candidate.election' => 'exact', 'zone' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: [
+    'votes.candidate.election' => 'exact',
+    'votes.candidate.position' => 'exact',
+    'zone' => 'exact'
+])]
 #[ApiFilter(ExistsFilter::class, properties: ['votes.invalidatedAt'])]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
