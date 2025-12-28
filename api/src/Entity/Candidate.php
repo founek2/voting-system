@@ -310,4 +310,16 @@ class Candidate
 
         return $this;
     }
+
+    #[Groups(groups: ["candidate:read"])]
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    #[Groups(groups: ["candidate:read"])]
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 }

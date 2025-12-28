@@ -409,4 +409,16 @@ class Election
 
         return $this;
     }
+
+    #[Groups(groups: ["election:read"])]
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    #[Groups(groups: ["election:read"])]
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 }
