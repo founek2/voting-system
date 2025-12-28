@@ -13,7 +13,7 @@ export default function PublicElectionStepper() {
   const { data: elections, isLoading } = useGetPublicElectionsQuery(undefined, {
     refetchOnFocus: true,
   });
-  const electionData = splitElections(elections?.member || []);
+  const electionData = splitElections(elections?.member || [], { stillCurrentAfterDays: 15 });
   const ongoingElection = head(electionData.current);
   const {
     data: candidates,
