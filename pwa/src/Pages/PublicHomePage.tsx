@@ -141,10 +141,10 @@ function FilesSection() {
           sx={{ width: "100%", display: "flex", flexDirection: "column", p: 2 }}
         >
           <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/stanovy">
-            {t('files.clubStatus', { since: dateToString(new Date("2025-09-01")), interpolation: { escapeValue: false } })}
+            {t('files.clubStatus')}
           </FileButton>
           <FileButton href="https://wiki.sh.cvut.cz/vedeni/dokumenty/predpisy/volebni_rad">
-            {t('files.clubElectionRules', { since: dateToString(new Date("2024-05-15")), interpolation: { escapeValue: false } })}
+            {t('files.clubElectionRules')}
           </FileButton>
           <Link to="/resolutions">
             <Button color="secondary">{t('files.resolutions')}</Button>
