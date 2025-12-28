@@ -53,8 +53,8 @@
         "title": "Documents",
         "resolutions": "Election committee resolutions",
         "reports": "Final reports",
-        "clubStatus": "Silicon Hill Club Statutes (effective from {{since}})",
-        "clubElectionRules": "Silicon Hill Club Election Rules (effective from {{since}})"
+        "clubStatus": "Silicon Hill Club Statutes",
+        "clubElectionRules": "Silicon Hill Club Election Rules"
     },
     "information": {
         "title": "Basic information",
