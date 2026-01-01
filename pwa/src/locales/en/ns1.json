@@ -111,6 +111,7 @@
         "actionAdmin": "Administration",
         "actionEnter": "Enter",
         "actionPoster": "Show poster",
+        "actionMainPage": "Main page",
         "position": "Position",
         "name": "Name",
         "poster": "Poster",
@@ -136,5 +137,8 @@
         "noOngoingVoting": "No ongoing electronic voting",
         "yourCandidatures": "Your candidatures",
         "noCandidatures": "You have no candidatures"
+    },
+    "oauth": {
+        "loginError": "An error occurred during login. Please try again."
     }
 }

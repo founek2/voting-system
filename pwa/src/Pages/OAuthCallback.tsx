@@ -5,12 +5,14 @@ import Loader from "../Components/Loader";
 import { useSignInMutation } from "../endpoints/signIn";
 import internalStorage from "../storage/internalStorage";
 import { handleError } from "../util/handleError";
+import { useTranslation } from "react-i18next";
 
 export default function OAuthCallback() {
   const [params, setParams] = useSearchParams({ code: "" });
   const [signIn, { isLoading }] = useSignInMutation();
   const navigate = useNavigate();
   const initialized = useRef(false)
+  const { t } = useTranslation()
   const code = params.get("code");
 
   async function run() {
@@ -20,7 +22,7 @@ export default function OAuthCallback() {
 
     const result = await signIn({ code });
     if (result.error) {
-      handleError(result.error, 'Nastala chyba při přihlašování. Zkuste to znovu');
+      handleError(result.error, t("oauth.loginError"));
     } else {
       const originalUrl = internalStorage.popOriginalUrl();
       if (originalUrl) navigate(originalUrl);
@@ -38,9 +40,9 @@ export default function OAuthCallback() {
 
   return (
     <Typography color="textPrimary">
-      Nastala chyba v procesu přihlašování. Zkuste to znovu.{" "}
+      {t("oauth.loginError")}{" "}
       <Link to="/">
-        <Button>Hlavní stránka</Button>
+        <Button>{t("common.actionMainPage")}</Button>
       </Link>
     </Typography>
   );

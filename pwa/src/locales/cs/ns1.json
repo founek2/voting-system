@@ -111,6 +111,7 @@
         "actionAdmin": "Administrace",
         "actionEnter": "Vstoupit",
         "actionPoster": "Zobrazit plakát",
+        "actionMainPage": "Hlavní stránka",
         "position": "Pozice",
         "name": "Jméno",
         "poster": "Plakát",
@@ -136,5 +137,8 @@
         "noOngoingVoting": "Neprobíhá žádné elektronické hlasování",
         "yourCandidatures": "Podané kandidátky",
         "noCandidatures": "Nemáte žádné podané kandidátky"
+    },
+    "oauth": {
+        "loginError": "Nastala chyba při přihlašování. Zkuste to znovu."
     }
 }
