@@ -13,6 +13,9 @@ use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ISProvider extends AbstractProvider
 {
@@ -20,6 +23,7 @@ class ISProvider extends AbstractProvider
         private string $oauthApiUri,
         private string $oauthUri,
         private UserRepository $userRepository,
+        private DenormalizerInterface $normalizer,
         array $options = [],
         array $collaborators = [],
     ) {
@@ -78,7 +82,7 @@ class ISProvider extends AbstractProvider
     {
         $status = $response->getStatusCode();
         if ($status != 200) {
-            throw new IdentityProviderException('Invalid status code',  $status, $response);
+            throw new IdentityProviderException(sprintf('Invalid status code: %s', $status),  $status, $response);
         }
     }
 
@@ -132,6 +136,7 @@ class ISProvider extends AbstractProvider
         $request = $this->getAuthenticatedRequest(self::METHOD_GET, $this->getActiveServicesUrl(), $accessToken);
         $response = $this->getParsedResponse($request);
 
-        return array_map(fn($data) => new UserServiceDto($data['from'], $data['to'], $data['usetype'], $data['note'], $data['service']), $response);
+        $data = $this->normalizer->denormalize($response, UserServiceDto::class . '[]', 'json');
+        return $data;
     }
 }

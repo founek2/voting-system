@@ -1,25 +1,21 @@
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React, { Suspense, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSignInMutation } from "../endpoints/signIn";
-import { useAsyncEffect } from "../hooks/useAsyncEffect";
-import { enqueueSnackbar } from "notistack";
+import { Button, Typography } from "@mui/material";
+import React, { useEffect, useRef } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "../Components/Loader";
+import { useSignInMutation } from "../endpoints/signIn";
 import internalStorage from "../storage/internalStorage";
-import { Link } from "react-router-dom";
 import { handleError } from "../util/handleError";
-
-let firsRender = true;
 
 export default function OAuthCallback() {
   const [params, setParams] = useSearchParams({ code: "" });
-  const code = params.get("code");
   const [signIn, { isLoading }] = useSignInMutation();
   const navigate = useNavigate();
+  const initialized = useRef(false)
+  const code = params.get("code");
 
   async function run() {
-    if (!code || isLoading || !firsRender) return;
-    firsRender = false;
+    if (!code || isLoading) return;
+
     setParams(new URLSearchParams());
 
     const result = await signIn({ code });
@@ -33,6 +29,8 @@ export default function OAuthCallback() {
   }
 
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
     run();
   }, []);
 
