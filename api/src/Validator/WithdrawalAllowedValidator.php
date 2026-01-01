@@ -2,19 +2,14 @@
 
 namespace App\Validator;
 
-use App\Const\ElectionStage;
 use App\Entity\Candidate;
-use App\Entity\Position;
-use App\Repository\CandidateRepository;
-use App\Util\ArrayUtil;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class WithdrawalAllowedValidator extends ConstraintValidator
 {
-    public function __construct(private CandidateRepository $candidateRepository, private Security $security) {}
+    public function __construct() {}
 
     /** 
      * @param Candidate $candidate 
@@ -26,8 +21,8 @@ class WithdrawalAllowedValidator extends ConstraintValidator
             throw new UnexpectedValueException($candidate, Candidate::class);
         }
 
-        if (!$constraint instanceof CandidateAllowed) {
-            throw new UnexpectedValueException($constraint, CandidateAllowed::class);
+        if (!$constraint instanceof WithdrawalAllowed) {
+            throw new UnexpectedValueException($constraint, WithdrawalAllowed::class);
         }
 
         if (!$candidate->isWithdrawAllowed()) {

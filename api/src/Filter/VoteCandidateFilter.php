@@ -75,7 +75,13 @@ final class VoteCandidateFilter extends AbstractFilter
             ->from(Position::class, 'p')
             ->leftJoin('p.zoneRestrictions', 'zone')
             // Only door number with numbers are legitimite for zone restrictions
-            ->andWhere(sprintf("(zone = :%s AND :%s) OR zone IS NULL", $zoneParam, $livesAtStrahovParam));
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('zone', sprintf(':%s', $zoneParam)),
+                    $qb->expr()->eq('TRUE', sprintf(':%s', $livesAtStrahovParam))
+                ),
+                $qb->expr()->isNull('zone')
+            ));
 
         $queryBuilder
             ->andWhere($queryBuilder->expr()->in(sprintf('IDENTITY(%s.position)', $alias), $allowedPositionsSubQuery->getDQL()));
