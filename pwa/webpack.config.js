@@ -13,7 +13,7 @@ const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 
 const proxyTarget =
     process.env.PROXY === 'dev'
-        ? 'https://volby.sh.home.iotdomu.cz'
+        ? 'https://volby.dev.sh.cvut.cz/'
         : process.env.PROXY === 'prod'
             ? 'https://volby.sh.cvut.cz'
             : 'https://localhost';

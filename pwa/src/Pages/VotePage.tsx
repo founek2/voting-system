@@ -282,9 +282,10 @@ export function Component() {
   const { data: elections, isLoading: isLoadingElections } =
     useGetPublicElectionsElectronicQuery();
   const election = elections ? elections.member[0] : undefined;
-  const { data: candidatesData, isLoading: isLoadingCandidates } =
+  const { data: candidatesData, isLoading: isLoadingCandidates, isError } =
     useGetCandidatesUnvotedQuery(Number(election?.id), {
       skip: !election?.id,
+      refetchOnFocus: true
     });
   const methods = useForm<FormType>();
   const {
@@ -323,6 +324,8 @@ export function Component() {
   const handleOnSubmit = handleSubmit(onSubmit);
 
   const isLoading = isLoadingElections || isLoadingCandidates;
+
+  if (isError) return <Typography>Failed to load possible votes.</Typography>;
 
   return (
     <Grid container spacing={2}>

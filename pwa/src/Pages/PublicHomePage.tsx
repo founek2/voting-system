@@ -61,7 +61,7 @@ function StepperSection() {
 function CandidatesSection() {
   const { t } = useTranslation()
   const { data: elections, isLoading, isError } = useGetPublicElectionsQuery();
-  const electionData = splitElections(elections?.member || []);
+  const electionData = splitElections(elections?.member || [], { stillCurrentAfterDays: 15 });
   const ongoingElection = head(electionData.current);
   const {
     data: candidates,
