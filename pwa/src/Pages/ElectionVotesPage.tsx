@@ -1,6 +1,5 @@
 import {
   Autocomplete,
-  Box,
   Button,
   Divider,
   FormControl,
@@ -13,35 +12,33 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns/format";
+import { enqueueSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDebounce } from "use-debounce";
+import AlertDialog from "../Components/AlertDialog";
 import Loader from "../Components/Loader";
+import { TypographyInfo } from "../Components/TypographyInfo";
+import { VoteCard } from "../Components/VoteCard";
 import { useGetElectionQuery } from "../endpoints/elections";
+import { useGetPositionsQuery } from "../endpoints/positions";
 import {
   User_jsonld_user_read,
   User_jsonld_vote_read,
-  Vote_jsonld_vote_read,
-  Zone_jsonld_zone_read,
+  Zone_jsonld_zone_read
 } from "../endpoints/types";
+import { useGetVotedForElectionQuery } from "../endpoints/users";
 import {
-  useGetVotesForElectionQuery,
   useInvalidateVoteMutation,
-  useLazyGetVotesForElectionQuery,
+  useLazyGetVotesForElectionQuery
 } from "../endpoints/votes";
 import { useGetZonesQuery } from "../endpoints/zones";
+import { downloadBlob } from "../util/downloadBlob";
 import { electionTitle } from "../util/electionTitle";
-import AlertDialog from "../Components/AlertDialog";
 import { handleError } from "../util/handleError";
-import { enqueueSnackbar } from "notistack";
-import { CandidateVoteCard } from "../Components/CandidateVoteCard";
-import { VoteCard } from "../Components/VoteCard";
-import { useDebounce } from "use-debounce";
-import { useGetVotedForElectionQuery } from "../endpoints/users";
-import { TypographyInfo } from "../Components/TypographyInfo";
-import { Controller } from "react-hook-form";
-import { useGetPositionsQuery } from "../endpoints/positions";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -251,6 +248,20 @@ export function Component() {
     }
   }
 
+  function handleDownloadCSV() {
+    if (!filteredUsers) return;
+
+    const header = `uuid,first name,last name,zone,door number\n`
+    const data = filteredUsers
+      .map(user => {
+        const zone = zones?.member.find(z => z["@id"] === user.zone);
+        return `${user.id},${user.firstName},${user.lastName},${zone?.name},${user.doorNumber}`
+      })
+      .join('\n')
+    const csv = header + data;
+    downloadBlob(csv, `hlasy_${format(new Date(), 'yyyy-MM-dd')}.csv`, 'text/csv;charset=utf-8;')
+  }
+
   if (isLoading) return <Loader />;
   if (isError || !election)
     return (
@@ -307,6 +318,9 @@ export function Component() {
               (position) => position["@id"] == positionFilter
             ) || { "@id": "", "@type": "", name: "" }}
           />
+        </Grid>
+        <Grid display="flex" alignItems="center" >
+          <Button onClick={handleDownloadCSV}>Exportovat do CSV</Button>
         </Grid>
         <Grid container size={{ xs: 12, xl: 8 }} spacing={2}>
           {!isLoadingUsers ? (
