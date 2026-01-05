@@ -47,7 +47,7 @@ export function ElectionEmailsForm({ onSendSingle, onSendAll, disabled }: Electi
         </Grid>
         <Grid>
             <Grid >
-                <Button variant="contained" disabled={disabled} onClick={() => setOpenDialog(true)} >Odeslat upozornění všem členům SH</Button>
+                <Button variant="contained" disabled={disabled} onClick={() => setOpenDialog(true)} >Odeslat upozornění členům SH</Button>
             </Grid>
         </Grid>
     </Grid >
@@ -55,8 +55,8 @@ export function ElectionEmailsForm({ onSendSingle, onSendAll, disabled }: Electi
             open={openDialog}
             onClose={() => setOpenDialog(false)}
             onConfirm={onConfirm}
-            title="Opravdu si přeješ odeslat všem emailové upozornění na volby?"
-            description="Email bude odeslán všem členům klubu Silicon Hill. Tento seznam se načítá z ISu přes API."
+            title="Opravdu si přeješ odeslat emailové upozornění na volby?"
+            description="Email bude odeslán všem aktivním členům klubu Silicon Hill, kterých se dané volby týkají. Tedy pro volbu pozice s restrikcí bloku, pouze členům, kteří v daném bloku jsou umístěni. Pro volby na pozice bez resrikce je email odeslán všem aktivním členům. Filtrují se vždy účty s UID větším než 1000."
         />
     </>
 }
