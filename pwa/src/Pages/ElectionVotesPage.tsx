@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   Divider,
@@ -39,6 +40,8 @@ import { VoteCard } from "../Components/VoteCard";
 import { useDebounce } from "use-debounce";
 import { useGetVotedForElectionQuery } from "../endpoints/users";
 import { TypographyInfo } from "../Components/TypographyInfo";
+import { Controller } from "react-hook-form";
+import { useGetPositionsQuery } from "../endpoints/positions";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -179,6 +182,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
 export function Component() {
   const params = useParams<{ id: string }>();
   const [zoneValue, setZoneValue] = useState("");
+  const [positionFilter, setPositionFilter] = useState<string>('');
   const {
     data: election,
     isLoading,
@@ -186,7 +190,7 @@ export function Component() {
   } = useGetElectionQuery(Number(params.id));
   const { data: users, isLoading: isLoadingUsers } =
     useGetVotedForElectionQuery(
-      { electionId: election?.["@id"]!, zoneId: zoneValue },
+      { electionId: election?.["@id"]!, zoneId: zoneValue ? zoneValue : undefined, positionId: positionFilter ? positionFilter : undefined },
       {
         skip: !election,
       }
@@ -202,6 +206,12 @@ export function Component() {
   );
   const [getVotes, { isLoading: isLoadingVotes }] =
     useLazyGetVotesForElectionQuery();
+  const { data: allPositions } = useGetPositionsQuery();
+  const availablePositions =
+    allPositions?.member.filter((position) =>
+      election?.positions?.includes(position["@id"] || "")
+    ) || [];
+  // availablePositions.push({ "@id": "", "@type": "", "name": "Nevybráno" })
 
   useEffect(() => {
     if (!users?.member) return;
@@ -281,6 +291,22 @@ export function Component() {
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid size={{ xs: 12, md: 4, lg: 2 }}>
+          <Autocomplete
+            options={availablePositions}
+            getOptionKey={(z) => z["@id"]!}
+            getOptionLabel={(z) => z.name!}
+            renderInput={(params) => (
+              <TextField {...params} label="Vyberte pozici" />
+            )}
+            onChange={(e, value) => {
+              setPositionFilter(value?.["@id"] || '');
+            }}
+            value={availablePositions.find(
+              (position) => position["@id"] == positionFilter
+            ) || { "@id": "", "@type": "", name: "" }}
+          />
         </Grid>
         <Grid container size={{ xs: 12, xl: 8 }} spacing={2}>
           {!isLoadingUsers ? (
