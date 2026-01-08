@@ -99,7 +99,7 @@ export default function ReportForm({
 
                         <Grid size={{ xs: 12, md: 6, lg: 6 }}>
                             <MyDatePickerControlled
-                                label="Datum zvěřejnění"
+                                label="Datum zveřejnění"
                                 name="publishedAt"
                                 rules={{ required: true }}
                                 control={control}
@@ -120,7 +120,7 @@ export default function ReportForm({
                                                 if (e) setFileUrl(URL.createObjectURL(e));
                                                 else setFileUrl(undefined);
                                             }}
-                                            label="Vyberte zprávu"
+                                            label="Vyberte právu"
                                             placeholder="Klikněte pro výběr souboru"
                                             InputProps={{
                                                 startAdornment: <AttachFileIcon />,
