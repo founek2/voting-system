@@ -22,12 +22,16 @@ import { electionTitle } from "../util/electionTitle";
 type ReportFormData = {
     file: File;
     name: string;
-    publishedAt: string;
+    publishedAt: Date | string;
     election: string | null;
+};
+
+type ReportFormDataResult = Omit<ReportFormData, 'publishedAt'> & {
+    publishedAt: string;
 };
 interface CandidateFormProps {
     defaultValues?: Partial<MediaReport_jsonld_media_read>;
-    onSubmit: SubmitHandler<ReportFormData>;
+    onSubmit: SubmitHandler<ReportFormDataResult>;
     onDelete?: (file: Partial<MediaReport_jsonld_media_read>) => Promise<any>;
     disabled?: boolean;
     edit?: boolean;
@@ -49,7 +53,10 @@ export default function ReportForm({
     } = useForm<ReportFormData>({
         defaultValues,
     });
-    const handleOnSubmit = handleSubmit((a) => onSubmit(a));
+    const handleOnSubmit = handleSubmit((a) => onSubmit({
+        ...a,
+        publishedAt: a.publishedAt instanceof Date ? a.publishedAt.toISOString() : a.publishedAt,
+    }));
     const [currentFileUrl, setFileUrl] = useState<string>();
     const fileUrl = currentFileUrl || defaultValues?.contentUrl;
     const [openDialog, setOpenDialog] = useState(false);

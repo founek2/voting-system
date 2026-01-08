@@ -1,10 +1,8 @@
-import { PickerValidDate } from "@mui/x-date-pickers/models/pickers";
 import {
-  DatePickerProps,
-  DatePicker as OriginalDatePicker,
+  DatePicker as OriginalDatePicker
 } from "@mui/x-date-pickers/DatePicker";
 import React from "react";
-import { ChangeHandler, Controller, FieldPath, FieldValues, UseControllerProps } from "react-hook-form";
+import { Controller, FieldPath, FieldValues, UseControllerProps } from "react-hook-form";
 
 export function MyDatePickerControlled<
   TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -14,6 +12,7 @@ export function MyDatePickerControlled<
     name,
     defaultValue,
     label,
+    ...props
   }: UseControllerProps<TFieldValues, TName> & { label: string },
 ) {
   return (
@@ -21,6 +20,7 @@ export function MyDatePickerControlled<
       name={name}
       defaultValue={defaultValue ? (new Date(defaultValue) as any) : undefined}
       control={control}
+      {...props}
       render={({ field }) => {
         return <OriginalDatePicker
           slotProps={{ textField: { fullWidth: true } }}
