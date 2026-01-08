@@ -4,44 +4,34 @@ import {
   DatePicker as OriginalDatePicker,
 } from "@mui/x-date-pickers/DatePicker";
 import React from "react";
-import { ChangeHandler } from "react-hook-form";
+import { ChangeHandler, Controller, FieldPath, FieldValues, UseControllerProps } from "react-hook-form";
 
-type CustomDatePickerProps<
-  TEnableAccessibleFieldDOMStructure extends boolean = false
-> = Omit<
-  DatePickerProps<TEnableAccessibleFieldDOMStructure> & React.RefAttributes<HTMLDivElement>,
-  "onChange" | "defaultValue"
-> & {
-  onChange: ChangeHandler;
-  defaultValue?: string | null;
-};
-export const MyDatePicker = React.forwardRef(function <
-  TDate extends PickerValidDate,
-  TEnableAccessibleFieldDOMStructure extends boolean = false
+export function MyDatePickerControlled<
+  TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(
   {
-    onChange,
+    control,
     name,
     defaultValue,
-    value,
-    ...props
-  }: CustomDatePickerProps<TEnableAccessibleFieldDOMStructure>,
-  ref: React.Ref<HTMLInputElement>
+    label,
+  }: UseControllerProps<TFieldValues, TName> & { label: string },
 ) {
   return (
-    <OriginalDatePicker
-      inputRef={ref}
-      slotProps={{ textField: { fullWidth: true } }}
-      onChange={(date) => {
-        if (isNaN(date as any)) {
-          onChange({ target: { value, name: name } });
-        } else {
-          onChange({ target: { value: date?.toISOString(), name: name } });
-        }
-      }}
+    <Controller
       name={name}
       defaultValue={defaultValue ? (new Date(defaultValue) as any) : undefined}
-      {...props}
+      control={control}
+      render={({ field }) => {
+        return <OriginalDatePicker
+          slotProps={{ textField: { fullWidth: true } }}
+          label={label}
+          value={field.value ? new Date(field.value) : null}
+          onChange={(date) => {
+            field.onChange(date)
+          }}
+          name={name}
+        />
+      }}
     />
   );
-});
+};

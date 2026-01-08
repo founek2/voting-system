@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
-import { MyDatePicker } from "../Components/MyDatePicker";
+import { MyDatePickerControlled } from "../Components/MyDatePicker";
 import {
   Election_election_write,
   Position_jsonld_position_read,
@@ -66,7 +66,8 @@ function getEndDate(
   const nextDateStr = election[nextKey];
   if (!nextDateStr) return "";
 
-  let nextDate = parse(nextDateStr, "dd.MM.yyyy", new Date());
+
+  let nextDate = (nextDateStr as any instanceof Date) ? new Date(nextDateStr) : parse(nextDateStr, "dd.MM.yyyy", new Date());
   if (isNaN(nextDate.getTime())) {
     nextDate = new Date(nextDateStr);
   }
@@ -84,13 +85,14 @@ function ElectionForm({
   onSubmit,
   disabled,
 }: ElectionFormProps) {
-  const methods = useForm<Election_election_write>();
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors, },
-  } = methods;
+  } = useForm<Election_election_write>({ defaultValues });
+
   const { data: positions } = useGetPositionsQuery();
 
   const handleOnSubmit = handleSubmit(onSubmit);
@@ -115,10 +117,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
+          name="announcementDate"
           label="Vyhlášení voleb"
-          {...register("announcementDate", { required: true })}
-          defaultValue={defaultValues?.announcementDate}
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -130,10 +133,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Přihlašování kandidátů"
-          {...register("registrationOfCandidatesDate", { required: true })}
-          defaultValue={defaultValues?.registrationOfCandidatesDate}
+          name="registrationOfCandidatesDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -145,10 +149,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Volební kampaň"
-          {...register("campaignDate", { required: true })}
-          defaultValue={defaultValues?.campaignDate}
+          name="campaignDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -160,10 +165,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Elektronické hlasování"
-          {...register("electronicVotingDate", { required: true })}
-          defaultValue={defaultValues?.electronicVotingDate}
+          name="electronicVotingDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -175,10 +181,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Urnové hlasování"
-          {...register("ballotVotingDate", { required: true })}
-          defaultValue={defaultValues?.ballotVotingDate}
+          name="ballotVotingDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -190,10 +197,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Vyhlášení předběžných výsledků"
-          {...register("preliminaryResultsDate", { required: true })}
-          defaultValue={defaultValues?.preliminaryResultsDate}
+          name="preliminaryResultsDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -205,10 +213,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Uzávěr podávání stížností"
-          {...register("complaintsDeadlineDate", { required: true })}
-          defaultValue={defaultValues?.complaintsDeadlineDate}
+          name="complaintsDeadlineDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -220,10 +229,11 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Vyhodnocení výsledků"
-          {...register("countingVotesDate", { required: true })}
-          defaultValue={defaultValues?.countingVotesDate}
+          name="countingVotesDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
       <Grid size={dateSize}>
@@ -235,16 +245,17 @@ function ElectionForm({
       </Grid>
 
       <Grid size={dateSize}>
-        <MyDatePicker
+        <MyDatePickerControlled
           label="Vyhlášení konečných výsledků"
-          {...register("finalResultsDate", { required: true })}
-          defaultValue={defaultValues?.finalResultsDate}
+          name="finalResultsDate"
+          rules={{ required: true }}
+          control={control}
         />
       </Grid>
 
       <Grid size={{ xs: 12 }}>
         <Controller
-          control={methods.control}
+          control={control}
           name="positions"
           defaultValue={defaultValues?.positions}
           render={({ field }) => (

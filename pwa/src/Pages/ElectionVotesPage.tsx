@@ -1,5 +1,5 @@
 import {
-  Box,
+  Autocomplete,
   Button,
   Divider,
   FormControl,
@@ -12,33 +12,33 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns/format";
+import { enqueueSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDebounce } from "use-debounce";
+import AlertDialog from "../Components/AlertDialog";
 import Loader from "../Components/Loader";
+import { TypographyInfo } from "../Components/TypographyInfo";
+import { VoteCard } from "../Components/VoteCard";
 import { useGetElectionQuery } from "../endpoints/elections";
+import { useGetPositionsQuery } from "../endpoints/positions";
 import {
   User_jsonld_user_read,
   User_jsonld_vote_read,
-  Vote_jsonld_vote_read,
-  Zone_jsonld_zone_read,
+  Zone_jsonld_zone_read
 } from "../endpoints/types";
+import { useGetVotedForElectionQuery } from "../endpoints/users";
 import {
-  useGetVotesForElectionQuery,
   useInvalidateVoteMutation,
-  useLazyGetVotesForElectionQuery,
+  useLazyGetVotesForElectionQuery
 } from "../endpoints/votes";
 import { useGetZonesQuery } from "../endpoints/zones";
+import { downloadBlob } from "../util/downloadBlob";
 import { electionTitle } from "../util/electionTitle";
-import AlertDialog from "../Components/AlertDialog";
 import { handleError } from "../util/handleError";
-import { enqueueSnackbar } from "notistack";
-import { CandidateVoteCard } from "../Components/CandidateVoteCard";
-import { VoteCard } from "../Components/VoteCard";
-import { useDebounce } from "use-debounce";
-import { useGetVotedForElectionQuery } from "../endpoints/users";
-import { TypographyInfo } from "../Components/TypographyInfo";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -179,6 +179,7 @@ function VoteList({ users, disabled, zones, onInvalidate }: VoteListProps) {
 export function Component() {
   const params = useParams<{ id: string }>();
   const [zoneValue, setZoneValue] = useState("");
+  const [positionFilter, setPositionFilter] = useState<string>('');
   const {
     data: election,
     isLoading,
@@ -186,7 +187,7 @@ export function Component() {
   } = useGetElectionQuery(Number(params.id));
   const { data: users, isLoading: isLoadingUsers } =
     useGetVotedForElectionQuery(
-      { electionId: election?.["@id"]!, zoneId: zoneValue },
+      { electionId: election?.["@id"]!, zoneId: zoneValue ? zoneValue : undefined, positionId: positionFilter ? positionFilter : undefined },
       {
         skip: !election,
       }
@@ -202,6 +203,12 @@ export function Component() {
   );
   const [getVotes, { isLoading: isLoadingVotes }] =
     useLazyGetVotesForElectionQuery();
+  const { data: allPositions } = useGetPositionsQuery();
+  const availablePositions =
+    allPositions?.member.filter((position) =>
+      election?.positions?.includes(position["@id"] || "")
+    ) || [];
+  // availablePositions.push({ "@id": "", "@type": "", "name": "Nevybráno" })
 
   useEffect(() => {
     if (!users?.member) return;
@@ -239,6 +246,20 @@ export function Component() {
       enqueueSnackbar("Hlas byl zneplatněn");
       setSelectedVote(undefined);
     }
+  }
+
+  function handleDownloadCSV() {
+    if (!filteredUsers) return;
+
+    const header = `uuid,first name,last name,zone,door number\n`
+    const data = filteredUsers
+      .map(user => {
+        const zone = zones?.member.find(z => z["@id"] === user.zone);
+        return `${user.id},${user.firstName},${user.lastName},${zone?.name},${user.doorNumber}`
+      })
+      .join('\n')
+    const csv = header + data;
+    downloadBlob(csv, `hlasy_${format(new Date(), 'yyyy-MM-dd')}.csv`, 'text/csv;charset=utf-8;')
   }
 
   if (isLoading) return <Loader />;
@@ -281,6 +302,25 @@ export function Component() {
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid size={{ xs: 12, md: 4, lg: 2 }}>
+          <Autocomplete
+            options={availablePositions}
+            getOptionKey={(z) => z["@id"]!}
+            getOptionLabel={(z) => z.name!}
+            renderInput={(params) => (
+              <TextField {...params} label="Vyberte pozici" />
+            )}
+            onChange={(e, value) => {
+              setPositionFilter(value?.["@id"] || '');
+            }}
+            value={availablePositions.find(
+              (position) => position["@id"] == positionFilter
+            ) || { "@id": "", "@type": "", name: "" }}
+          />
+        </Grid>
+        <Grid display="flex" alignItems="center" >
+          <Button onClick={handleDownloadCSV}>Exportovat do CSV</Button>
         </Grid>
         <Grid container size={{ xs: 12, xl: 8 }} spacing={2}>
           {!isLoadingUsers ? (

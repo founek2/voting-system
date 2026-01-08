@@ -8,14 +8,15 @@ export const usersApi = api.injectEndpoints({
             query: () => `users/me`,
             providesTags: ['UserMe'],
         }),
-        getVotedForElection: build.query<Hydra<User_jsonld_user_read>, { electionId: string, zoneId?: string }>({
-            query: ({ electionId, zoneId }) => ({
+        getVotedForElection: build.query<Hydra<User_jsonld_user_read>, { electionId: string, zoneId?: string, positionId?: string }>({
+            query: ({ electionId, zoneId, positionId }) => ({
                 url: 'users',
                 params: {
                     'votes.candidate.election': electionId,
                     'exists[votes.invalidatedAt]': false,
                     'itemsPerPage': 2000,
-                    'zone': zoneId
+                    'zone': zoneId,
+                    'votes.candidate.position': positionId,
 
                 }
             }),
