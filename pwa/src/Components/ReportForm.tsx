@@ -127,7 +127,7 @@ export default function ReportForm({
                                                 if (e) setFileUrl(URL.createObjectURL(e));
                                                 else setFileUrl(undefined);
                                             }}
-                                            label="Vyberte právu"
+                                            label="Vyberte zprávu"
                                             placeholder="Klikněte pro výběr souboru"
                                             InputProps={{
                                                 startAdornment: <AttachFileIcon />,
