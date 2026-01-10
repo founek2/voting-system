@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(),
+        new GetCollection(uriTemplate: 'public/positions'),
         new Get(),
         new Post(security: 'user.hasRole("ROLE_ADMIN")'),
         new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
@@ -48,7 +49,6 @@ class Position
      * @var Collection<int, Candidate>
      */
     #[ORM\OneToMany(mappedBy: 'position', targetEntity: Candidate::class)]
-    #[Groups(['position:read'])]
     private Collection $candidates;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -59,7 +59,6 @@ class Position
      * @var Collection<int, Election>
      */
     #[ORM\ManyToMany(targetEntity: Election::class, mappedBy: 'positions')]
-    #[Groups(['position:read'])]
     private Collection $elections;
 
     /**
