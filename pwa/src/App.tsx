@@ -9,6 +9,7 @@ import { MyThemeProvider } from "./Containers/ThemeProvider";
 import { persistor, store } from "./store";
 import { ColorModeContext } from "./context/colorMode";
 import { PaletteMode } from "@mui/material";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 
 const COLOR_MODE_KEY = 'colorMode'
@@ -32,6 +33,10 @@ function App() {
       localStorage.setItem(COLOR_MODE_KEY, colorMode)
     }
   }, [colorMode])
+
+  useEffect(() => {
+    return setupListeners(store.dispatch)
+  }, [])
 
   return (
     <Provider store={store}>
