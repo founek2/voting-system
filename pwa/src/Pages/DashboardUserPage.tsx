@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { CandidateFancyCard } from "../Components/CandidateFancyCard";
 import { ElectionCard } from "../Components/ElectionCard";
 import Loader from "../Components/Loader";
-import { useGetCandidatesUnvotedQuery, useGetUserCandidatesQuery } from "../endpoints/candidates";
+import { useGetCandidatesUnvotedQuery, useGetCandidatesVotedQuery, useGetUserCandidatesQuery } from "../endpoints/candidates";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
 import { useAppSelector } from "../hooks/app";
 import { Election } from "../types";
@@ -15,6 +15,7 @@ import { splitElections } from "../util/splitElections";
 import { TypographyInfo } from "../Components/TypographyInfo";
 import { PositionElectionList } from "../Components/PositionElectionList";
 import { useTranslation } from "react-i18next";
+import { filterCandidateEligible } from "../util/filterCandidateEligible";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -67,6 +68,11 @@ export function Component() {
     useGetCandidatesUnvotedQuery(Number(ongoingElection?.id), {
       skip: !ongoingElection?.id,
     });
+  const { data: voted, isLoading: isLoadingVotedCandidates } =
+    useGetCandidatesVotedQuery(Number(ongoingElection?.id), {
+      skip: !ongoingElection?.id,
+    });
+  const avaiableCandidates = (candidatesUnvoted?.member || []).filter(filterCandidateEligible);
 
   return (
     <Grid container spacing={10}>
@@ -77,7 +83,7 @@ export function Component() {
           </Typography>
         </Grid>
         <Grid container size={12} spacing={2}>
-          {!isLoading ? (
+          {!isLoading && !isLoadingUnvotedCandidates ? (
             electronicVotingElections.length > 0 ? (
               electronicVotingElections.map((election) => (
                 <Grid size={{ xs: 12, md: 8, lg: 6, xl: 5 }} key={election.id}>
@@ -88,8 +94,10 @@ export function Component() {
                         election.electronicVotingDate
                       )} - ${dateToString(election.ballotVotingDate)}`}
                     >
-                      <PositionElectionList candidates={candidatesUnvoted?.member || []} />
-                      {candidatesUnvoted?.member.length === 0 ? <Typography>{t('vote.done')}</Typography> : null}
+                      <PositionElectionList candidates={avaiableCandidates} />
+                      {avaiableCandidates.length === 0 && (voted?.member.length || 0) > 0 ? <Typography>{t('vote.done')}</Typography> : null}
+                      {avaiableCandidates.length === 0 && (voted?.member.length || 0) === 0 ? <Typography>{t('vote.notEligible')}</Typography> : null}
+                      {avaiableCandidates.length > 0 && (voted?.member.length || 0) === 0 ? <Typography>{t('vote.enter')}</Typography> : null}
                     </ElectionCard>
                   </Link>
                 </Grid>

@@ -91,6 +91,8 @@
         "abstain": "Abstain",
         "candidateWithdrew": "Candidacy was withdrawn",
         "done": "You have already voted ✅",
+        "enter": "Enter electronic voting →",
+        "notEligible": "You are not eligible to vote in these elections",
         "voting": "Voting"
     },
     "candidates": {

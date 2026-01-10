@@ -49,7 +49,7 @@ export function ElectionCard({
   return (
     <Card sx={sx}>
       <CardHeader title={title ? title : electionTitle(election)} />
-      <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
+      <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         {!isMobile ? (
           <Box>
             <HowToVoteIcon fontSize="large" />

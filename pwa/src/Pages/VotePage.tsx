@@ -1,48 +1,39 @@
 import {
   Button,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-  Link as MuiLink,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Divider,
-  Box,
-  useMediaQuery,
-  useTheme,
-  FormLabel,
   FormControl,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  Typography,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import Loader from "../Components/Loader";
-import AddIcon from "@mui/icons-material/Add";
-import { useGetPositionsQuery } from "../endpoints/positions";
-import { PositionCard } from "../Components/PositionCard";
-import {
-  useGetElectionsQuery,
-  useGetPublicElectionsElectronicQuery,
-} from "../endpoints/elections";
-import { useGetCandidatesUnvotedQuery } from "../endpoints/candidates";
-import { Candidate_jsonld_candidate_read } from "../endpoints/types";
-import { ConditionalTooltip } from "../Components/ConditionalTooltip";
-import { isAfter, isBefore } from "date-fns";
-import { CandidateVoteCard } from "../Components/CandidateVoteCard";
-import { PosterButton } from "../Components/PosterButton";
 import {
   Control,
   Controller,
-  useFieldArray,
   useForm,
-  UseFormRegister,
+  UseFormRegister
 } from "react-hook-form";
-import { FormStatus } from "../Components/FormStatus";
-import { useAddBallotVoteMutation } from "../endpoints/ballots";
-import { handleError } from "../util/handleError";
-import { getCandidateStyle } from "../util/candidateOpacity";
 import { useTranslation } from "react-i18next";
+import { CandidateVoteCard } from "../Components/CandidateVoteCard";
+import { ConditionalTooltip } from "../Components/ConditionalTooltip";
+import { FormStatus } from "../Components/FormStatus";
+import Loader from "../Components/Loader";
+import { PosterButton } from "../Components/PosterButton";
+import { useAddBallotVoteMutation } from "../endpoints/ballots";
+import { useGetCandidatesUnvotedQuery, useGetCandidatesVotedQuery } from "../endpoints/candidates";
+import {
+  useGetPublicElectionsElectronicQuery
+} from "../endpoints/elections";
+import { Candidate_jsonld_candidate_read } from "../endpoints/types";
+import { getCandidateStyle } from "../util/candidateOpacity";
+import { filterCandidateEligible } from "../util/filterCandidateEligible";
+import { filterWithdrawBeforeVoting } from "../util/filterWithdrawBeforeVoting";
+import { handleError } from "../util/handleError";
 
 // Mobiles cannot show tables -> needs special view
 function VoteListMobile({
@@ -55,57 +46,62 @@ function VoteListMobile({
 
   return (
     <Grid container spacing={2} display="flex" justifyContent="center">
-      {candidates.map((candidate, i) => (
-        <CandidateVoteCard
-          candidate={candidate}
-          key={candidate.id}
-          sx={{ width: "100%" }}
-        >
-          {candidate.withdrewAt ? (
-            <Typography>{t('vote.candidateWithdrew')}</Typography>
-          ) : (
-            <>
-              <input
-                type="hidden"
-                value={candidate["@id"]}
-                {...register(`votes.${i}.candidate`)}
-              />
-              <Controller
-                control={control}
-                name={`votes.${i}.value`}
-                rules={{ required: true }}
-                defaultValue="0"
-                render={({ field }) => (
-                  <FormControl>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-radio-buttons-group-label"
-                      onChange={(val) => field.onChange(val.target.value)}
-                      value={field.value}
-                    >
-                      <FormControlLabel
-                        value="1"
-                        control={<Radio />}
-                        label={t('vote.agree')}
-                      />
-                      <FormControlLabel
-                        value="0"
-                        control={<Radio />}
-                        label={t('vote.abstain')}
-                      />
-                      <FormControlLabel
-                        value="-1"
-                        control={<Radio />}
-                        label={t('vote.against')}
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                )}
-              />
-            </>
-          )}
-        </CandidateVoteCard>
-      ))}
+      {candidates.map((candidate, i) => {
+        const withdrew = Boolean(candidate.withdrewAt || candidate.rejectedAt);
+        const opacity = getCandidateStyle(candidate);
+
+        return (
+          <CandidateVoteCard
+            candidate={candidate}
+            key={candidate.id}
+            sx={{ width: "100%", opacity: opacity.opacity }}
+          >
+            {candidate.withdrewAt ? (
+              <Typography>{t('vote.candidateWithdrew')}</Typography>
+            ) : (
+              <>
+                <input
+                  type="hidden"
+                  value={candidate["@id"]}
+                  {...register(`votes.${i}.candidate`)}
+                />
+                <Controller
+                  control={control}
+                  name={`votes.${i}.value`}
+                  rules={{ required: true }}
+                  defaultValue="0"
+                  render={({ field }) => (
+                    <FormControl>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        onChange={(val) => field.onChange(val.target.value)}
+                        value={field.value}
+                      >
+                        <FormControlLabel
+                          value="1"
+                          control={<Radio />}
+                          label={t('vote.agree')}
+                        />
+                        <FormControlLabel
+                          value="0"
+                          control={<Radio />}
+                          label={t('vote.abstain')}
+                        />
+                        <FormControlLabel
+                          value="-1"
+                          control={<Radio />}
+                          label={t('vote.against')}
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  )}
+                />
+              </>
+            )}
+          </CandidateVoteCard>
+        )
+      })}
       <Grid size={12} display="flex" justifyContent="center">
         <Button type="submit" disabled={disabled}>
           {t('common.actionVote')}
@@ -120,8 +116,9 @@ interface VoteListProps {
   disabled?: boolean;
   register: UseFormRegister<FormType>;
   control: Control<FormType, any>;
+  votedCandidates: Candidate_jsonld_candidate_read[];
 }
-function VoteList({ candidates, disabled, register, control }: VoteListProps) {
+function VoteList({ candidates, disabled, register, control, votedCandidates }: VoteListProps) {
   const { t } = useTranslation()
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -131,8 +128,11 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
   const sizeVoting = { sm: 3 };
   const sizePosition = { sm: 3 };
 
-  if (candidates.every((c) => Boolean(c.withdrewAt)))
+  const avaiableCandidates = candidates.filter(filterCandidateEligible);
+  if (avaiableCandidates.length === 0 && votedCandidates.length > 0)
     return <Typography color="textPrimary">{t('vote.done')}</Typography>;
+  if (avaiableCandidates.length === 0 && votedCandidates.length === 0)
+    return <Typography color="textPrimary">{t('vote.notEligible')}</Typography>;
 
   if (isMobile)
     return (
@@ -141,6 +141,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
         register={register}
         disabled={disabled}
         control={control}
+        votedCandidates={votedCandidates}
       />
     );
 
@@ -175,7 +176,7 @@ function VoteList({ candidates, disabled, register, control }: VoteListProps) {
           <Divider sx={{ mb: 2 }} />
         </Grid>
         {candidates.map((candidate, i) => {
-          const withdrew = Boolean(candidate.withdrewAt);
+          const withdrew = Boolean(candidate.withdrewAt || candidate.rejectedAt);
           const opacity = getCandidateStyle(candidate);
 
           return (
@@ -287,6 +288,11 @@ export function Component() {
       skip: !election?.id,
       refetchOnFocus: true
     });
+  const { data: votedData, isLoading: isLoadingVotedCandidates, isError: isErrorVoted } =
+    useGetCandidatesVotedQuery(Number(election?.id), {
+      skip: !election?.id,
+      refetchOnFocus: true
+    });
   const methods = useForm<FormType>();
   const {
     register,
@@ -297,11 +303,8 @@ export function Component() {
   } = methods;
   const [ballotVote, { isLoading: isMutating }] = useAddBallotVoteMutation();
 
-  const candidates = (candidatesData?.member || []).filter((c) =>
-    c.withdrewAt && election?.electronicVotingDate
-      ? isAfter(new Date(c.withdrewAt), new Date(election.electronicVotingDate))
-      : true
-  );
+  const candidates = (candidatesData?.member || []).filter(filterWithdrawBeforeVoting(election));
+  const votedCandidates = (votedData?.member || [])
 
   useEffect(() => {
     if (candidates.length) {
@@ -347,6 +350,7 @@ export function Component() {
         ) : (
           <VoteList
             candidates={candidates}
+            votedCandidates={votedCandidates}
             register={register}
             control={control}
             disabled={isMutating}

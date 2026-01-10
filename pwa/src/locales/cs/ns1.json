@@ -91,6 +91,8 @@
         "abstain": "Zdržuji se",
         "candidateWithdrew": "Kandidátka byla stažena",
         "done": "Již máte odhlasováno ✅",
+        "enter": "Vstupte k elektronickým volbám →",
+        "notEligible": "Nemáte právo hlasovat v těchto volbách",
         "voting": "Hlasování"
     },
     "candidates": {

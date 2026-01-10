@@ -72,15 +72,7 @@ export const signInApi = api.injectEndpoints({
         getCandidatesUnvoted: build.query<Hydra<Candidate>, number>({
             query: (electionId) => `elections/${electionId}/candidates?type=unvoted`,
             providesTags: ['Candidates', 'Votes'],
-            transformResponse: (data: Hydra<Candidate>) => {
-                data.member.sort((a, b) => {
-                    if (a.position && b.position) {
-                        return b.position.name!.localeCompare(a.position.name!);
-                    }
-                    return a.id! - b.id!;
-                })
-                return data;
-            }
+            transformResponse: orderByPosition
         }),
         addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_jsonld_candidate_write }>({
             query({ userId, body }) {
@@ -90,7 +82,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify(body),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         updateCandidate: build.mutation<Position_jsonld_position_read, { id: number, body: Candidate_candidate_edit }>({
             query({ id, body }) {
@@ -100,7 +92,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify(body),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         withdrawCandidate: build.mutation<void, number>({
             query(id) {
@@ -110,7 +102,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify({}),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         rejectCandidate: build.mutation<void, number>({
             query(id) {
@@ -120,7 +112,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify({}),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         markWinnerCandidate: build.mutation<void, number>({
             query(id) {
@@ -130,7 +122,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify({}),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         unmarkWinnerCandidate: build.mutation<void, number>({
             query(id) {
@@ -140,7 +132,7 @@ export const signInApi = api.injectEndpoints({
                     body: JSON.stringify({}),
                 };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         }),
         saveWinnerResult: build.mutation<void, ResultType>({
             async queryFn(results, _queryApi, _extraOptions, baseQuery) {
@@ -168,7 +160,7 @@ export const signInApi = api.injectEndpoints({
                 }
                 return { data: undefined };
             },
-            invalidatesTags: ['Candidates'],
+            invalidatesTags: ['Candidates', 'Elections'],
         })
     }),
 });
