@@ -60,7 +60,7 @@ function StepperSection() {
 
 function CandidatesSection() {
   const { t } = useTranslation()
-  const { data: elections, isLoading, isError } = useGetPublicElectionsQuery();
+  const { data: elections, isLoading, isError } = useGetPublicElectionsQuery(undefined, { refetchOnFocus: true });
   const electionData = splitElections(elections?.member || [], { stillCurrentAfterDays: 15 });
   const ongoingElection = head(electionData.current);
   const {
@@ -69,6 +69,7 @@ function CandidatesSection() {
     isError: errorCandidates,
   } = useGetPublicCandidatesQuery(Number(ongoingElection?.id!), {
     skip: !ongoingElection?.id,
+    refetchOnFocus: true,
   });
   const showResult = Boolean(
     ongoingElection?.evaluatedAt || ongoingElection?.completedAt
