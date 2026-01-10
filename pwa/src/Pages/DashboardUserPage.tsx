@@ -16,6 +16,7 @@ import { TypographyInfo } from "../Components/TypographyInfo";
 import { PositionElectionList } from "../Components/PositionElectionList";
 import { useTranslation } from "react-i18next";
 import { filterCandidateEligible } from "../util/filterCandidateEligible";
+import { useGetPublicPositionsQuery } from "../endpoints/positions";
 
 interface AddCandidateProps {
   disabled?: boolean;
@@ -55,6 +56,7 @@ export function Component() {
       },
       { skip: !user?.id || !electionsData.current }
     );
+  const { data: positions } = useGetPublicPositionsQuery()
 
   const electronicVotingElections = (elections?.member || []).filter(
     (e) => e.stage === "electronic_voting"
@@ -73,6 +75,7 @@ export function Component() {
       skip: !ongoingElection?.id,
     });
   const avaiableCandidates = (candidatesUnvoted?.member || []).filter(filterCandidateEligible);
+  const electionPositions = (positions?.member || []).filter(position => ongoingElection?.positions?.includes(position['@id']!))
 
   return (
     <Grid container spacing={10}>
@@ -94,7 +97,7 @@ export function Component() {
                         election.electronicVotingDate
                       )} - ${dateToString(election.ballotVotingDate)}`}
                     >
-                      <PositionElectionList candidates={avaiableCandidates} />
+                      <PositionElectionList positions={electionPositions} />
                       {avaiableCandidates.length === 0 && (voted?.member.length || 0) > 0 ? <Typography>{t('vote.done')}</Typography> : null}
                       {avaiableCandidates.length === 0 && (voted?.member.length || 0) === 0 ? <Typography>{t('vote.notEligible')}</Typography> : null}
                       {avaiableCandidates.length > 0 && (voted?.member.length || 0) === 0 ? <Typography>{t('vote.enter')}</Typography> : null}

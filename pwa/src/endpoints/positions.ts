@@ -8,6 +8,10 @@ export const signInApi = api.injectEndpoints({
             query: () => `positions`,
             providesTags: ['Positions'],
         }),
+        getPublicPositions: build.query<Hydra<Position_jsonld_position_read>, void>({
+            query: () => `public/positions`,
+            providesTags: ['Positions'],
+        }),
         getPosition: build.query<Position_jsonld_position_read, number>({
             query: (id) => `positions/${id}`,
             providesTags: ['Positions'],
@@ -35,4 +39,4 @@ export const signInApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetPositionsQuery, useUpdatePositionMutation, useAddPositionMutation, useGetPositionQuery } = signInApi;
+export const { useGetPositionsQuery, useGetPublicPositionsQuery, useUpdatePositionMutation, useAddPositionMutation, useGetPositionQuery } = signInApi;

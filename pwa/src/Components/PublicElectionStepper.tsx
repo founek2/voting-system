@@ -1,12 +1,12 @@
-import { Grid, Typography } from "@mui/material";
-import React, { useMemo } from "react";
+import { Typography } from "@mui/material";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { useGetPublicElectionsQuery } from "../endpoints/elections";
+import { useGetPublicPositionsQuery } from "../endpoints/positions";
 import { head } from "../util/head";
 import { splitElections } from "../util/splitElections";
 import ElectionStepper from "./ElectionStepper";
 import Loader from "./Loader";
-import { useTranslation } from "react-i18next";
-import { useGetPublicCandidatesQuery } from "../endpoints/candidates";
 
 export default function PublicElectionStepper() {
   const { t } = useTranslation()
@@ -16,14 +16,14 @@ export default function PublicElectionStepper() {
   const electionData = splitElections(elections?.member || [], { stillCurrentAfterDays: 15 });
   const ongoingElection = head(electionData.current);
   const {
-    data: candidates,
-  } = useGetPublicCandidatesQuery(Number(ongoingElection?.id!), {
-    skip: !ongoingElection?.id,
-  });
+    data: allPositions,
+  } = useGetPublicPositionsQuery(undefined);
+
   if (isLoading) return <Loader />;
+  const electionPositions = allPositions?.member.filter(position => ongoingElection?.positions?.includes(position['@id']!))
 
   return ongoingElection ? (
-    <ElectionStepper election={ongoingElection} candidates={candidates?.member} />
+    <ElectionStepper election={ongoingElection} positions={electionPositions} />
   ) : (
     <Typography color="textSecondary">
       {t('election.noElections')}

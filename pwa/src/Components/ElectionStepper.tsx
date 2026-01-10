@@ -13,7 +13,7 @@ import { TFunction } from "i18next";
 import * as React from "react";
 import { useTranslation, } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Candidate_jsonld_candidate_read } from "../endpoints/types";
+import { Position_jsonld_position_read } from "../endpoints/types";
 import { LocalizedLabelKey } from "../locales/i18n";
 import { Election } from "../types";
 import { dateToString } from "../util/dateToString";
@@ -49,7 +49,7 @@ function getStep(election: Election) {
 type StepType = {
   label: (election: Election) => LocalizedLabelKey;
   date: (election: Election) => string;
-  description: LocalizedLabelKey | ((election: Election, candidates: Candidate_jsonld_candidate_read[], t: TFunction<"ns1", undefined>) => JSX.Element);
+  description: LocalizedLabelKey | ((election: Election, positions: Position_jsonld_position_read[], t: TFunction<"ns1", undefined>) => JSX.Element);
   action?: (election: Election) => JSX.Element;
 };
 
@@ -101,13 +101,13 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: (election: Election, candidates: Candidate_jsonld_candidate_read[], t: TFunction<"ns1", undefined>) => (
+    description: (election: Election, positions: Position_jsonld_position_read[], t: TFunction<"ns1", undefined>) => (
       <>
         <Typography color="textSecondary" gutterBottom>
           {t('stepper.step3.description')}
         </Typography>
         <Typography color="textSecondary" > {t('stepper.step3.positionListTitle')}</Typography>
-        <PositionElectionList candidates={candidates} />
+        <PositionElectionList positions={positions} />
       </>
     ),
     action: (election: Election) => (
@@ -197,12 +197,12 @@ function AddTooltip({
 
 interface ElectionStepperProps {
   election: Election;
-  candidates: Candidate_jsonld_candidate_read[] | undefined
+  positions: Position_jsonld_position_read[] | undefined
   sx?: SxProps;
 }
 export default function ElectionStepper({
   election,
-  candidates,
+  positions,
   sx,
 }: ElectionStepperProps) {
   const activeStep = getStep(election);
@@ -212,7 +212,7 @@ export default function ElectionStepper({
     <Stepper activeStep={activeStep} orientation="vertical" sx={sx}>
       {steps.map((step, index) => {
         const description = typeof step.description === 'function'
-          ? step.description(election, candidates || [], t)
+          ? step.description(election, positions || [], t)
           : t(step.description) as string;
 
         return (
