@@ -91,6 +91,11 @@ const steps: readonly StepType[] = [
         }
       )}`,
     description: 'stepper.step2.description',
+    action: (election: Election) => (
+      <MuiLink href="#election.candidatesSigned">
+        <Button color="primary" sx={{ px: 0 }}><RawText textKey="election.candidatesSigned" /></Button>
+      </MuiLink>
+    ),
   },
   {
     label: (election: Election) => 'stepper.step3.label',

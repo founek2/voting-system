@@ -76,16 +76,17 @@ function CandidatesSection() {
   );
 
   if (!ongoingElection) return null;
+  const translationId = ongoingElection.completedAt
+    ? 'election.finalResults'
+    : ongoingElection.evaluatedAt
+      ? 'election.preliminaryResults'
+      : 'election.candidatesSigned'
 
   return (
     <Grid container spacing={4} size={12}>
       <Grid size={12} justifyContent="center" display="flex">
-        <Typography variant="h3" color="primary" textAlign="center">
-          {ongoingElection.completedAt
-            ? t('election.finalResults')
-            : ongoingElection.evaluatedAt
-              ? t('election.preliminaryResults')
-              : t('election.candidatesSigned')}
+        <Typography variant="h3" color="primary" textAlign="center" id={translationId}>
+          {t(translationId)}
         </Typography>
       </Grid>
 
