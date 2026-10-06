@@ -10,4 +10,5 @@ export function downloadBlob(content: string, filename: string, contentType: str
     pom.setAttribute('download', filename);
     pom.click();
     pom.remove()
+    URL.revokeObjectURL(url);
 }
