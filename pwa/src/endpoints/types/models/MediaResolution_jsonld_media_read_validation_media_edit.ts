@@ -1,0 +1,13 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
+export type MediaResolution_jsonld_media_read_validation_media_edit = (HydraItemBaseSchema & {
+    readonly id?: number;
+    readonly contentUrl?: string | null;
+    name?: string;
+    publishedAt?: string;
+    election?: string | null;
+});
+

@@ -67,6 +67,10 @@ class Position
     #[ORM\OneToMany(mappedBy: 'position', targetEntity: BoardMember::class)]
     private Collection $boardMembers;
 
+    #[ORM\Column(length: 1000, nullable: true)]
+    #[Groups(['position:read', 'position:write', 'candidate:read', 'member:public:read'])]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->zoneRestrictions = new ArrayCollection();
@@ -200,6 +204,18 @@ class Position
                 $boardMember->setPosition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

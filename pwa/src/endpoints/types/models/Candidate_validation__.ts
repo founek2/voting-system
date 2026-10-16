@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Candidate = {
+export type Candidate_validation__ = {
     readonly id?: number;
     election?: string;
     appUser?: string;

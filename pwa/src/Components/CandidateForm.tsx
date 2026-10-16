@@ -13,7 +13,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
 import { useGetPosterQuery } from "../endpoints/mediaPoster";
 import { useGetPositionsQuery } from "../endpoints/positions";
-import { Candidate_candidate_write } from "../endpoints/types";
+import { Candidate_candidate_write_validation_candidate_write } from "../endpoints/types";
 import { Candidate, Election } from "../types";
 import { parseId } from "../util/parseId";
 import AlertDialog from "./AlertDialog";
@@ -23,7 +23,7 @@ import { MyUploadFileInput } from "./MyUploadFileInput";
 
 interface CandidateFormProps {
   defaultValues?: Candidate;
-  onSubmit: SubmitHandler<Candidate_candidate_write>;
+  onSubmit: SubmitHandler<Candidate_candidate_write_validation_candidate_write>;
   onWithdraw?: () => any;
   onReject?: () => any;
   disabled?: boolean;
@@ -39,7 +39,7 @@ export default function CandidateForm({
   onWithdraw,
   onReject,
 }: CandidateFormProps) {
-  const methods = useForm<Candidate_candidate_write>({
+  const methods = useForm<Candidate_candidate_write_validation_candidate_write>({
     defaultValues: { poster: defaultValues?.poster?.["@id"] },
   });
   const {

@@ -8,9 +8,9 @@ import {
   useGetUserCandidatesQuery,
 } from "../endpoints/candidates";
 import { useGetElectionQuery } from "../endpoints/elections";
-import { Candidate_candidate_write } from "../endpoints/types";
 import { useAppSelector } from "../hooks/app";
 import { handleError } from "../util/handleError";
+import { Candidate_candidate_write_validation_candidate_write } from "src/endpoints/types";
 
 export function Component() {
   const user = useAppSelector((state) => state.authorization.currentUser);
@@ -32,7 +32,7 @@ export function Component() {
   );
   const navigate = useNavigate();
 
-  async function onSubmit(data: Candidate_candidate_write) {
+  async function onSubmit(data: Candidate_candidate_write_validation_candidate_write) {
     const { error } = await createCandidate({ userId: user?.id!, body: data });
     if (error) {
       handleError(error);

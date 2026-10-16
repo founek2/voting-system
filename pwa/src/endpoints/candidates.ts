@@ -1,6 +1,6 @@
 import { Candidate, Hydra } from '../types';
 import { api } from './api';
-import { Candidate_candidate_edit_jsonMergePatch, Candidate_candidate_write, Position_jsonld_position_read } from './types';
+import { Candidate_candidate_edit_jsonMergePatch, Candidate_candidate_write_validation_candidate_write, Position_jsonld_position_read } from './types';
 
 type ResultType = {
     candidateId: number;
@@ -74,7 +74,7 @@ export const signInApi = api.injectEndpoints({
             providesTags: ['Candidates', 'Votes'],
             transformResponse: orderByPosition
         }),
-        addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write }>({
+        addCandidate: build.mutation<Candidate, { userId: number, body: Candidate_candidate_write_validation_candidate_write }>({
             query({ userId, body }) {
                 return {
                     url: `candidates`,

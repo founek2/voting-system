@@ -13,7 +13,7 @@ import {
   Zone_jsonld_zone_read,
 } from "../endpoints/types";
 import { useGetZonesQuery } from "../endpoints/zones";
-import { head } from "../util/head";
+import { TextFieldControlled } from "./TextFieldControlled";
 
 const allZone = {
   name: "Všichni",
@@ -57,7 +57,8 @@ export default function PositionForm({
       </Grid>
 
       <Grid size={{ xs: 12, md: 4, lg: 3 }}>
-        <TextField
+        <TextFieldControlled
+          control={methods.control}
           label="Název"
           {...register("name", { required: true })}
           fullWidth
@@ -91,6 +92,15 @@ export default function PositionForm({
               }
             />
           )}
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 8, lg: 6 }}>
+        <TextFieldControlled
+          control={methods.control}
+          label="Popis"
+          {...register("description")}
+          fullWidth
+          multiline
         />
       </Grid>
       <Grid size={12}>

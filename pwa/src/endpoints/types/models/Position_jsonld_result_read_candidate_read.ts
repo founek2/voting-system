@@ -6,5 +6,6 @@ import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
 export type Position_jsonld_result_read_candidate_read = (HydraItemBaseSchema & {
     readonly id?: number;
     name?: string;
+    description?: string | null;
 });
 

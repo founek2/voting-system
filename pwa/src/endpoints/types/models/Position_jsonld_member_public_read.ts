@@ -5,5 +5,6 @@
 import type { HydraItemBaseSchema } from './HydraItemBaseSchema';
 export type Position_jsonld_member_public_read = (HydraItemBaseSchema & {
     name?: string;
+    description?: string | null;
 });
 

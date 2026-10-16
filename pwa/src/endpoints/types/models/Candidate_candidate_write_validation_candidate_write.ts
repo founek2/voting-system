@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Candidate_candidate_write = {
+export type Candidate_candidate_write_validation_candidate_write = {
     election: string;
     position: string;
     poster?: string | null;

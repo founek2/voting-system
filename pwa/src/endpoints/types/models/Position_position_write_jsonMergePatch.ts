@@ -5,5 +5,6 @@
 export type Position_position_write_jsonMergePatch = {
     zoneRestrictions?: Array<string>;
     name?: string;
+    description?: string | null;
 };
 
