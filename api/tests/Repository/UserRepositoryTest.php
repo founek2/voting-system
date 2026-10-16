@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Api;
+namespace App\Tests\Repository;
 
 use App\Factory\UserFactory;
 use App\Repository\UserRepository;
