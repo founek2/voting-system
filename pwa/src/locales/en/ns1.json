@@ -92,7 +92,7 @@
         "candidateWithdrew": "Candidacy was withdrawn",
         "done": "You have already voted ✅",
         "enter": "Enter electronic voting →",
-        "notEligible": "You are not eligible to vote in these elections",
+        "notEligible": "You cannot vote in this election",
         "voting": "Voting"
     },
     "candidates": {

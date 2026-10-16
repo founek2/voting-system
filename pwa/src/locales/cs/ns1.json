@@ -92,7 +92,7 @@
         "candidateWithdrew": "Kandidátka byla stažena",
         "done": "Již máte odhlasováno ✅",
         "enter": "Vstupte k elektronickým volbám →",
-        "notEligible": "Nemáte právo hlasovat v těchto volbách",
+        "notEligible": "V těchto volbách nemůžete hlasovat",
         "voting": "Hlasování"
     },
     "candidates": {
