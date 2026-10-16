@@ -91,6 +91,10 @@ class Election
     #[Groups(['election:read', 'election:write'])]
     private ?\DateTimeInterface $finalResultsDate = null;
 
+    #[ORM\Column(length: 500)]
+    #[Groups(['election:read', 'election:write'])]
+    private ?string $ballotVotingDescription = null;
+
     /**
      * @var Collection<int, Candidate>
      */
@@ -196,6 +200,18 @@ class Election
     public function setBallotVotingDate(?\DateTimeInterface $ballotVotingDate): static
     {
         $this->ballotVotingDate = $ballotVotingDate;
+
+        return $this;
+    }
+
+    public function getBallotVotingDescription(): ?string
+    {
+        return $this->ballotVotingDescription;
+    }
+
+    public function setBallotVotingDescription(string $ballotVotingDescription): static
+    {
+        $this->ballotVotingDescription = $ballotVotingDescription;
 
         return $this;
     }
