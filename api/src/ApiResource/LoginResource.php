@@ -8,7 +8,7 @@ use ApiPlatform\Metadata\Get;
 use App\Dto\LoginResponseDto;
 use App\State\LoginProcessor;
 use App\State\LoginProvider;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(

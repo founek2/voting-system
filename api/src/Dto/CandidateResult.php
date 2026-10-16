@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use App\Entity\Candidate;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 class CandidateResult
 {

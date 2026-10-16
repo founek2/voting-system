@@ -13,7 +13,7 @@ use App\State\ElectionResultProvider;
 use App\State\NewBallotVoteProcessor;
 use App\Validator\BallotResourceAllowed;
 use DateTime;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(

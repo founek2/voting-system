@@ -5,6 +5,8 @@ framework:
     annotations: false
     http_method_override: false
     handle_all_throwables: true
+    property_info:
+        with_constructor_extractor: false
  
     trusted_proxies: '%env(TRUSTED_PROXIES)%'
     trusted_hosts: '%env(TRUSTED_HOSTS)%'
