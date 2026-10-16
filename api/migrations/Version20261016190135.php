@@ -20,7 +20,7 @@ final class Version20261016190135 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE election ADD ballot_voting_description VARCHAR(500) NOT NULL');
+        $this->addSql('ALTER TABLE election ADD ballot_voting_description VARCHAR(1000) DEFAULT NULL');
         $this->addSql('DROP INDEX idx_550df1a216ba31db');
         $this->addSql('DROP INDEX idx_550df1a2e3bd61ce');
         $this->addSql('DROP INDEX idx_550df1a2fb7336f0');

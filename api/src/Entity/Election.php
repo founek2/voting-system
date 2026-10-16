@@ -93,7 +93,7 @@ class Election
     #[Groups(['election:read', 'election:write'])]
     private ?\DateTimeInterface $finalResultsDate = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(length: 1000, nullable: true)]
     #[Groups(['election:read', 'election:write'])]
     private ?string $ballotVotingDescription = null;
 
