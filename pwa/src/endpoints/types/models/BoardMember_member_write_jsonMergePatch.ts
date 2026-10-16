@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Vote_jsonld__ = Record<string, any>;
+export type BoardMember_member_write_jsonMergePatch = {
+    appUser?: string;
+    position?: string;
+};
+

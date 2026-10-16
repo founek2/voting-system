@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type MediaReport_media_edit = {
+export type MediaResolution_media_edit_jsonMergePatch = {
     name?: string;
     publishedAt?: string;
     election?: string | null;

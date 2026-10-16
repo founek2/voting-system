@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BallotResult_jsonld_result_write = {
+export type BallotResult_result_write_jsonMergePatch = {
     candidate?: string;
     positiveVotes?: number;
     negativeVotes?: number;

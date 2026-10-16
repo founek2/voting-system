@@ -9,7 +9,7 @@ import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
 import {
-  Position_jsonld_position_write,
+  Position_position_write,
   Zone_jsonld_zone_read,
 } from "../endpoints/types";
 import { useGetZonesQuery } from "../endpoints/zones";
@@ -22,8 +22,8 @@ const allZone = {
 };
 
 interface PositionFormProps {
-  defaultValues?: Position_jsonld_position_write;
-  onSubmit: SubmitHandler<Position_jsonld_position_write>;
+  defaultValues?: Position_position_write;
+  onSubmit: SubmitHandler<Position_position_write>;
   disabled?: boolean;
 }
 export default function PositionForm({
@@ -31,7 +31,7 @@ export default function PositionForm({
   onSubmit,
   disabled,
 }: PositionFormProps) {
-  const methods = useForm<Position_jsonld_position_write>({ defaultValues });
+  const methods = useForm<Position_position_write>({ defaultValues });
   const {
     register,
     handleSubmit,

@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Candidate_candidate_edit = {
-    poster?: string | null;
+import type { Vote_vote_write } from './Vote_vote_write';
+export type BallotResource_vote_write = {
+    votes?: Array<Vote_vote_write>;
 };
 

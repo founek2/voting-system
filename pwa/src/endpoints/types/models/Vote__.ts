@@ -2,9 +2,4 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type MediaResolution_media_edit = {
-    name?: string;
-    publishedAt?: string;
-    election?: string | null;
-};
-
+export type Vote__ = Record<string, any>;

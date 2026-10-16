@@ -16,12 +16,15 @@ export type Election_jsonld_election_read_media_read_url = (HydraItemBaseSchema 
     complaintsDeadlineDate?: string | null;
     countingVotesDate?: string | null;
     finalResultsDate?: string | null;
+    ballotVotingDescription?: string;
     candidates?: Array<string>;
     positions?: Array<string>;
     mediaResolutions?: Array<MediaResolution_jsonld_election_read_media_read_url>;
     mediaReports?: Array<MediaReport_jsonld_election_read_media_read_url>;
     evaluatedAt?: string | null;
     completedAt?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
     readonly stage?: 'announcement' | 'registration_of_candidates' | 'campaign' | 'electronic_voting' | 'ballot_voting' | 'preliminary_results' | 'complaints' | 'counting_votes' | 'final_results';
 });
 

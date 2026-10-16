@@ -12,6 +12,7 @@ export type Election_election_write = {
     complaintsDeadlineDate?: string | null;
     countingVotesDate?: string | null;
     finalResultsDate?: string | null;
+    ballotVotingDescription?: string;
     candidates?: Array<string>;
     positions?: Array<string>;
 };

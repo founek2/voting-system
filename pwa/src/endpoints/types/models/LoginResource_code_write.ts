@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BoardMember_jsonld_member_write = {
-    appUser?: string;
-    position?: string;
+export type LoginResource_code_write = {
+    code: string;
 };
 

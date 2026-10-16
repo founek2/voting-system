@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Position_jsonld_position_write = {
+export type Position_position_write_jsonMergePatch = {
     zoneRestrictions?: Array<string>;
     name?: string;
 };

@@ -9,7 +9,7 @@ import {
   useGetBoardMemberQuery,
   useUpdateBoardMemberMutation,
 } from "../endpoints/board";
-import { BoardMember_jsonld_member_write } from "../endpoints/types";
+import { BoardMember_member_write } from "../endpoints/types";
 import { handleError } from "../util/handleError";
 
 export function Component() {
@@ -26,7 +26,7 @@ export function Component() {
   const navigate = useNavigate();
   const isLoadingMutation = isLoadingUpdate || isLoading || isLoadingDelete;
 
-  async function onSubmit(data: BoardMember_jsonld_member_write) {
+  async function onSubmit(data: BoardMember_member_write) {
     const { error } = await updateMember({
       id: member?.id!,
       body: data,

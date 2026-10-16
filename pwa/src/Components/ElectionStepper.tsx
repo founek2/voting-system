@@ -130,7 +130,9 @@ const steps: readonly StepType[] = [
           subDays: 1,
         }
       )}`,
-    description: 'stepper.step4.description',
+    description: (election, positions, t) => <Typography color="textSecondary" gutterBottom>
+      {t('stepper.step4.description')} {election.ballotVotingDescription}
+    </Typography>,
     action: (election: Election) => (
       <>
         {election.mediaResolutions?.map((resolution) => (

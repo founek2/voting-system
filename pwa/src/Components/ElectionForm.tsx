@@ -18,6 +18,7 @@ import { useGetPositionsQuery } from "../endpoints/positions";
 import { ResponsiveStyleValue } from "@mui/system";
 import { Election } from "../types";
 import { differenceInDays, subDays, parse } from "date-fns";
+import { TextFieldControlled } from "./TextFieldControlled";
 
 const dateSize: ResponsiveStyleValue<GridSize> = { xs: 12, md: 6 };
 
@@ -193,6 +194,16 @@ function ElectionForm({
           fullWidth
           value={getEndDate("ballotVotingDate", formData)}
           disabled
+        />
+      </Grid>
+
+      <Grid size={12}>
+        <TextFieldControlled
+          label="Urnové hlasování popis"
+          name="ballotVotingDescription"
+          control={control}
+          fullWidth
+          multiline
         />
       </Grid>
 

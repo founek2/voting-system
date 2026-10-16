@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Candidate_jsonld = {
+export type Candidate = {
     readonly id?: number;
     election?: string;
     appUser?: string;

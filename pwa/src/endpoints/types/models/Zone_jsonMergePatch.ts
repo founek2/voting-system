@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Zone_jsonld = {
+export type Zone_jsonMergePatch = {
     id?: number;
     alias?: string;
     name?: string;

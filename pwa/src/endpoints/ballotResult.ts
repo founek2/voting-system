@@ -1,6 +1,6 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
-import { BallotResult_jsonld_result_read_candidate_read, BallotResult_jsonld_result_write, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
+import { BallotResult_jsonld_result_read_candidate_read, BallotResult_result_write, Election_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
 import { FormType } from '../Components/VoteResultRow';
 
 export const signInApi = api.injectEndpoints({
@@ -21,7 +21,7 @@ export const signInApi = api.injectEndpoints({
                 return data;
             }
         }),
-        addBallotResult: build.mutation<BallotResult_jsonld_result_read_candidate_read, BallotResult_jsonld_result_write>({
+        addBallotResult: build.mutation<BallotResult_jsonld_result_read_candidate_read, BallotResult_result_write>({
             query(body) {
                 return {
                     url: `ballot_results`,
@@ -31,7 +31,7 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Ballot'],
         }),
-        updateBallotResult: build.mutation<BallotResult_jsonld_result_read_candidate_read, { id: number, body: BallotResult_jsonld_result_write }>({
+        updateBallotResult: build.mutation<BallotResult_jsonld_result_read_candidate_read, { id: number, body: BallotResult_result_write }>({
             query({ id, body }) {
                 return {
                     url: `ballot_results/${id}`,
@@ -44,7 +44,7 @@ export const signInApi = api.injectEndpoints({
         saveBallotResult: build.mutation<void, FormType>({
             async queryFn(data, _queryApi, _extraOptions, baseQuery) {
                 for (const result of data.candidates) {
-                    const resultConverted: BallotResult_jsonld_result_write = {
+                    const resultConverted: BallotResult_result_write = {
                         candidate: result.candidate,
                         negativeVotes: Number(result.negativeVotes),
                         neutralVotes: Number(result.neutralVotes),

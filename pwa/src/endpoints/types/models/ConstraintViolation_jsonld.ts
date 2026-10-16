@@ -12,11 +12,23 @@ export type ConstraintViolation_jsonld = (HydraItemBaseSchema & {
         /**
          * The property path of the violation
          */
-        propertyPath?: string;
+        propertyPath: string;
         /**
          * The message associated with the violation
          */
-        message?: string;
+        message: string;
+        /**
+         * The code of the violation
+         */
+        code?: string;
+        /**
+         * An extra hint to understand the violation
+         */
+        hint?: string;
+        /**
+         * The serialized payload of the violation
+         */
+        payload?: Record<string, any>;
     }>;
     readonly detail?: string;
     readonly description?: string;

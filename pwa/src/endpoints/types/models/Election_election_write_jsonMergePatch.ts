@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Election_jsonld_election_write = {
+export type Election_election_write_jsonMergePatch = {
     announcementDate?: string;
     registrationOfCandidatesDate?: string | null;
     campaignDate?: string | null;
@@ -12,6 +12,7 @@ export type Election_jsonld_election_write = {
     complaintsDeadlineDate?: string | null;
     countingVotesDate?: string | null;
     finalResultsDate?: string | null;
+    ballotVotingDescription?: string;
     candidates?: Array<string>;
     positions?: Array<string>;
 };

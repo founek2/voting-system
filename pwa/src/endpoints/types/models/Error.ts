@@ -14,7 +14,7 @@ export type Error = {
      * A human-readable explanation specific to this occurrence of the problem.
      */
     readonly detail?: string | null;
-    status?: number;
+    status?: number | null;
     /**
      * A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.
      */

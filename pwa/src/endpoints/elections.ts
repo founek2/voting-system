@@ -1,6 +1,6 @@
 import { api } from './api';
 import { Election, Hydra } from '../types';
-import { BallotResult_jsonld_result_read_candidate_read, Election_jsonld_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
+import { BallotResult_jsonld_result_read_candidate_read, Election_election_write, ElectionResultResource_jsonld_candidate_read } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -20,7 +20,7 @@ export const signInApi = api.injectEndpoints({
             query: (id) => `elections/${id}`,
             providesTags: ['Elections'],
         }),
-        addElection: build.mutation<Election, Election_jsonld_election_write>({
+        addElection: build.mutation<Election, Election_election_write>({
             query(body) {
                 return {
                     url: `elections`,
@@ -30,7 +30,7 @@ export const signInApi = api.injectEndpoints({
             },
             invalidatesTags: ['Elections', 'PublicElections'],
         }),
-        updateElection: build.mutation<Election, { id: number, body: Election_jsonld_election_write }>({
+        updateElection: build.mutation<Election, { id: number, body: Election_election_write }>({
             query(data) {
                 return {
                     url: `elections/${data.id}`,

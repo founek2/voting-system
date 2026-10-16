@@ -1,5 +1,5 @@
 import { api } from './api';
-import { EmailResource_jsonld_write } from './types';
+import { EmailResource_write } from './types';
 
 export const emailsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -8,7 +8,7 @@ export const emailsApi = api.injectEndpoints({
                 return {
                     url: `emails/elections/${electionId}/notify-single`,
                     method: 'POST',
-                    body: JSON.stringify({ email: emailAddress } satisfies EmailResource_jsonld_write),
+                    body: JSON.stringify({ email: emailAddress } satisfies EmailResource_write),
                 };
             },
             invalidatesTags: ['SignIn'],

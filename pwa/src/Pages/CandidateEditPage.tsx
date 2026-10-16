@@ -11,7 +11,7 @@ import {
   useWithdrawCandidateMutation,
 } from "../endpoints/candidates";
 import { useGetElectionQuery } from "../endpoints/elections";
-import { Candidate_candidate_edit } from "../endpoints/types";
+import { Candidate_candidate_edit_jsonMergePatch } from "../endpoints/types";
 import { useAppSelector } from "../hooks/app";
 import { handleError } from "../util/handleError";
 import { parseId } from "../util/parseId";
@@ -41,7 +41,7 @@ export function Component() {
     isLoadingUpdate || isLoadingWithdraw || isLoadingReject;
   const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
-  async function onSubmit(data: Candidate_candidate_edit) {
+  async function onSubmit(data: Candidate_candidate_edit_jsonMergePatch) {
     const { error } = await updateCandidate({
       id: candidate?.id!,
       body: data,

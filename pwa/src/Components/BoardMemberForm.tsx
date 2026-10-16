@@ -8,12 +8,13 @@ import {
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FormStatus } from "../Components/FormStatus";
+import { TextFieldControlled } from "../Components/TextFieldControlled";
 import { useGetPositionsQuery } from "../endpoints/positions";
-import { BoardMember_jsonld_member_write } from "../endpoints/types";
+import { BoardMember_member_write } from "../endpoints/types";
 
 interface PositionFormProps {
-  defaultValues?: BoardMember_jsonld_member_write;
-  onSubmit: SubmitHandler<BoardMember_jsonld_member_write>;
+  defaultValues?: BoardMember_member_write;
+  onSubmit: SubmitHandler<BoardMember_member_write>;
   disabled?: boolean;
   onDelete?: () => any;
 }
@@ -23,7 +24,7 @@ export default function BoardMemberForm({
   disabled,
   onDelete,
 }: PositionFormProps) {
-  const methods = useForm<BoardMember_jsonld_member_write>({ defaultValues });
+  const methods = useForm<BoardMember_member_write>({ defaultValues });
   const {
     register,
     handleSubmit,
@@ -47,29 +48,14 @@ export default function BoardMemberForm({
       </Grid>
 
       <Grid size={5}>
-        <Controller
+        <TextFieldControlled
           control={methods.control}
           name="appUser"
           rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              label="UID uživatele"
-              defaultValue={defaultValues?.appUser || ""}
-              value={field.value?.split("/").pop()}
-              fullWidth
-              onChange={(e) => {
-                const newE = {
-                  ...e,
-                  target: {
-                    ...e.target,
-                    value: `/api/users/${e.target.value}`,
-                  },
-                };
-                field.onChange(newE);
-              }}
-              onBlur={field.onBlur}
-            />
-          )}
+          label="UID uživatele"
+          fullWidth
+          formatValue={(value) => value?.split("/").pop()}
+          parseValue={(value) => `/api/users/${value}`}
         />
       </Grid>
       <Grid size={5}>

@@ -15,6 +15,8 @@ export type Candidate_jsonld_candidate_read = (HydraItemBaseSchema & {
     withdrewAt?: string | null;
     rejectedAt?: string | null;
     winnerMarkedAt?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
     readonly withdrawAllowed?: boolean;
 });
 

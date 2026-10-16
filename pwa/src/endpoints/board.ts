@@ -1,6 +1,6 @@
 import { Hydra } from '../types';
 import { api } from './api';
-import { BoardMember_jsonld_member_public_read, BoardMember_jsonld_member_read, BoardMember_jsonld_member_write, HydraItemBaseSchema, Position_jsonld_position_read } from './types';
+import { BoardMember_jsonld_member_public_read, BoardMember_jsonld_member_read, BoardMember_member_write, HydraItemBaseSchema, Position_jsonld_position_read } from './types';
 
 export const boardApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -21,7 +21,7 @@ export const boardApi = api.injectEndpoints({
             query: (id) => `board_members/${id}`,
             providesTags: ['BoardMembers'],
         }),
-        addBoardMember: build.mutation<Position_jsonld_position_read, BoardMember_jsonld_member_write>({
+        addBoardMember: build.mutation<Position_jsonld_position_read, BoardMember_member_write>({
             query(body) {
                 return {
                     url: `board_members`,
@@ -31,7 +31,7 @@ export const boardApi = api.injectEndpoints({
             },
             invalidatesTags: ['BoardMembers'],
         }),
-        updateBoardMember: build.mutation<Position_jsonld_position_read, { id: number, body: BoardMember_jsonld_member_write }>({
+        updateBoardMember: build.mutation<Position_jsonld_position_read, { id: number, body: BoardMember_member_write }>({
             query(data) {
                 return {
                     url: `board_members/${data.id}`,

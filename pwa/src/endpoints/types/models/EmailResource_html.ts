@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type EmailResource_jsonld_write = {
+export type EmailResource_html = {
     email?: string;
 };
 

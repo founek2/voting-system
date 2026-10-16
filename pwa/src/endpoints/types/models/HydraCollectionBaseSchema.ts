@@ -2,27 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type HydraCollectionBaseSchema = {
-    member: any[];
-    totalItems?: number;
+import type { HydraCollectionBaseSchemaNoPagination } from './HydraCollectionBaseSchemaNoPagination';
+export type HydraCollectionBaseSchema = (HydraCollectionBaseSchemaNoPagination & {
     view?: {
         '@id'?: string;
         '@type'?: string;
-        first?: string;
-        last?: string;
-        previous?: string;
-        next?: string;
+        first?: string | null;
+        last?: string | null;
+        previous?: string | null;
+        next?: string | null;
     };
-    search?: {
-        '@type'?: string;
-        template?: string;
-        variableRepresentation?: string;
-        mapping?: Array<{
-            '@type'?: string;
-            variable?: string;
-            property?: string | null;
-            required?: boolean;
-        }>;
-    };
-};
+});
 

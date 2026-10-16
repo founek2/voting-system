@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type LoginResource_jsonld_code_write = {
-    code: string;
+export type Vote_vote_write = {
+    candidate: string;
+    value: 1 | 0 | -1;
 };
 

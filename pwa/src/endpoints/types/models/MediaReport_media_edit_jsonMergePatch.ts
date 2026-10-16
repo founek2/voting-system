@@ -2,4 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type EmailResource_jsonld__ = Record<string, any>;
+export type MediaReport_media_edit_jsonMergePatch = {
+    name?: string;
+    publishedAt?: string;
+    election?: string | null;
+};
+

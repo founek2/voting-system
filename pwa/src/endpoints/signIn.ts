@@ -1,5 +1,5 @@
 import { api } from './api';
-import { LoginResource_jsonld_code_write, LoginResource_jsonld_url_read, LoginResource_LoginResponseDto_jsonld } from './types';
+import { LoginResource_code_write, LoginResource_jsonld_url_read, LoginResource_LoginResponseDto_jsonld } from './types';
 
 export const signInApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -7,7 +7,7 @@ export const signInApi = api.injectEndpoints({
             query: () => `public/login`,
             providesTags: ['AuthorizationUrl'],
         }),
-        signIn: build.mutation<LoginResource_LoginResponseDto_jsonld, LoginResource_jsonld_code_write>({
+        signIn: build.mutation<LoginResource_LoginResponseDto_jsonld, LoginResource_code_write>({
             query(body) {
                 return {
                     url: `public/login`,

@@ -8,7 +8,7 @@ import {
   useGetPositionQuery,
   useUpdatePositionMutation,
 } from "../endpoints/positions";
-import { Position_jsonld_position_write } from "../endpoints/types";
+import { Position_position_write } from "../endpoints/types";
 
 export function Component() {
   const params = useParams<{ id: string }>();
@@ -21,7 +21,7 @@ export function Component() {
     useUpdatePositionMutation();
   const navigate = useNavigate();
 
-  async function onSubmit(data: Position_jsonld_position_write) {
+  async function onSubmit(data: Position_position_write) {
     const { error } = await updatePosition({
       id: Number(params.id!),
       body: data,
