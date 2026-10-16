@@ -3,22 +3,24 @@
 namespace App\Tests\Repository;
 
 use App\Factory\UserFactory;
-use App\Repository\UserRepository;
+use App\Dto\AccessTokenDto;
+use App\Entity\User;
 use App\Tests\Fixtures\ApiTestCaseClient;
-use League\OAuth2\Client\Token\AccessToken;
 
 class UserRepositoryTest extends ApiTestCaseClient
 {
-    public function testFindByAccessKey(): void
+    public function testAccessTokenDtoIsPersisted(): void
     {
-        $user = UserFactory::createOne(['accessToken' => new AccessToken(['access_token' => 'foo', 'expires_in' => -100])]);
+        $expires = time() - 3600;
+        $user = UserFactory::createOne(['accessToken' => new AccessTokenDto(['expires' => $expires])]);
+        $id = $user->getId();
+        $manager = self::getContainer()->get('doctrine')->getManager();
+        $manager->clear();
 
-        /** @var UserRepository */
-        $repo = UserFactory::repository();
-
-        $user = $repo->findByAccessToken('foo');
+        $user = $manager->getRepository(User::class)->find($id);
         self::assertNotNull($user);
-        self::assertEquals('foo', $user->getAccessToken()->getToken());
+        self::assertInstanceOf(AccessTokenDto::class, $user->getAccessToken());
+        self::assertSame($expires, $user->getAccessToken()->getExpires());
         self::assertTrue($user->getAccessToken()->hasExpired());
     }
 }

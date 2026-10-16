@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Const\VoteValue;
 use App\Repository\VoteRepository;
 use App\State\VoteInvalidateProcessor;
@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(
             security: 'user.hasRole("ROLE_ADMIN")',
-            paginationMaximumItemsPerPage: 2000
+            paginationMaximumItemsPerPage: 2000,
         ),
         new GetCollection(
             uriTemplate: 'users/{userId}/votes',
@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 'userId' => new Link(fromClass: User::class, fromProperty: 'votes')
             ],
             security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
-            paginationMaximumItemsPerPage: 2000
+            paginationMaximumItemsPerPage: 2000,
         ),
         new Get(security: 'user.hasRole("ROLE_ADMIN")'),
         new Post(
@@ -44,9 +44,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ],
     normalizationContext: ['groups' => ['vote:read']],
+    parameters: [
+        'candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election', constraints: []),
+        'appUser' => new QueryParameter(filter: new ExactFilter(), property: 'appUser', constraints: []),
+        'appUser.zone' => new QueryParameter(filter: new ExactFilter(), property: 'appUser.zone', constraints: []),
+        'exists[invalidatedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'invalidatedAt', constraints: []),
+    ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['candidate.election' => 'exact', 'appUser' => 'exact', 'appUser.zone' => 'exact'])]
-#[ApiFilter(ExistsFilter::class, properties: ['invalidatedAt'])]
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
 #[UniqueEntity(['candidate', 'appUser'])]
 #[UniqueConstraint('uniq_vote_idx', ['candidate_id', 'app_user_id'])]

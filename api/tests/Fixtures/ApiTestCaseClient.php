@@ -21,6 +21,12 @@ class ApiTestCaseClient extends ApiTestCase
     protected static function createUserClient(User|Proxy $user): Client
     {
         $client = self::createClient();
+        $expires = $user->getAccessToken()->getExpires();
+        $token = self::getContainer()->get(JWTEncoderInterface::class)->encode([
+            'id' => $user->getId(),
+            'iat' => min(time(), $expires - 1),
+            'exp' => $expires,
+        ]);
 
         $client->setDefaultOptions([
             'auth_basic' => null,
@@ -28,7 +34,7 @@ class ApiTestCaseClient extends ApiTestCase
             'query' => [],
             'headers' => [
                 'accept' => ['application/ld+json'],
-                'Authorization' => sprintf('Bearer %s', $user->getAccessToken()->getToken()),
+                'Authorization' => sprintf('Bearer %s', $token),
                 'Accept-Language' => 'cs,sk;q=0.8,en-US;q=0.5,en;q=0.3'
             ],
             'body' => '',

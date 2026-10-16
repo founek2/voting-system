@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Repository\BallotResultRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
@@ -36,8 +36,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ],
     normalizationContext: ['groups' => ['result:read', 'candidate:read']],
     denormalizationContext: ['groups' => ['result:write']],
+    parameters: [
+        'candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election', constraints: []),
+        'candidate.election.id' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election.id', constraints: []),
+    ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['candidate.election' => 'exact', 'candidate.election.id' => 'exact'])]
 #[ORM\Entity(repositoryClass: BallotResultRepository::class)]
 #[UniqueEntity(['candidate'])]
 class BallotResult

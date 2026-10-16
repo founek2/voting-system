@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\IriFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Const\ElectionStage;
 use App\Filter\VoteCandidateFilter;
 use App\Repository\CandidateRepository;
@@ -45,7 +46,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             security: 'user.getId() == request.attributes.get("userId") or user.hasRole("ROLE_ADMIN")',
             uriVariables: [
                 'userId' => new Link(fromClass: User::class, fromProperty: 'candidates')
-            ]
+            ],
         ),
         new GetCollection(
             uriTemplate: 'public/elections/{id}/candidates',
@@ -58,7 +59,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             uriVariables: [
                 'id' => new Link(fromClass: Election::class, fromProperty: 'candidates'),
             ],
-            filters: [VoteCandidateFilter::class],
+            parameters: [
+                'type' => new QueryParameter(filter: VoteCandidateFilter::class, property: 'type', constraints: []),
+            ],
         ),
         new GetCollection(security: 'user.hasRole("ROLE_ADMIN")'),
         new Post(
@@ -86,11 +89,17 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             validationContext: ['groups' => ['_']]
         ),
     ],
-    normalizationContext: ['groups' => ['candidate:read']]
+    normalizationContext: ['groups' => ['candidate:read']],
+    parameters: [
+        'election' => new QueryParameter(filter: new IriFilter(), property: 'election', constraints: []),
+        'appUser' => new QueryParameter(filter: new ExactFilter(), property: 'appUser', constraints: []),
+        'position' => new QueryParameter(filter: new ExactFilter(), property: 'position', constraints: []),
+        'exists[withdrewAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'withdrewAt', constraints: []),
+        'exists[rejectedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'rejectedAt', constraints: []),
+        'exists[winnerMarkedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'winnerMarkedAt', constraints: []),
+    ],
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['election' => 'exact', 'appUser' => 'exact', 'position' => 'exact'])]
-#[ApiFilter(ExistsFilter::class, properties: ['withdrewAt', 'rejectedAt', 'winnerMarkedAt'])]
 #[Validator\WithdrawalAllowed(groups: ['candidate:delete'])]
 #[Validator\CandidateAllowed(groups: ['candidate:write'])]
 #[ORM\UniqueConstraint('single_candidate_idx', ['election_id', 'app_user_id', 'withdrew_at'])]

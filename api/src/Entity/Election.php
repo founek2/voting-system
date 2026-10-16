@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Const\ElectionStage;
 use App\Filter\ElectionStageFilter;
 use App\Repository\ElectionRepository;
@@ -41,10 +41,12 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ],
     normalizationContext: ['groups' => ['election:read', 'media:read_url']],
     denormalizationContext: ['groups' => ['election:write']],
-    order: ['id' => 'DESC']
+    order: ['id' => 'DESC'],
+    parameters: [
+        'stage' => new QueryParameter(filter: ElectionStageFilter::class, property: 'stage', constraints: []),
+    ],
 )]
 #[ORM\Entity(repositoryClass: ElectionRepository::class)]
-#[ApiFilter(ElectionStageFilter::class)]
 class Election
 {
     use TimestampableEntity;

@@ -2,43 +2,21 @@
 
 namespace App\Filter;
 
-use ApiPlatform\Doctrine\Orm\Filter\AbstractFilter;
+use ApiPlatform\Doctrine\Orm\Filter\FilterInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Const\ElectionStage;
-use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
-final class ElectionStageFilter extends AbstractFilter
+final class ElectionStageFilter implements FilterInterface
 {
     public const ALLOWED_VALUES = [ElectionStage::ELECTRONIC_VOTING->value];
     const QUERY_PARAM_NAME = 'stage';
 
-    public function __construct(
-        ManagerRegistry $managerRegistry,
-        private readonly Security $security,
-        ?LoggerInterface $logger = null,
-        ?array $properties = null,
-        ?NameConverterInterface $nameConverter = null
-    ) {
-        parent::__construct($managerRegistry, $logger, $properties, $nameConverter);
-    }
-
-    /*
-     * Filtered properties is accessible through getProperties() method: property => strategy
-     */
-    protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?Operation $operation = null, array $context = []): void
+    public function apply(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?Operation $operation = null, array $context = []): void
     {
-        if ($property != self::QUERY_PARAM_NAME) {
-            return;
-        }
-
+        $value = ($context['parameter'] ?? null)?->getValue();
         if (!in_array($value, self::ALLOWED_VALUES)) {
             return;
         }

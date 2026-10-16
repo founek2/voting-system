@@ -2,7 +2,7 @@
 
 namespace App\Filter;
 
-use ApiPlatform\Doctrine\Orm\Filter\AbstractFilter;
+use ApiPlatform\Doctrine\Orm\Filter\FilterInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\Election;
@@ -11,38 +11,20 @@ use App\Entity\User;
 use App\Entity\Vote;
 use DateTimeImmutable;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
-final class VoteCandidateFilter extends AbstractFilter
+final class VoteCandidateFilter implements FilterInterface
 {
     const VOTED = 'voted';
     const UNVOTED = 'unvoted';
     public const ALLOWED_VALUES = [self::VOTED, self::UNVOTED];
     const QUERY_PARAM_NAME = 'type';
 
-    public function __construct(
-        ManagerRegistry $managerRegistry,
-        private readonly Security $security,
-        ?LoggerInterface $logger = null,
-        ?array $properties = null,
-        ?NameConverterInterface $nameConverter = null
-    ) {
-        parent::__construct($managerRegistry, $logger, $properties, $nameConverter);
-    }
+    public function __construct(private readonly Security $security) {}
 
-    /*
-     * Filtered properties is accessible through getProperties() method: property => strategy
-     */
-    protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?Operation $operation = null, array $context = []): void
+    public function apply(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?Operation $operation = null, array $context = []): void
     {
-        if ($property != self::QUERY_PARAM_NAME) {
-            return;
-        }
-
+        $value = ($context['parameter'] ?? null)?->getValue();
         if (!in_array($value, self::ALLOWED_VALUES)) {
             return;
         }

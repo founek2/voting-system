@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\User;
-use League\OAuth2\Client\Token\AccessToken;
+use App\Dto\AccessTokenDto;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -32,7 +32,7 @@ final class UserFactory extends PersistentProxyObjectFactory
     {
         return [
             'id' => self::faker()->numberBetween(),
-            'accessToken' => new AccessToken(['access_token' => '123']), // TODO add ACCESSTOKEN type manually
+            'accessToken' => new AccessTokenDto(['expires' => time() + 3600]),
             'email' => self::faker()->text(255),
             'firstName' => self::faker()->text(255),
             'lastName' => self::faker()->text(255),

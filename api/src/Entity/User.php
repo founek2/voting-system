@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Const\Role;
 use App\Doctrine\Types\AccessTokenType;
 use App\Dto\AccessTokenDto;
@@ -37,14 +36,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(
             provider: UserProvider::class,
         ),
-    ]
+    ],
+    parameters: [
+        'votes.candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'votes.candidate.election', constraints: []),
+        'votes.candidate.position' => new QueryParameter(filter: new ExactFilter(), property: 'votes.candidate.position', constraints: []),
+        'zone' => new QueryParameter(filter: new ExactFilter(), property: 'zone', constraints: []),
+        'exists[votes.invalidatedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'votes.invalidatedAt', constraints: []),
+    ],
 )]
-#[ApiFilter(SearchFilter::class, properties: [
-    'votes.candidate.election' => 'exact',
-    'votes.candidate.position' => 'exact',
-    'zone' => 'exact'
-])]
-#[ApiFilter(ExistsFilter::class, properties: ['votes.invalidatedAt'])]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity('email')]

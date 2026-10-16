@@ -3,8 +3,8 @@
 namespace App\Tests\Api;
 
 use App\Factory\UserFactory;
+use App\Dto\AccessTokenDto;
 use App\Tests\Fixtures\ApiTestCaseClient;
-use League\OAuth2\Client\Token\AccessToken;
 
 class UserTest extends ApiTestCaseClient
 {
@@ -20,7 +20,7 @@ class UserTest extends ApiTestCaseClient
     public function testGetUserExpiredToken(): void
     {
         $user = UserFactory::createOne([
-            'accessToken' => new AccessToken(['access_token' => '123', 'expires' => -1000]),
+            'accessToken' => new AccessTokenDto(['expires' => time() - 3600]),
         ]);
 
         $client = self::createUserClient($user);
