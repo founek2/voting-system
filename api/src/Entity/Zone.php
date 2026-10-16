@@ -11,7 +11,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    mercure: true,
     normalizationContext: ['groups' => ['zone:read']]
 )]
 #[ORM\Entity(repositoryClass: ZoneRepository::class)]

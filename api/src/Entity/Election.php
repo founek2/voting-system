@@ -39,7 +39,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
         new Patch(security: 'user.hasRole("ROLE_ADMIN")'),
     ],
-    mercure: true,
     normalizationContext: ['groups' => ['election:read', 'media:read_url']],
     denormalizationContext: ['groups' => ['election:write']],
     order: ['id' => 'DESC']

@@ -43,7 +43,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: VoteInvalidateProcessor::class,
         ),
     ],
-    mercure: true,
     normalizationContext: ['groups' => ['vote:read']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['candidate.election' => 'exact', 'appUser' => 'exact', 'appUser.zone' => 'exact'])]

@@ -86,7 +86,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             validationContext: ['groups' => ['_']]
         ),
     ],
-    mercure: true,
     normalizationContext: ['groups' => ['candidate:read']]
 )]
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
