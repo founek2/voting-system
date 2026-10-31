@@ -38,7 +38,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             denormalizationContext: ['groups' => ['candidate:write']],
         ),
         new Patch(
-            security: 'user.getId() == object.getAppUser().getId()',
+            security: 'user.getId() == object.getAppUser().getId() or user.hasRole("ROLE_ADMIN")',
             denormalizationContext: ['groups' => ['candidate:edit']],
         ),
         new GetCollection(
