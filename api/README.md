@@ -6,3 +6,4 @@ Refer to the [Getting Started Guide](https://api-platform.com/docs/distribution)
 
 ## File upload
 Current limit is 16MB for all files.
+
