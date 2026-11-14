@@ -185,7 +185,7 @@ export function Component() {
     isLoading,
     isError,
   } = useGetElectionQuery(Number(params.id));
-  const { data: users, isLoading: isLoadingUsers } =
+  const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } =
     useGetVotedForElectionQuery(
       { electionId: election?.["@id"]!, zoneId: zoneValue ? zoneValue : undefined, positionId: positionFilter ? positionFilter : undefined },
       {
@@ -263,7 +263,7 @@ export function Component() {
   }
 
   if (isLoading) return <Loader />;
-  if (isError || !election)
+  if (isError || !election || isErrorUsers)
     return (
       <TypographyInfo>Nelze načíst informace o zvolené volbě.</TypographyInfo>
     );
