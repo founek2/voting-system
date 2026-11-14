@@ -14,7 +14,7 @@ class ElectionNotification
         return $this->email;
     }
 
-    public function getElectionId(): string
+    public function getElectionId(): int
     {
         return $this->electionId;
     }

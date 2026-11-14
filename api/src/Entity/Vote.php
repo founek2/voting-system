@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
+use ApiPlatform\Doctrine\Orm\Filter\IriFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
@@ -45,9 +46,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     normalizationContext: ['groups' => ['vote:read']],
     parameters: [
-        'candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election', constraints: []),
-        'appUser' => new QueryParameter(filter: new ExactFilter(), property: 'appUser', constraints: []),
-        'appUser.zone' => new QueryParameter(filter: new ExactFilter(), property: 'appUser.zone', constraints: []),
+        'candidate.election' => new QueryParameter(filter: new IriFilter(), property: 'candidate.election', constraints: []),
+        'appUser' => new QueryParameter(filter: new IriFilter(), property: 'appUser', constraints: []),
+        'appUser.zone' => new QueryParameter(filter: new IriFilter(), property: 'appUser.zone', constraints: []),
         'exists[invalidatedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'invalidatedAt', constraints: []),
     ],
 )]

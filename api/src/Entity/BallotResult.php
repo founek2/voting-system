@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
+use ApiPlatform\Doctrine\Orm\Filter\IriFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
@@ -37,7 +38,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     normalizationContext: ['groups' => ['result:read', 'candidate:read']],
     denormalizationContext: ['groups' => ['result:write']],
     parameters: [
-        'candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election', constraints: []),
+        'candidate.election' => new QueryParameter(filter: new IriFilter(), property: 'candidate.election', constraints: []),
         'candidate.election.id' => new QueryParameter(filter: new ExactFilter(), property: 'candidate.election.id', constraints: []),
     ],
 )]

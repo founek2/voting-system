@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
+use ApiPlatform\Doctrine\Orm\Filter\IriFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
@@ -38,8 +39,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ],
     parameters: [
-        'votes.candidate.election' => new QueryParameter(filter: new ExactFilter(), property: 'votes.candidate.election', constraints: []),
-        'votes.candidate.position' => new QueryParameter(filter: new ExactFilter(), property: 'votes.candidate.position', constraints: []),
+        'votes.candidate.election' => new QueryParameter(filter: new IriFilter(), property: 'votes.candidate.election', constraints: []),
+        'votes.candidate.position' => new QueryParameter(filter: new IriFilter(), property: 'votes.candidate.position', constraints: []),
         'zone' => new QueryParameter(filter: new ExactFilter(), property: 'zone', constraints: []),
         'exists[votes.invalidatedAt]' => new QueryParameter(filter: new ExistsFilter(), property: 'votes.invalidatedAt', constraints: []),
     ],
